@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title>AGC CAMS</title>
+        <link rel="stylesheet" href="materialize/css/materialize.min.css" />
+        <link rel="stylesheet" href="css/DateTimePicker.css" >
+        <link rel="stylesheet" href="css/custom.css" >
+		<script src='js/jquery2.1.0.min.js'></script>
+        <script src="js/DateTimePicker.js"></script>
+        <script src="js/custom.js"></script>
+        <script src="materialize/js/materialize.min.js"></script>
+		<script src="js/cams_script.js"></script>
+		
+		
+    </head>
+
+    <body>
+        <div class="navbar-fixed">
+            <nav class="deep-purple darken-1">
+                <div class="nav-wrapper">
+                    <div class="input-field">
+                        <a href="" onclick="backPage()"><i class="mdi-navigation-chevron-left myBack"></i></a>
+                        <img class="nav-logo" src="img/nav-logo.svg">
+                        <label>Maklumat Permohonan</label>
+                    </div>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="mdi-navigation-menu"></i></a>
+                    <ul class="side-nav" id="mobile-demo">
+                        <li class="profile-container"><div class="profile-background"></div><span class="profile-pic"></span>
+						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
+                        <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
+                        <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
+                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                    </ul>
+                    <ul class="side-nav hide-on-med-and-down tablet-nav">
+                        <li class="profile-container"><div class="profile-background"></div><span class="profile-pic"></span>
+						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
+                        <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
+                        <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
+                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="myContainer">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card-panel myTitle">Permohonan Kebenaran Meninggalkan Pejabat Dalam Waktu Bekerja di Bawah Perintah AM 5 BAB G</div>
+                    <div class="card-panel">
+                        <form id="applicantdetail" name="applicantdetail" action="#">
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Bahagian</div>
+                                <div id="bahagian" name="bahagian" class="col s12 m5"></div>
+                            </div>
+                            <div id="penyokong" name="penyokong" class="row">
+                                <div class="col s12 m2 label-on-small-only">Penyokong</div>
+                                <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
+                            </div>
+							<div id="pelulus" name="pelulus" class="row">
+                                <div class="col s12 m2 label-on-small-only">Pelulus</div>
+                                <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
+                            </div>  
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Tujuan</div>
+								<div id="tujuan" name="tujuan" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Tarikh</div>
+                                <div id="tkh_keluar" name="tkh_keluar" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Masa Keluar</div>
+								<div id="masa_keluar" name="masa_keluar" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Masa Masuk</div>
+								<div id="masa_masuk" name="masa_masuk" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Lampiran</div>
+                                <div class="col s12 m5 file-field">
+                                    <input class="file-path" type="text" disabled/>
+                                    <div class="btn waves-effect waves-light deep-purple darken-1">
+                                        <span><i class="mdi-editor-attach-file"></i></span>
+                                        <input type="file" />
+                                    </div>
+                                </div>
+                            </div>
+							<div class="row">
+                                <div class="col s12 m2 label-on-small-only">Status Permohonan</div>
+								<div id="status_permohonan" name="status_permohonan" type="text" class="col s12 m5"></div>
+							</div>
+                            <div id="change-btn" name="change-btn" class="row">
+                                <div class="col s12 offset-m2 m10">   
+									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="kemaskiniPermohonan(gup('phid'));">Kemaskini</button>
+									&nbsp;&nbsp;  <button id="cancel-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="deleteApplication();">BATAL</button>
+									&nbsp;&nbsp;  <button id="checkin-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="checkin();">CHECK-IN</button>
+								</div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dtBox"></div>
+		<span id="hidden"><input id="stf_username" name="stf_username" type="hidden"></span>
+		
+		
+		    <script>
+            $(document).ready(function(){
+			  		
+					$(".button-collapse").sideNav({edge:'right'});
+					
+					getData();
+					getApprover(getSessionStorage("PEN_BHGN_ID"));
+					getDetailApplicationById (); 
+										
+					var today = new Date();
+
+					$("#dtBox").DateTimePicker({timeFormat:'HH:mm', setButtonContent:'Set', clearButtonContent:'Padam', titleContentTime:'MASA', titleContentDate:'TARIKH', 
+					  minDate: today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()
+					}); //end dateTimePicker()
+
+				   		
+			});  //end document ready state
+			          
+			function getData()
+			{
+			
+				var getFlowID = getSessionStorage("FLOW_ID");
+			    if (getFlowID == 2) 
+					{
+						$("#penyokong").show();$("#status_penyokong").show();$("#catatan_penyokong").show();
+						//alert('pengguna ini ada penyokong'); //ajax response successful alert box shows
+						getSupporter(getSessionStorage("PEN_BHGN_ID"));
+						
+					}
+					else 
+					{
+						$("#penyokong").hide();
+						$("#status_penyokong").hide();
+						$("#catatan_penyokong").hide();
+					} 
+					
+				$('#span_nama').html (getSessionStorage("STF_NAMA"));
+				$('#stf_username').val (getSessionStorage("STF_USERNAME"));
+				//$('#phid').val (getSessionStorage("PH_ID"));
+				$('#bahagian').html (getSessionStorage("BAHAGIAN"));
+										
+			
+				var nicefilename = getSessionStorage("STF_GAMBAR_FILE");
+				//alert(nicefilename);
+				var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
+				$('.profile-background').css('background-image', 'url(' + urlgambar + ')');
+				$('.profile-pic').css('background-image', 'url(' + urlgambar + ')');	
+			}
+			
+		    		    
+			function getSupporter(bhgnid) 
+			{
+         		//alert('start');
+				var TX = Math.random(); 
+		        //start ajax request
+                $.ajax({
+                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						bahagianid: bhgnid
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+                        
+                        //data downloaded so we call parseJSON function and pass downloaded data
+                        //alert(data);
+						var json = $.parseJSON(data);
+						//alert('3='+ json.data);
+						var jsondata = $.parseJSON(json.data);
+						
+						var mytext = '<option value="" selected> Sila Pilih </option>';
+						for(var i =0; i < jsondata.length; i++)		
+						{
+							mytext = mytext + '<option value="' + jsondata[i].STF_ID + '">' + jsondata[i].STF_NAMA + '</option>';
+							
+						}
+												
+						$('#stf_id_penyokong').html(mytext);
+                        $('#stf_id_penyokong').material_select();						
+							
+							
+                    }
+                });
+			
+        }   
+		
+		
+		function getApprover(bhgnid) 
+		{
+         		//alert('start');
+				var TX = Math.random(); 
+		        //start ajax request
+                $.ajax({
+                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						bahagianid: bhgnid
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+                        
+                        //data downloaded so we call parseJSON function and pass downloaded data
+                        //alert(data);
+						var json = $.parseJSON(data);
+						//alert('3='+ json.data);
+						var jsondata = $.parseJSON(json.data);
+						
+						var mytext = '<option value="" selected> Sila Pilih </option>';
+						for(var i =0; i < jsondata.length; i++)		
+						{
+							mytext = mytext + '<option value="' + jsondata[i].STF_ID + '">' + jsondata[i].STF_NAMA + '</option>';
+							
+						}
+												
+						$('#stf_id_pelulus').html(mytext);
+                        $('#stf_id_pelulus').material_select();						
+													
+                    }
+                });
+			
+        }   //end getApprover()
+		
+				
+		function getDetailApplicationById () 
+		{
+         		var TX = Math.random(); 
+				
+				//alert("nilai gup phid = " + gup("phid"));
+                $.ajax({
+                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						id: gup("phid")
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+					    //alert('Success');
+					    var json = $.parseJSON(data);
+						var jsondata = $.parseJSON(json.data);
+						//alert(jsondata);	
+						                        						
+						if (jsondata.length > 0) {
+							var phid=jsondata[0].PH_ID;
+							var nama_penyokong = jsondata[0].STF_NAMA_PENYOKONG;	
+							var nama_pelulus = jsondata[0].STF_NAMA_PELULUS;	
+							var tarikh = jsondata[0].PH_TKH_KELUAR;
+								tarikh = tarikh.replace ("/","-");
+								tarikh = tarikh.replace ("/","-");
+							var sebab = jsondata[0].PH_TUJUAN;
+							var masa_keluar = jsondata[0].PH_MASA_KELUAR;
+							var masa_masuk = jsondata[0].PH_MASA_MASUK;
+							var status_permohonan = jsondata[0].STATUS_PERMOHONAN;
+							var status_id_penyokong = jsondata[0].PH_STATUS_ID_PENYOKONG;
+							var status_id_permohonan = jsondata[0].PH_STATUS_ID_PERMOHONAN;
+							var bf_flow_id = jsondata[0].PH_BF_FLOW_ID;
+							
+							if (bf_flow_id == "1")
+							{
+								if (status_id_permohonan==4){ //belum diluluskan
+									$("#update-btn").show();
+									$("#cancel-btn").show();
+									$("#checkin-btn").hide();
+								}
+								else
+								{
+									$("#update-btn").hide();
+									$("#cancel-btn").show();
+									$("#checkin-btn").show();
+								}
+                         
+							}
+							else // 2level
+							{
+								if (status_id_permohonan==1){ //belum disokongkan
+									//$("#change-btn").show();
+									$("#update-btn").show();
+									$("#cancel-btn").show();
+									$("#checkin-btn").hide();
+								}
+								else
+								{
+									//$("#change-btn").hide();
+									$("#update-btn").hide();
+									$("#cancel-btn").show();
+									$("#checkin-btn").show();
+								}
+							
+							}
+							
+							
+							//control permohonan. Tidak boleh edit apabila diluluskan
+							if (status_id_permohonan==3||status_id_permohonan==4||status_id_permohonan==5||status_id_permohonan==6){
+							   $("#change-btn").hide();
+							}
+                         
+						 $('#nama_penyokong').html(nama_penyokong);
+						 $('#nama_pelulus').html(nama_pelulus);
+						 $('#tkh_keluar').html(tarikh);
+						 $('#masa_keluar').html(masa_keluar);
+						 $('#masa_masuk').html(masa_masuk);
+						 $('#tujuan').html(sebab);
+						 $('#status_permohonan').html(status_permohonan);
+													
+                         }
+					
+					}
+                });
+			
+        }   
+		
+		function kemaskiniPermohonan(phid)
+		{
+				//alert('saya di kemaskiniPermohonan');
+				window.location.href = "kemaskinipermohonan.html?phid=" + phid;
+		} 
+		
+		function checkin(){
+		//cke API check-in
+		window.location.href = "checkin.html";
+		}
+          
+        </script>
+
+ 
+    </body>
+</html>

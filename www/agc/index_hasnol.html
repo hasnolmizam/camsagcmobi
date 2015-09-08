@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title>AGC CAMS</title>
+        <link rel="stylesheet" href="materialize/css/materialize.min.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/custom.css" >
+		<script src='js/jquery2.1.0.min.js'></script>
+        <script src="js/custom.js"></script>
+        <script src="materialize/js/materialize.min.js"></script>
+	
+	</head>
+
+	<body class="login">
+	<span id="results"></span>
+        <div class="row">
+            <form class="col s12" action="dashboard.html">
+              <div class="row">
+                <div class="col offset-s1 s10 offset-m3 m6 offset-l4 l4 center-align">
+                    <img class="login_logo" src="img/logo.svg">
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col offset-s1 s10 offset-m3 m6 offset-l4 l4">
+                  <input id="id_pengguna" type="text" value="adlina">
+                  <label for="id_pengguna">ID Pengguna</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col offset-s1 s10 offset-m3 m6 offset-l4 l4">
+                  <input id="kata_laluan" type="text" value="123">
+                  <label for="kata_laluan">Katalaluan</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col offset-s1 s10 offset-m3 m6 offset-l4 l4">
+                  <a class="waves-effect waves-light btn-large deep-purple darken-1 fullwidth" onclick="checklogin()">LOG MASUK</a>
+                </div>
+              </div>
+              <!--
+              <div class="row lupaKatalaluan">
+                <div class="col offset-s1 s10 offset-m3 m6 offset-l4 l4 center-align">
+                  <a onclick="lupaKatalaluan()" style="color: #E276F5;">Lupa Katalaluan</a>
+                </div>
+              </div>
+              -->
+            </form>
+        </div>
+        
+        <div id="modal1" class="modal">
+            <div class="modal-content center-align red-text text-darken-4">
+                Salah Password
+            </div>
+        </div>
+
+    
+
+    <script>
+
+        //When DOM loaded we attach click event to button
+        $(document).ready(function() {
+            
+          });
+        function checkAuth(uname, pass) 
+		{
+		$.ajax({
+		        dataType: "json",
+				type: "POST",
+				url: "http://10.17.14.210/cams/api_generator.php?api_name=check_ad_authentication",
+				data: 
+					{   
+						username  : uname,  
+						password :  pass 
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+					success: function(data) {
+                        
+                        //data downloaded so we call parseJSON function and pass downloaded data
+						//alert(data);
+                        var json = $.parseJSON(data);
+						
+						//alert("2");
+						var jsondata = $.parseJSON(json.data);
+						//alert(jsondata);						
+						
+						if (jsondata.length > 0)
+						{
+							
+							
+							var getStafID = jsondata[0].STF_ID;
+							//alert(getStafID);
+						
+							var getStafName=jsondata[0].STF_NAMA;
+							alert(getStafName);
+						
+							
+							//terus registerGCM disini..
+							//=========================
+								
+								
+								
+								
+								
+							//============================	
+							
+							//window.sessionStorage.setItem("info", JSON.stringify(details[1]));
+							window.sessionStorage.setItem("info", data);
+							window.location.href = "dashboard.html";
+						}
+						
+
+                    }
+					
+                });
+            }
+        
+		function checklogin() {
+				//alert('Semak ID');
+                if(
+				  $('#id_pengguna').val()=="" || $('#kata_laluan').val()=="" ) {
+                  $('#modal1').openModal();
+				 				
+                }
+                else {
+				    
+				    //alert('ID dan kata laluan tidak sah.');
+                    var uname = $('#id_pengguna').val();
+					var pass = $('#kata_laluan').val();
+					checkAuth(uname,pass);
+					
+					
+					
+                }
+            }
+		
+		
+    </script>
+
+</body>
+</html>

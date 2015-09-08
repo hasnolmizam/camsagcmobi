@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title>AGC CAMS</title>
+        <link rel="stylesheet" href="materialize/css/materialize.min.css" />
+		<!-- 
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+         -->
+         <link rel="stylesheet" href="css/custom.css" >
+		<script src='js/jquery2.1.0.min.js'></script>
+        <script src="js/custom.js"></script>
+        <script src="materialize/js/materialize.min.js"></script>
+	
+	</head>
+
+	<body class="login">
+	
+	<script src="../cordova.js"></script>
+	
+	<span id="results"></span>
+        <div class="row">
+            <form class="col s12" action="dashboard.html">
+              <div class="row">
+                <div class="col offset-s1 s10 offset-m3 m6 offset-l4 l4 center-align">
+                    <img class="login_logo" src="img/logo.svg">
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col offset-s1 s10 offset-m3 m6 offset-l4 l4">
+                  <input id="id_pengguna" type="text" value="adlina">
+                  <label for="id_pengguna">ID Pengguna</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col offset-s1 s10 offset-m3 m6 offset-l4 l4">
+                  <input id="kata_laluan" type="text" value="123">
+                  <label for="kata_laluan">Katalaluan</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col offset-s1 s10 offset-m3 m6 offset-l4 l4">
+                  <a class="waves-effect waves-light btn-large deep-purple darken-1 fullwidth" onclick="checklogin()">LOG MASUK</a>
+                </div>
+              </div>
+              <!--
+              <div class="row lupaKatalaluan">
+                <div class="col offset-s1 s10 offset-m3 m6 offset-l4 l4 center-align">
+                  <a onclick="lupaKatalaluan()" style="color: #E276F5;">Lupa Katalaluan</a>
+                </div>
+              </div>
+              -->
+            </form>
+        </div>
+        
+        <div id="modal1" class="modal">
+            <div class="modal-content center-align red-text text-darken-4">
+                Salah Password
+            </div>
+        </div>
+
+    <script src="js/cams_script.js"></script>
+    
+
+    <script>
+
+        //When DOM loaded we attach click event to button
+        $(document).ready(function() {
+				  
+        		//alert('document saya dah ready di browser');
+		      	  if (navigator.notification) { // Override default HTML alert with native dialog
+		    	      
+		      	      //alert('guna navigator.notification');
+		      		  window.alert = function (message) {
+		    	          navigator.notification.alert(
+		    	              message,    // message
+		    	              null,       // callback
+		    	              "CAMS-AGC", // title
+		    	              'OK'        // buttonName
+		    	          );
+		    	      };
+		    	  }
+		      	 
+          });
+        
+        
+        document.addEventListener('deviceready', function () {
+        	
+        	
+        	  if (navigator.notification) { // Override default HTML alert with native dialog
+        	      window.alert = function (message) {
+        	          navigator.notification.alert(
+        	              message,    // message
+        	              null,       // callback
+        	              "CAMS-AGC", // title
+        	              'OK'        // buttonName
+        	          );
+        	      };
+        	  }
+        	}, false);
+        	
+        
+        
+        
+        function checkAuth(uname, pass) 
+		{
+        	/*
+        	alert("calling checkAuth");
+        		  
+        	cordova.plugins.pDialog.init({
+        	    theme : 'HOLO_LIGHT',
+        	    progressStyle : 'SPINNER',
+        	    cancelable : true,
+        	    title : 'CAMS-AGC',
+        	    message : 'Sila Tunggu...'
+        	});
+        	*/
+        	
+        	loading("Sila Tunggu...");
+        	
+        	//navigator.notification.activityStart("Your message....", "loading");
+        	
+			var TX = Math.random(); 
+			$.ajax({
+		        dataType: "json",
+				type: "POST",
+				url: GLOBAL_IP + "/api_generator.php?api_name=check_ad_authentication",
+				
+				data: 
+					{   
+						TX :  TX,
+						username  : uname,  
+						password :  pass 
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						unloading();
+						alert('connection error ' + textStatus +  errorThrown ); 
+						return false;
+					},
+					success: function(data) {
+						//cordova.plugins.pDialog.dismiss();
+						//navigator.notification.activityStop();
+                        unloading();
+                        
+                        //data downloaded so we call parseJSON function and pass downloaded data
+						//alert(data);
+                        var json = $.parseJSON(data);
+						
+						//alert("2");
+						var jsondata = $.parseJSON(json.data);
+						//alert(jsondata);						
+						
+						if (jsondata.length > 0)
+						{
+							
+							
+							var getStafID = jsondata[0].STF_ID;
+							//alert(getStafID);
+						
+							var getStafName=jsondata[0].STF_NAMA;
+							//alert(getStafName);
+						
+							window.sessionStorage.setItem("info", data);
+							
+							
+							registerGCM(uname);							
+							
+							
+							window.location.href = "dashboard.html";
+						}
+						
+
+                    }
+					
+                });
+            }
+        
+        
+        function registerGCM(uname)
+        {
+        	
+        	var version= gup("versionName");
+			var regid = "" + gup("regid");
+        	
+			//alert("uname=" + uname + " | " + "version=" + version + " | regid=" + regid);
+			
+			if (regid != "")
+				{
+					var TX = Math.random(); 
+					
+					//loading .show();
+					
+					$.ajax({
+				        dataType: "json",
+						type: "POST",
+						url: GLOBAL_IP + "/api_generator.php?api_name=registerGCM",
+						
+						data: 
+							{   
+								TX :  TX,
+								regid  : regid,
+								uname :  uname,
+								version :  version
+							},
+							cache: false,
+							timeout: 30 * 1000,
+							error: function(xhr, textStatus, errorThrown){
+								alert('connection error ' + textStatus + ' ' + errorThrown ); 
+								
+								return false;
+							},
+							success: function(data) {
+								//ok
+								//loading .hide();
+		                    }
+							
+		                });		
+				
+				}
+	
+			
+        }
+        
+        
+		function checklogin() {
+				//alert('Semak ID');
+                if(
+				  $('#id_pengguna').val()=="" || $('#kata_laluan').val()=="" ) {
+                  $('#modal1').openModal();
+				 				
+                }
+                else {
+				    
+				    //alert('ID dan kata laluan tidak sah.');
+                    var uname = $('#id_pengguna').val();
+					var pass = $('#kata_laluan').val();
+					checkAuth(uname,pass);
+					
+                }
+            }
+		
+		
+    </script>
+
+</body>
+</html>

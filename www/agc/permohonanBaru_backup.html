@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title>AGC CAMS</title>
+        <link rel="stylesheet" href="materialize/css/materialize.min.css" />
+        <link rel="stylesheet" href="css/DateTimePicker.css" >
+        <link rel="stylesheet" href="css/custom.css" >
+		<script src='js/jquery2.1.0.min.js'></script>
+        <script src="js/DateTimePicker.js"></script>
+        <script src="js/custom.js"></script>
+        <script src="materialize/js/materialize.min.js"></script>
+    </head>
+
+    <body>
+        <div class="navbar-fixed">
+            <nav class="deep-purple darken-1">
+                <div class="nav-wrapper">
+                    <div class="input-field">
+                        <a href="" onclick="backPage()"><i class="mdi-navigation-chevron-left myBack"></i></a>
+                        <img class="nav-logo" src="img/nav-logo.svg">
+                        <label>Permohonan Baru</label>
+                    </div>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="mdi-navigation-menu"></i></a>
+                    <ul class="side-nav" id="mobile-demo">
+                        <li class="profile-container"><div class="profile-background"></div><span class="profile-pic"></span>
+						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
+                        <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
+                        <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
+                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                    </ul>
+                    <ul class="side-nav hide-on-med-and-down tablet-nav">
+                        <li class="profile-container"><div class="profile-background"></div><span class="profile-pic"></span>
+						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
+                        <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
+                        <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
+                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="myContainer">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card-panel myTitle">Permohonan Kebenaran Meninggalkan Pejabat Dalam Waktu Bekerja di Bawah Perintah AM 5 BAB G</div>
+                    <div class="card-panel">
+                        <form action="#">
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Bahagian</div>
+                                <div class="col s12 m5">IT</div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Penyelia</div>
+                                <div class="col s12 m5">
+                                    <select id="DL_Penyelia"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Tujuan</div>
+                                <div class="col s12 m10"><textarea class="materialize-textarea"></textarea></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Tarikh</div>
+                                <div class="col s12 m5"><input type="text" data-field="date" readonly></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Masa Keluar</div>
+                                <div class="col s12 m5"><input name="timeexit" type="text" data-field="time" readonly></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Masa Masuk</div>
+                                <div class="col s12 m5"><input name="timereturn" type="text" data-field="time" readonly></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Lampiran</div>
+                                <div class="col s12 m5 file-field">
+                                    <input class="file-path" type="text" disabled/>
+                                    <div class="btn waves-effect waves-light deep-purple darken-1">
+                                        <span><i class="mdi-editor-attach-file"></i></span>
+                                        <input type="file" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 offset-m2 m10"><button class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="submit" name="action">Hantar</button></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dtBox"></div>
+
+        <script>
+            $(document).ready(function(){
+			  			
+                $(".button-collapse").sideNav({edge:'right'});
+                
+                var today = new Date();
+
+                $("#dtBox").DateTimePicker({timeFormat:'hh:mm AA', setButtonContent:'Set', clearButtonContent:'Padam', titleContentTime:'MASA', titleContentDate:'TARIKH', minDate: today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()
+
+				});
+
+				    $("form").submit(function(){
+						alert("Permohonan dihantar.");
+						});
+                
+				     getPenyelia();
+				
+				//start JSON part
+				var info = window.sessionStorage.getItem("info");
+                var json = $.parseJSON(info);
+			    var jsondata = $.parseJSON(json.data);
+			    //alert(jsondata);
+						if (jsondata.length > 0)
+						{					
+							
+							var getStafID = jsondata[0].STF_ID;
+							//alert(getStafID);
+						    var getStafName=jsondata[0].STF_NAMA;
+							//alert(getStafName);
+							$('#span_nama').html (getStafName);
+							
+							var STF_GAMBAR_FILE = "defaultFEMALE.jpg";
+							if (jsondata[0].STF_GAMBAR_FILE != "")
+							{
+								STF_GAMBAR_FILE = jsondata[0].STF_GAMBAR_FILE;
+								
+							}
+							var nicefilename=encodeURIComponent(jsondata[0].STF_GAMBAR_FILE); 
+							//baca semua string termasuk space character contoh mohd hanafi.png akan dibaca
+							//mohd%20hanafi.png
+						    var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
+							$('.profile-background').css('background-image', 'url(' + urlgambar + ')');
+							$('.profile-pic').css('background-image', 'url(' + urlgambar + ')');
+						
+						}
+				
+				
+				//end JSON part
+
+
+			});
+
+               function getPenyelia() {
+                //Assuming this is an ajax call result
+                $('#DL_Penyelia').html(
+                    '<option value="" selected>Sila Pilih</option>' +
+                    '<option value="1">HASNOL MIZAM BIN HASHIM</option>' +
+                    '<option value="2">NORULHAIDAH AB RAHMAN</option>' +
+                    '<option value="3">ISKANDAR SHAH SULAIMAN</option>'
+                );
+
+
+                //You must initialize the select element as shown below. In addition, you will need a separate call for any dynamically generated select elements your page generates.
+                $('#DL_Penyelia').material_select();
+            }
+        </script>
+    </body>
+</html>

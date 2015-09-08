@@ -1,0 +1,387 @@
+/* --------------------------------------------------------------------- General 4 */
+html, body {
+    height: 100%;
+    background-color: #E5E5E5;
+}
+.row:last-of-type {
+    margin-bottom: 0;
+}
+.nav-logo {
+    margin: 0 10px;
+}
+.myBack {
+    float: left;
+    margin-left: 1px;
+    margin-right: -5px;
+}
+nav .input-field {
+    float: left;
+    width: 85%;
+}
+nav .button-collapse {
+    margin-right: 6px;
+}
+nav .input-field label {
+    color: white;
+    font-weight: bold;
+    left: 40px;
+}
+nav .input-field a ~ label {
+    left: 68px;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+    color: #7C4DFF;
+}
+input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #7C4DFF;
+    box-shadow: none;
+}
+.file-field .btn, .file-field .btn-large {
+    left: 11px;
+}
+input[type=text]:disabled {
+    border-bottom: 1px solid #C8C8C8;
+}
+.side-nav li {
+    padding: 0 !important;
+}
+.profile-container {
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+    width: 240px;
+}
+.profile-background {
+    background-size: 100% auto;
+    height: 300px;
+    margin: -115px 0 0 -30px;
+    width: 400px;
+    position: relative;
+}
+.profile-background:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: #464154;
+    opacity: 0.8;
+    position: absolute;
+}
+.profile-pic {
+    background-position: center center;
+    background-size: auto 70px;
+    border: 2px solid white;
+    border-radius: 50%;
+    display: inline-block;
+    height: 70px;
+    left: 15px;
+    position: absolute;
+    top: calc(50% - 35px);
+    width: 70px;
+}
+.profile-name {
+    font-size: 20px;
+    font-weight: 300;
+    left: 95px;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 20px;
+    position: absolute;
+}
+.side-nav, .side-nav a {
+    background-color: #353740;
+    border-bottom: 1px solid #62656E;
+    color: white;
+}
+.side-nav li:last-child a {
+    color: #FF5252;
+}
+.fullwidth {
+    width: 100%;
+}
+
+/* --------------------------------------------------------------------- Login */
+.login {
+    background: url('../img/background.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    overflow: hidden;
+}
+.login form {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+}
+.login input+label {
+    width: calc(100% - 20px);
+    text-align: center;
+    color: white;
+}
+.login input[type=text], .login input[type=text]:focus {
+    border-bottom: 1px solid #B39DDB;
+    box-shadow: none;
+}
+.login input[type=text]:focus + label {
+    color: #B39DDB;
+}
+.login_logo {
+    margin-bottom: 30px;
+}
+.login_logo {
+    height: 160px;
+}
+.input-field label.active {
+    color: #B39DDB;
+}
+
+/* --------------------------------------------------------------------- Dashboard */
+.tablet-nav {
+    left: 0;
+    top: 64px;
+}
+.myContainer{
+    float: right;
+    width: calc(100% - 0px);
+    margin: 2px 0px 0 0;
+}
+.myInputAlign {
+    margin-top: 11px;
+}
+.myTitle {
+    background-color: #5E35B1;
+    color: white;
+    margin-bottom: -7px;
+    font-size: 1.64rem;
+}
+.mycard-content {
+    padding: 15px;
+    line-height: 0;
+}
+.mycard-content .btn-floating {
+    margin-top: -50px;
+}
+.myListHeader {
+    position: relative;
+    height: 70px;
+    padding: 15px;
+    text-align: right;
+    font-weight: bold;
+    border-radius: 2px 2px 0 0;
+    background-color: #5E35B1;
+}
+.myListHeader > a {
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+.myListHeader > img {
+    position: absolute;    
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+.myListHeader > .myListTitle {
+    position: absolute;
+    top: 13px;
+    left: 69px;
+    color: white;
+}
+.myListHeader > .close {
+    position: absolute;
+    right: 6px;
+    top: 3px;
+    color: white;
+}
+.myList li {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    padding: 20px 0;
+    border-bottom: 1px solid #ECE4F9;
+}
+.myList li .mdi-action-done, .myList li .mdi-action-done-all {
+    margin-right: 5px;
+}
+#modalList {
+    background-color: transparent;
+    max-height: none;
+    padding: 0 10px;
+    top: 58px !important;
+}
+[class^=badge]:not(.badge-container) {
+    display: inline-block;
+    width: 20px;
+    height: 15px;
+    border-radius: 4px;
+    line-height: 15px;
+    font-size: 10px;
+    color: white;
+    margin-right: 4px;
+    text-align: center;
+}
+.badge-inprocess {
+    background-color: #E5E5E5;
+    color: black !important;
+}
+.badge-approaved {
+    background-color: #3498DB;
+}
+.badge-rejected {
+    background-color: #E74C3C;
+}
+.badge-container {
+    position: absolute;
+    top: 34px;
+    left: 69px;
+    height: 25px;
+}
+.myListScroller {
+    overflow: scroll;
+    width: 100%;
+    padding: 0 20px;
+    background-color: white;
+}
+.myListContainer  .card-panel {
+    margin-bottom: 0;
+    padding: 0;
+}
+.fixed-action-btn {
+    bottom: 45px;
+    right: 25px;
+}
+.myListContainerSmall {
+    width: calc(100% - 20px);
+    position: absolute;
+    z-index: 10;
+    top: 100%;
+    left: 10px;
+    transform: translate3D(0,0,0);
+    transition: all .5s ease-in-out;
+}
+.myListContainerSmall.expand {
+    top: 58px;
+}
+.myListContainerSmall > .card-panel {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.tabs .indicator {
+    background-color: #5E35B1;
+}
+[type="radio"]+label:before, [type="radio"]+label:after {
+    left: -3px;
+}
+.tabs .tab a {
+    color: #5E35B1;
+}
+.tabs .tab a:hover {
+    color: #AF8DF4;
+}
+input[type=radio] + label {
+    color: black;
+}
+textarea.materialize-textarea {
+    padding-top: 0;
+}
+
+/* --------------------------------------------------------------------- Widget */
+.picker__date-display,
+.picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected
+ {
+    background-color: #7C4DFF;
+}
+.picker__weekday-display {
+    background-color: #6443BD;
+}
+.picker__close, .picker__today,
+.picker__day.picker__day--today {
+    color: #7C4DFF;
+    font-weight: bold;
+}
+.dtpicker-header .dtpicker-value {
+    font-size: 1.64rem;
+    background-color: #5E35B1;
+    color: white;
+    text-transform: uppercase;
+    padding: 20px;
+}
+.dtpicker-header .dtpicker-title,
+.dtpicker-components .dtpicker-comp > *,
+.dtpicker-components .dtpicker-comp > *:hover {
+    color: black;
+}
+.dtpicker-title {
+    padding: 10px;
+}
+.dtpicker-header .dtpicker-close {
+    color: #B71C1C;
+}
+
+/* --------------------------------------------------------------------- tablet10 and bigger */
+@media only screen and (min-device-width: 1280px) {
+    .myContainer {
+        width: calc(100% - 280px);
+        margin: 20px 20px 0 0;
+    }
+}
+
+/* --------------------------------------------------------------------- tablet7 */
+@media only screen and (min-device-width: 960px) and (max-device-width: 1279px) {
+    .myContainer{
+        width: calc(100% - 20px);
+        margin: 14px 10px 0 0;
+    }
+}
+
+/* --------------------------------------------------------------------- tablet7 and bigger */
+@media only screen and (min-device-width: 960px) {
+    .nav-logo {
+        margin: 4px 10px;
+    }
+}
+
+/* --------------------------------------------------------------------- smaller than tablet7 */
+@media only screen and (max-device-width: 959px) {
+    .myTitle {
+        font-size: 1.2rem;
+    }
+    .label-on-small-only {
+        font-size: 0.8rem;
+        color: #9E9E9E;
+    }
+    .file-field {
+        margin-top: 14px;
+    }
+}
+
+/* --------------------------------------------------------------------- iPhone 4 & 5 */
+@media only screen and (max-device-width: 359px) {
+    .login_logo {
+        height: 120px;
+        margin-bottom: 10px;
+    }
+    .row {
+        margin-bottom: 0;
+    }
+    .lupaKatalaluan {
+        margin-top: 10px;
+    }
+    .card .card-image img {
+        height: 88px;
+    }
+    .tabs .tab a {
+        font-size: 12px;
+    }
+}
+
+/* --------------------------------------------------------------------- iPhone 5 only */
+@media only screen and (device-width: 320px) and (device-height: 568px) {
+    .card .card-image img {
+        height: 117px;
+    }
+}

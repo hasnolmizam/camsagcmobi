@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title>AGC CAMS</title>
+        <link rel="stylesheet" href="materialize/css/materialize.min.css" />
+        <link rel="stylesheet" href="css/DateTimePicker.css" >
+        <link rel="stylesheet" href="css/custom.css" >
+		<script src='js/jquery2.1.0.min.js'></script>
+        <script src="js/DateTimePicker.js"></script>
+        <script src="js/custom.js"></script>
+        <script src="materialize/js/materialize.min.js"></script>
+		<script src="js/cams_script.js"></script>
+		
+		
+    </head>
+
+    <body>
+        <div class="navbar-fixed">
+            <nav class="deep-purple darken-1">
+                <div class="nav-wrapper">
+                    <div class="input-field">
+                        <a href="" onclick="backPage()"><i class="mdi-navigation-chevron-left myBack"></i></a>
+                        <img class="nav-logo" src="img/nav-logo.svg">
+                        <label>Kemaskini Permohonan</label>
+                    </div>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="mdi-navigation-menu"></i></a>
+                    <ul class="side-nav" id="mobile-demo">
+                        <li class="profile-container"><div class="profile-background"></div><span class="profile-pic"></span>
+						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
+                        <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
+                        <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
+                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                    </ul>
+                    <ul class="side-nav hide-on-med-and-down tablet-nav">
+                        <li class="profile-container"><div class="profile-background"></div><span class="profile-pic"></span>
+						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
+                        <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
+                        <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
+                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="myContainer">
+            <div class="row">
+                <div class="col s12">
+                    <div class="card-panel myTitle">Permohonan Kebenaran Meninggalkan Pejabat Dalam Waktu Bekerja di Bawah Perintah AM 5 BAB G</div>
+                    <div class="card-panel">
+                        <form id="camsform" name="camsform" action="#">
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Bahagian</div>
+                                <div id="bahagian" name="bahagian" class="col s12 m5"></div>
+                            </div>
+                            <div id="penyokong" name="penyokong" class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Penyokong</div>
+                                <div class="col s12 m5">
+                                    <select id="stf_id_penyokong" name="stf_id_penyokong"></select>
+                                </div>
+                            </div>
+							<div id="pelulus" name="pelulus" class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Pelulus</div>
+                                <div class="col s12 m5">
+                                    <select id="stf_id_pelulus" name="stf_id_pelulus"></select>
+                                </div>
+                            </div>   
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Tujuan</div>
+                                <div class="col s12 m10"><textarea id="tujuan" name="tujuan" class="materialize-textarea"></textarea></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Tarikh</div>
+                                <div class="col s12 m5"><input id="tkh_keluar" name="tkh_keluar" type="text" data-field="date" required></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Masa Keluar</div>
+                                <div class="col s12 m5"><input id="masa_keluar" name="masa_keluar" type="text" data-field="time" required></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Masa Masuk</div>
+                                <div class="col s12 m5"><input id="masa_masuk" name="masa_masuk" type="text" data-field="time" required></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only myInputAlign">Lampiran</div>
+                                <div class="col s12 m5 file-field">
+                                    <input class="file-path" type="text" disabled/>
+                                    <div class="btn waves-effect waves-light deep-purple darken-1">
+                                        <span><i class="mdi-editor-attach-file"></i></span>
+                                        <input type="file" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 offset-m2 m10">
+									<button class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplication();">KEMASKINI</button></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dtBox"></div>
+		<span id="hidden"><input id="stf_username" name="stf_username" type="hidden"></span>
+		
+		    <script>
+            $(document).ready(function(){
+			  		
+					$(".button-collapse").sideNav({edge:'right'});
+					
+					getData();
+					getApprover(getSessionStorage("PEN_BHGN_ID"));
+					//getDetailApplicationById();			
+							
+					var today = new Date();
+
+					$("#dtBox").DateTimePicker({timeFormat:'HH:mm', setButtonContent:'Set', clearButtonContent:'Padam', titleContentTime:'MASA', titleContentDate:'TARIKH', 
+					  minDate: today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear()
+					}); //end dateTimePicker()
+
+				   		
+			});  //end document ready state
+			          
+			
+
+
+			function getData()
+			{
+			
+				var getFlowID = getSessionStorage("FLOW_ID");
+			    if (getFlowID == 2) 
+					{
+						$("#penyokong").show();
+						//alert('pengguna ini ada penyokong'); //ajax response successful alert box shows
+						getSupporter(getSessionStorage("PEN_BHGN_ID"));
+						
+					}
+					else 
+					{
+						$("#penyokong").hide();
+					} 
+					
+				$('#span_nama').html (getSessionStorage("STF_NAMA"));
+				$('#stf_username').val (getSessionStorage("STF_USERNAME"));
+				$('#bahagian').html (getSessionStorage("BAHAGIAN"));
+										
+			
+				var nicefilename = getSessionStorage("STF_GAMBAR_FILE");
+				//alert(nicefilename);
+				var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
+				$('.profile-background').css('background-image', 'url(' + urlgambar + ')');
+				$('.profile-pic').css('background-image', 'url(' + urlgambar + ')');	
+			}
+			
+		    		    
+			function getSupporter(bhgnid) 
+			{
+         		//alert('start');
+				var TX = Math.random(); 
+		        //start ajax request
+                $.ajax({
+                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						
+						bahagianid: bhgnid
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+                        
+                        //data downloaded so we call parseJSON function and pass downloaded data
+                        //alert(data);
+						var json = $.parseJSON(data);
+						//alert('3='+ json.data);
+						var jsondata = $.parseJSON(json.data);
+						var mytext = '<option value="" selected> Sila Pilih </option>';
+						for(var i =0; i < jsondata.length; i++)		
+						{
+							mytext = mytext + '<option value="' + jsondata[i].STF_ID + '">' + jsondata[i].STF_NAMA + '</option>';
+							
+						}
+												
+						$('#stf_id_penyokong').html(mytext);
+                        $('#stf_id_penyokong').material_select();						
+							
+							
+                    }
+                });
+			
+        }   
+		
+		
+		function getApprover(bhgnid) 
+		{
+         		//alert('start');
+				var TX = Math.random(); 
+		        //start ajax request
+                $.ajax({
+                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						
+						bahagianid: bhgnid
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+                        
+                        //data downloaded so we call parseJSON function and pass downloaded data
+                        //alert(data);
+						var json = $.parseJSON(data);
+						//alert('3='+ json.data);
+						var jsondata = $.parseJSON(json.data);
+                        
+						var mytext = '<option value="" selected> Sila Pilih </option>';
+						for(var i =0; i < jsondata.length; i++)		
+						{
+							mytext = mytext + '<option value="' + jsondata[i].STF_ID + '">' + jsondata[i].STF_NAMA + '</option>';
+							
+						}
+						$('#stf_id_pelulus').html(mytext);
+                        $('#stf_id_pelulus').material_select();		
+						getDetailApplicationById();
+													
+                    }
+                });
+			
+        }   //end getApprover()
+		
+		
+		
+		function updateApplication () 
+		{
+         		
+				var TX = Math.random(); 
+				
+                $.ajax({
+                    url: "http://10.17.14.210/cams/api_generator.php?api_name=update_application_by_applicant&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						
+						ph_id: gup("phid"),
+						stf_id_penyokong: $('#stf_id_penyokong').val(),
+						stf_id_pelulus: $('#stf_id_pelulus').val(),
+						tkh_keluar: $('#tkh_keluar').val(),
+						masa_keluar: $('#masa_keluar').val(),
+						masa_masuk: $('#masa_masuk').val(),
+						tujuan: $('#tujuan').val()
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+                        
+                        alert('Permohonan telah dikemaskini.');	
+						window.location.href = "dashboard.html";
+													
+                    }
+                });
+			
+        }   //end submitApplication()
+		
+		
+		function getDetailApplicationById() 
+		{
+         		var TX = Math.random(); 
+				
+                $.ajax({
+                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+					 id: gup("phid")
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+					    //alert('Success');
+					    var json = $.parseJSON(data);
+						var jsondata = $.parseJSON(json.data);
+                         //alert('Penyokong:'+nama_penyokong);						
+						if (jsondata.length > 0) {
+							
+								var phid=jsondata[0].PH_ID;
+								var nama_penyokong = jsondata[0].STF_NAMA_PENYOKONG;	
+								var nama_pelulus = jsondata[0].STF_NAMA_PELULUS;
+								var stf_id_penyokong = jsondata[0].PH_STF_ID_PENYOKONG;								
+								var stf_id_pelulus = jsondata[0].PH_STF_ID_PELULUS;	
+								var tarikh = jsondata[0].PH_TKH_KELUAR;
+								tarikh = tarikh.replace ("/","-");
+								tarikh = tarikh.replace ("/","-");
+								
+								var sebab = jsondata[0].PH_TUJUAN;
+								var masa_keluar = jsondata[0].PH_MASA_KELUAR;
+								var masa_masuk = jsondata[0].PH_MASA_MASUK;
+								
+								 //algorithm to display details
+								 if (stf_id_penyokong != ""){
+									$('#stf_id_penyokong').val(stf_id_penyokong);
+									$('#stf_id_penyokong').material_select();
+								 }
+								 
+								 //alert('nama_pelulus=' + nama_pelulus);
+								 if (stf_id_pelulus != ""){
+									$('#stf_id_pelulus').val(stf_id_pelulus);
+									$('#stf_id_pelulus').material_select();
+								 }
+								 
+								 $('#tkh_keluar').val(tarikh);
+								 $('#masa_keluar').val(masa_keluar);
+								 $('#masa_masuk').val(masa_masuk);
+								 $('#tujuan').html(sebab);
+															
+                         }
+					
+					}
+                });
+			
+        }
+          
+        </script>
+
+ 
+    </body>
+</html>

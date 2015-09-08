@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" android:background="@drawable/birthdayback4"
+    android:padding="10dp" >
+
+
+    <ImageView android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:paddingTop="0dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:textColor="#000000"
+        android:typeface="sans"
+	        android:ellipsize="end"
+	        android:lines="3"
+        android:textSize="13sp"
+        android:textStyle="normal"/>
+ 
+    <!--  android:singleLine="true" -->
+    <!-- Artist Name -->
+    <!--  <TextView
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:textColor="#343434"
+        android:textSize="15sp"
+        android:layout_marginTop="1dip"
+        android:layout_marginLeft="4dip"
+        android:layout_marginRight="50dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="" />
+ 	-->
+    
+
+   <LinearLayout android:id="@+id/durationlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:padding="1dp"
+        android:layout_marginRight="0dip">
+	<!--  android:background="#000000" -->
+        
+	    <TextView
+	        android:id="@+id/masa"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignTop="@id/title"
+	        android:gravity="right"
+	        android:text=""
+	        android:layout_marginRight="0dip"
+	        android:textSize="15sp"
+	        android:paddingTop="5dp"
+	        android:paddingBottom="5dp"
+	        android:paddingLeft="10dp"
+	        android:paddingRight="10dp"
+	        android:textColor="#bc0006"
+	        android:textStyle="bold"/>
+        <!--  android:background="#ffffff" -->
+    </LinearLayout>
+ 
+
+</RelativeLayout>
