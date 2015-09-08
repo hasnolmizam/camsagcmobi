@@ -49,7 +49,7 @@
     </feature>
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <allow-intent href="market:*" />
-    <name>camsagc</name>
+    <name>camsagcmobi</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
