@@ -90,8 +90,10 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        //pecahkan message utk dapatkan accountid..
     	        String accountid = "";
     	        String contactinteractionid = "";
+    	        String phid = "";
     	        //String XArray = 
     	        
+    	        /*
     	        int i = message.indexOf("#");
     	        if (i >= 0)
     	        {
@@ -121,10 +123,35 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        	//}
 					//Toast.makeText(this, "XArray.XArray.contactinteractionid=" + contactinteractionid, Toast.LENGTH_LONG).show();
     	        }
+    	        */
+    	        
+    	        String SHOWLOKASI = "N";
+    	        int i = message.indexOf("PEMBERITAHUAN LOKASI");
+    	        if (i >= 0)
+    	        {
+    	        	SHOWLOKASI = "Y";
+    	        
+    	        	String XArray[] = message.split("#");
+    	        	phid = XArray[0];
+    	        	message= XArray[1];
+    	        
+    	        }
     	        
     	        
     	        displayMessage(context, message);
     	        // notifies user
+    	        
+    	        if (SHOWLOKASI.equals("Y"))
+    	        {
+    	        	generateNotificationCustomLayoutAGC(context, message, phid);
+    	        }
+    	        else
+    	        {
+    	        	generateNotificationCustomLayout(context, message, accountid);
+    	        }
+    	        
+    	        /*
+    	        
     	        //generateNotification(context, message);
     	        if (contactinteractionid.equals("") || contactinteractionid.equals("null"))
     	        {
@@ -134,6 +161,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        {
     	        	generateNotificationCustomLayout2(context, message, accountid, contactinteractionid);
         	    }
+        	    */
     		}
     	}
 
@@ -250,6 +278,120 @@ public class GCMIntentService extends GCMBaseIntentService  {
         mNotificationManager.notify(6, notification);       
     }
     */
+    
+
+    
+    private void generateNotificationCustomLayoutAGC (Context context, String message, String phid) {
+    	
+    	
+		//SharedPreferences settingsS = getSharedPreferences("CAMSAGC", 0);
+		//SharedPreferences.Editor editor = settingsS.edit();
+		//editor.putString("CAMSAGC_GCM_OPEN_ACCOUNTID", accountid); 
+		//editor.commit();
+
+		
+		//SharedPreferences settingsSq = getSharedPreferences("CAMSAGC", 0);
+		//String XXX = settingsSq.getString("CAMSAGC_GCM_OPEN_ACCOUNTID", "TTTTT"); 
+		
+		//alert.showAlertDialog(this, "CAMSAGC_GCM_OPEN_ACCOUNTID", accountid, false);
+		//Toast.makeText(this, 
+		//		"CAMSAGC_GCM_OPEN_ACCOUNTID=" + accountid, Toast.LENGTH_LONG).show();
+
+		
+       	String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
+        
+        
+        //int icon = R.drawable.komlogoborder;
+        int icon = R.drawable.mdeccrm3;
+        
+        //CharSequence tickerText = "Happy Birthday!";
+        long when = System.currentTimeMillis();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        Date date = new Date();
+        String masaSekarang = "" + dateFormat.format(date);
+
+        Notification notification = new Notification(icon, message, when);
+        
+        
+        
+				        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_notification);
+				    	//contentView.setImageViewResource(R.id.image, R.drawable.komlogopng);
+				        //contentView.setImageViewResource(R.id.image, R.drawable.komlogopng);
+				        contentView.setImageViewResource(R.id.image, R.drawable.mdeccrm3);
+				    	
+				        
+				    	contentView.setTextViewText(R.id.title, "" + message);
+				    	//contentView.setTextViewText(R.id.text, "TX:" + message);
+				    	contentView.setTextViewText(R.id.masa, "" + masaSekarang);
+				    	
+				    	notification.contentView = contentView;    	
+				
+				    	Intent notificationIntent = new Intent(context, ShowLocationActivity.class);
+				    	notificationIntent.putExtra("phid", phid);
+				    	
+				    	
+				    	//PendingIntent contentIntent = PendingIntent.getActivity(context, 7, notificationIntent, 0);
+				    	PendingIntent contentIntent = PendingIntent.getActivity(context, 7, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+				    	//notification.flags |= Notification.FLAG_AUTO_CANCEL;
+				    	
+				    	notification.contentIntent = contentIntent;
+    	
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        
+        long[] vibrate = {0,100,200,300};
+        notification.vibrate = vibrate;
+        
+        //notification.defaults |= Notification.DEFAULT_LIGHTS;
+        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
+        
+        
+        try
+        {
+            //double ran = Math.random() * 1000;
+            //ran = Math.round(ran);
+            //String rans = "" + ran;
+            //rans = rans.replace(".0", "");
+            //int ranx = Integer.parseInt("" + rans);
+            
+            Random randomGenerator = new Random();
+            int randomInt = randomGenerator.nextInt(998);
+            randomInt = randomInt + 1;
+            
+            //HASNOLMIZAM - FIX 1 TEMPAT SAHAJA.. 11/11/2014
+            //mNotificationManager.notify(randomInt, notification);
+            mNotificationManager.notify(6, notification);
+            
+            /*
+            if (message.indexOf("[WEB]") >= 0 || message.indexOf("[ANDROID]") >= 0)
+            {
+            	String newMessage = message.replace("[WEB]-", "");
+            	newMessage = newMessage.replace("[ANDROID]-", "");
+            	
+            	myspeak ("Hello! " + newMessage);
+            }
+            else
+            {
+            	myspeak ("Hello! You got 1 new message from DROPSHIP ONLINE MALAYSIA. Please check.");
+            }
+            	//mysilence(300);
+			//myspeak (message);
+			
+			//message
+			*/
+			
+        }
+        catch (Exception x) 
+        {
+        	//hantar jugak tapi guna id 6
+            mNotificationManager.notify(6, notification);      
+        }
+        
+        int nilai = getBadgeLocal();
+        nilai = nilai + 1;
+        setBadge(context, nilai);
+
+    }
     
     //private static void generateNotificationCustomLayout (Context context, String message) {
     private  void generateNotificationCustomLayout (Context context, String message, String accountid) {
