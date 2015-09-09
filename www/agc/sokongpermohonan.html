@@ -51,6 +51,10 @@
                     <div class="card-panel myTitle">Permohonan Kebenaran Meninggalkan Pejabat Dalam Waktu Bekerja di Bawah Perintah AM 5 BAB G</div>
                     <div class="card-panel">
                         <form id="applicantdetail" name="applicantdetail" action="#">
+						    <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Nama Pemohon</div>
+                                <div id="nama_pemohon" name="nama_pemohon" class="col s12 m5"></div>
+                            </div>
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Bahagian</div>
                                 <div id="bahagian" name="bahagian" class="col s12 m5"></div>
@@ -90,8 +94,8 @@
                                 </div>
                             </div>
 							<div class="row">
-                                <div class="col s12 m2 label-on-small-only">Komen</div>
-								<div class="col s12 m5"><textarea id="komen" name="komen" class="materialize-textarea"></textarea></div>
+                                <div class="col s12 m2 label-on-small-only">Ulasan Penyokong</div>
+								<div class="col s12 m5"><textarea id="ulasan_penyokong" name="ulasan_penyokong" class="materialize-textarea"></textarea></div>
                                
                             </div>
 							<div class="row">
@@ -106,7 +110,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplicationBySupporter();">KEMAS KINI</button>
+									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplicationBySupporter();">KEMAS KINI</button>
 								</div>
                             </div>
                         </form>
@@ -282,20 +286,37 @@
 						                        						
 						if (jsondata.length > 0) {
 							var phid=jsondata[0].PH_ID;
-							var nama_penyokong = jsondata[0].STF_NAMA_PENYOKONG;	
+							var nama_pemohon = jsondata[0].STF_NAMA;
+							var nama_penyokong = jsondata[0].STF_NAMA_PENYOKONG;
+							var ulasan_penyokong = jsondata[0].PH_KOMEN_PENYOKONG;							
 							var nama_pelulus = jsondata[0].STF_NAMA_PELULUS;	
 							var tarikh = jsondata[0].PH_TKH_KELUAR;
 								tarikh = tarikh.replace ("/","-");
 								tarikh = tarikh.replace ("/","-");
+							var tarikh_sokongan = jsondata[0].PH_TKH_STATUS_PENYOKONG;
+								tarikh_sokongan = tarikh_sokongan.replace ("/","-");
+								tarikh_sokongan = tarikh_sokongan.replace ("/","-");								
 							var sebab = jsondata[0].PH_TUJUAN;
 							var masa_keluar = jsondata[0].PH_MASA_KELUAR;
 							var masa_masuk = jsondata[0].PH_MASA_MASUK;
+							var status_sokongan = jsondata[0].PH_STATUS_ID_PENYOKONG;
+							
+						 if (status_sokongan != ""){
+									$('#status_sokongan').val(status_sokongan);
+									$('#status_sokongan').material_select();
+									
+								 }
                          
+						 $('#nama_pemohon').html(nama_pemohon);
 						 $('#nama_penyokong').html(nama_penyokong);
+						 $('#nama_penyokong').html(nama_penyokong);
+						 $('#tarikh_sokongan').html(tarikh_sokongan);
+						 $('#ulasan_penyokong').html(ulasan_penyokong);
 						 $('#nama_pelulus').html(nama_pelulus);
 						 $('#tkh_keluar').html(tarikh);
 						 $('#masa_keluar').html(masa_keluar);
 						 $('#masa_masuk').html(masa_masuk);
+						 $('#status_sokongan').val(status_sokongan);
 						 $('#tujuan').html(sebab);
 													
                          }
@@ -305,47 +326,6 @@
 			
         }   
 		
-		/*function sokong(phid)
-		{
-				//alert('saya di kemaskiniPermohonan');
-				window.location.href = "kemaskinipermohonan.html?phid=" + phid;
-		}  */
-		
-		function updateApplicationBySupporter___() 
-		{
-         		
-				var TX = Math.random(); 
-				
-                $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=update_application_by_supporter&TX=" + TX,
-                    dataType: "json",
-					data: 
-					{
-						//ph_id, stf_username, status_id, comment
-						ph_id: gup("phid"),
-						stf_username: $('#stf_username').val(),
-						status_id:$('#status_sokongan').val(),
-						comment: $('#komen').val()
-					},
-					cache: false,
-					timeout: 30 * 1000,
-					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
-						return false;
-					},
-                    success: function(data) {
-                        
-                        window.location.href = "dashboard.html";
-													
-                    }
-                });
-			
-        }   //end updateApplicationBySupporter
-          
-		  
-		  
-		  
 		function updateApplicationBySupporter() 
 		{
          		var TX = Math.random(); 
@@ -359,7 +339,7 @@
 						ph_id: gup("phid"),
 						stf_username: $('#stf_username').val(),
 						status_id:$('#status_sokongan').val(),
-						comment: $('#komen').val()
+						comment: $('#ulasan_penyokong').val()
 					},
 					cache: false,
 					timeout: 30 * 1000,
