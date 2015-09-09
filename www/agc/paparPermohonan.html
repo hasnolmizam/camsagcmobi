@@ -76,11 +76,11 @@
                                 <div class="col s12 m2 label-on-small-only">Penyokong</div>
                                 <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
                             </div>
-							<div id="tarikh-sokongan" name="tarikh-sokongan" class="row">
+							<div id="penyokong" name="penyokong" class="row">
                                 <div class="col s12 m2 label-on-small-only">Tarikh</div>
                                 <div id="tarikh_sokongan" name="tarikh_sokongan" class="col s12 m5"></div>
                             </div>
-							<div id="ulasan" name="ulasan" class="row">
+							<div id="penyokong" name="penyokong" class="row">
                                 <div class="col s12 m2 label-on-small-only">Ulasan Penyokong</div>
                                 <div id="ulasan_penyokong" name="ulasan_penyokong" class="col s12 m5"></div>
                             </div>
@@ -88,11 +88,11 @@
                                 <div class="col s12 m2 label-on-small-only">Pelulus</div>
                                 <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
                             </div> 
-							<div id="tarikh-kelulusan" name="tarikh-kelulusan" class="row">
+							<div id="pelulus" name="pelulus" class="row">
                                 <div class="col s12 m2 label-on-small-only">Tarikh</div>
                                 <div id="tarikh_kelulusan" name="tarikh_kelulusan" class="col s12 m5"></div>
                             </div>
-							<div id="ulasan" name="ulasan" class="row">
+							<div id="pelulus" name="pelulus" class="row">
                                 <div class="col s12 m2 label-on-small-only">Ulasan Pelulus</div>
                                 <div id="ulasan_pelulus" name="ulasan_pelulus" class="col s12 m5"></div>
                             </div>
@@ -113,7 +113,7 @@
 
                             <div id="change-btn" name="change-btn" class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="kemaskiniPermohonan(gup('phid'));">Kemaskini</button>
+									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="kemaskiniPermohonan(gup('phid'));">KEMAS KINI</button>
 									&nbsp;&nbsp;  <button id="cancel-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="cancelApplication(gup('phid'));">BATAL</button>
 									&nbsp;&nbsp;  <button id="checkin-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="checkin(gup('phid'));">CHECK-IN</button>
 								</div>
@@ -184,7 +184,7 @@
 				var TX = Math.random(); 
 		        //start ajax request
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -198,9 +198,7 @@
 						return false;
 					},
                     success: function(data) {
-                        
-                        //data downloaded so we call parseJSON function and pass downloaded data
-                        //alert(data);
+
 						var json = $.parseJSON(data);
 						//alert('3='+ json.data);
 						var jsondata = $.parseJSON(json.data);
@@ -228,7 +226,7 @@
 				var TX = Math.random(); 
 		        //start ajax request
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -242,9 +240,7 @@
 						return false;
 					},
                     success: function(data) {
-                        
-                        //data downloaded so we call parseJSON function and pass downloaded data
-                        //alert(data);
+ 
 						var json = $.parseJSON(data);
 						//alert('3='+ json.data);
 						var jsondata = $.parseJSON(json.data);
@@ -271,7 +267,7 @@
 				
 				//alert("nilai gup phid = " + gup("phid"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -313,7 +309,7 @@
 							var status_id_permohonan = jsondata[0].PH_STATUS_ID_PERMOHONAN;
 							var bf_flow_id = jsondata[0].PH_BF_FLOW_ID;
 							
-														if (bf_flow_id == "1")
+							if (bf_flow_id == "1")
 							{
 								if (status_id_permohonan==4){ //belum diluluskan
 									$("#update-btn").show();
@@ -390,8 +386,8 @@
 		} 
 		
 		function checkin(){
-		//cke API check-in
-		window.location.href = "checkin.html";
+		// API check-in
+		window.location.href = "checkin.html?phid=" + phid;
 		}
 		
 		function cancelApplication(){
@@ -399,7 +395,7 @@
 		var TX = Math.random(); 
 		        //start ajax request
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=cancel_application_by_applicant&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=cancel_application_by_applicant&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
