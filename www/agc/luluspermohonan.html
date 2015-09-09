@@ -59,19 +59,19 @@
                                 <div class="col s12 m2 label-on-small-only">Bahagian</div>
                                 <div id="bahagian" name="bahagian" class="col s12 m5"></div>
                             </div>
-                            <div class="row">
+                            <div id="penyokong" name="penyokong" class="row">
                                 <div class="col s12 m2 label-on-small-only">Penyokong</div>
                                 <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
                             </div>
-							<div class="row">
+							<div id="penyokong" name="penyokong" class="row">
                                 <div class="col s12 m2 label-on-small-only">Tarikh Sokongan</div>
                                 <div id="tarikh_sokongan" name="tarikh_sokongan" class="col s12 m5"></div>
                             </div>
-							<div class="row">
+							<div id="penyokong" name="penyokong" class="row">
                                 <div class="col s12 m2 label-on-small-only">Keputusan Penyokong</div>
                                 <div id="status_sokongan" name="status_sokongan" class="col s12 m5"></div>
                             </div>
-							<div class="row">
+							<div id="penyokong" name="penyokong" class="row">
                                 <div class="col s12 m2 label-on-small-only">Ulasan Penyokong</div>
                                 <div id="ulasan_penyokong" name="ulasan_penyokong" class="col s12 m5"></div>
                             </div>  
@@ -97,7 +97,7 @@
                                     <input class="file-path" type="text" disabled/>
                                     <div class="btn waves-effect waves-light deep-purple darken-1">
                                         <span><i class="mdi-editor-attach-file"></i></span>
-                                        <input type="file" />
+                                        <input type="file" disabled/>
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@
 				var TX = Math.random(); 
 		        //start ajax request
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
 					dataType: "json",
 					data: 
 					{
@@ -230,7 +230,7 @@
 				var TX = Math.random(); 
 		        //start ajax request
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -273,7 +273,7 @@
 				
 				//alert("nilai gup phid = " + gup("phid"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -362,7 +362,7 @@
 				var TX = Math.random(); 
 				
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=update_application_by_approver&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_approver&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -383,7 +383,7 @@
                     success: function(data) {
                         
 						window.location.href = "dashboard.html?nextpage=kelulusan";
-                        //window.location.href = "dashboard.html";
+                       
 													
                     }
                 });
