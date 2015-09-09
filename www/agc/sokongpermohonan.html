@@ -178,7 +178,7 @@
 				var TX = Math.random(); 
 		        //start ajax request
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -222,7 +222,7 @@
 				var TX = Math.random(); 
 		        //start ajax request
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -265,7 +265,7 @@
 				
 				//alert("nilai gup phid = " + gup("phid"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -330,9 +330,9 @@
 		{
          		var TX = Math.random(); 
 				
-				alert("nilai gup phid = " + gup("phid"));
+				//alert("nilai gup phid = " + gup("phid"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=update_application_by_supporter&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_supporter&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -349,7 +349,7 @@
 					},
                     success: function(data) {
 							    window.location.href = "dashboard.html?nextpage=sokongan";
-								//alert("OOKKKKK");					
+								//alert("OK");					
                          }
 					
 					
