@@ -5,9 +5,14 @@ import static com.agc.cams.CommonUtilities.displayMessage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -17,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -27,6 +33,10 @@ import com.google.android.gcm.GCMBaseIntentService;
 
 //public class GCMIntentService extends GCMBaseIntentService implements OnInitListener {
 public class GCMIntentService extends GCMBaseIntentService  {
+
+	JSONParser jParser = new JSONParser();
+    public double latitude = 0;
+    public double longitude = 0;
 
 	private static final String TAG = "GCMIntentService";
 	//private static TextToSpeech tts;
@@ -85,7 +95,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	{
     		if (!message.equals("")) 
     		{
-    	        Log.i(TAG, "Received message");
+    	        //Log.i(TAG, "Received message");
 
     	        //pecahkan message utk dapatkan accountid..
     	        String accountid = "";
@@ -138,6 +148,19 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        }
     	        
     	        
+    	        String LOCATIONREQUEST = "N";
+    	        i = message.indexOf("LOCATIONREQUEST");
+    	        if (i >= 0)
+    	        {
+    	        	LOCATIONREQUEST = "Y";
+    	        	String XArray[] = message.split("#");
+    	        	phid = XArray[0];
+    	        	message= XArray[1];
+    	        
+    	        }
+
+    	        
+    	        
     	        displayMessage(context, message);
     	        // notifies user
     	        
@@ -145,7 +168,11 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        {
     	        	generateNotificationCustomLayoutAGC(context, message, phid);
     	        }
-    	        else
+    	        else if (LOCATIONREQUEST.equals("Y"))
+    	        {
+    	        	generateNotificationCustomLayoutAGC_SENDLOCATION(context, phid);
+    	        }
+    	        else 
     	        {
     	        	generateNotificationCustomLayout(context, message, accountid);
     	        }
@@ -280,6 +307,18 @@ public class GCMIntentService extends GCMBaseIntentService  {
     */
     
 
+    
+    private void generateNotificationCustomLayoutAGC_SENDLOCATION (Context context, String phid) {
+    	
+    		//terus dapatkan coordinat dan call API 
+    		//http://10.17.14.210/cams/api_generator.php?api_name=check_in_by_applicant&ph_id=600&stf_username=adlina&lng=1.0001&lat=3.00001
+    	
+    	new SendingLocationInfo().execute();
+    	
+    	
+
+    }
+    
     
     private void generateNotificationCustomLayoutAGC (Context context, String message, String phid) {
     	
@@ -712,5 +751,366 @@ public class GCMIntentService extends GCMBaseIntentService  {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	class SendingLocationInfo extends AsyncTask<String, String, String> {
+
+		/**
+		 * Before starting background thread Show Progress Dialog
+		 * */
+		@Override
+		protected void onPreExecute() {
+
+			
+			//dapatkan location disini...
+			
+			
+			 //GPSTracker gps = new GPSTracker(getApplicationContext());
+		    GPSTracker gps = new GPSTracker(getApplicationContext());
+
+            // Check if GPS enabled
+            if(gps.canGetLocation()) {
+
+                 latitude = gps.getLatitude();
+                 longitude = gps.getLongitude();
+
+                // \n is for new line
+                //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            } else {
+                // Can't get location.
+                // GPS or network is not enabled.
+                // Ask user to enable GPS/network in settings.
+                //gps.showSettingsAlert();
+           	 //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            }
+            
+						
+			super.onPreExecute();
+
+		}
+
+		
+		
+	
+	protected String doInBackground(String... args) {
+
+		//SharedPreferences settings = getActivity().getSharedPreferences("KOMDS", 0);
+		//String KOMDS_USERID = settings.getString("KOMDS_USERID", "");
+		//String KOMDS_ROLEID = settings.getString("KOMDS_ROLEID", "");
+
+		// Building Parameters
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("fieldX","fieldX"));
+		params.add(new BasicNameValuePair("ph_id","633"));
+		//params.add(new BasicNameValuePair("roleid",KOMDS_ROLEID));
+
+
+
+		//if (KOMDS_RANKING.equals(""))
+		//{
+
+
+        //query//
+		try {
+
+
+			//hantar maklumat ke API check_in_by_applicant
+			//JSONObject json = jParser.makeHttpRequest("http://www.visionice.net/ds/androidservice.php?actionid=getagentprofits&T=" + System.nanoTime(), "GET", params);
+			JSONObject json = jParser.makeHttpRequest("http://10.17.14.210/cams/api_generator.php?api_name=check_in_by_applicant&ph_id=633&stf_username=adlina&lng=" + longitude + "&lat=" + latitude + "&T=" + System.nanoTime(), "GET", params);
+				
+			//if (json == null) 
+			//{
+			//	return null;
+			//}
+
+			/*
+			querystatus_GLOBAL = json.getString("querystatus");
+			if (querystatus_GLOBAL.equals("OK"))
+			{
+
+				totalitemsoldbyyou_GLOBAL = "" + json.getString("totalitemsoldbyyou");
+				totalallsalebyyou_GLOBAL =  "" + json.getString("totalallsalebyyou");
+				totalallcostbyyou_GLOBAL =  "" + json.getString("totalallcostbyyou");
+				totalallprofitbyyou_GLOBAL =  "" + json.getString("totalallprofitbyyou");
+				ranking_GLOBAL =  "" + json.getString("ranking");
+
+
+
+				if (totalitemsoldbyyou_GLOBAL.equals("null") )
+				{
+					totalitemsoldbyyou_GLOBAL = "0";
+				}
+
+				//simpan dalam session
+				SharedPreferences settingsXX = getActivity().getSharedPreferences("KOMDS", 0);
+				SharedPreferences.Editor editorXX = settingsXX.edit();
+				editorXX.putString("KOMDS_TOTALITEMSOLDBYYOU", totalitemsoldbyyou_GLOBAL);
+				editorXX.putString("KOMDS_TOTALALLSALEBYYOU", totalallsalebyyou_GLOBAL); 
+				editorXX.putString("KOMDS_TOTALALLCOSTBYYOU", totalallcostbyyou_GLOBAL);
+				editorXX.putString("KOMDS_TOTALALLPROFITBYYOU", totalallprofitbyyou_GLOBAL);
+				editorXX.putString("KOMDS_RANKING", ranking_GLOBAL); 
+				editorXX.commit();
+
+
+
+				//username_GLOBAL = json.getString("username");
+				//roleid_GLOBAL = json.getString("roleid");
+				//rolename_GLOBAL = json.getString("rolename");
+				//fullname_GLOBAL = json.getString("fullname");
+				//phoneno_GLOBAL = json.getString("phoneno");
+				//infocomplete_GLOBAL = json.getString("infocomplete");
+				//userid_GLOBAL  = json.getString("userid");
+				//usernameGCM = username_GLOBAL;
+				//fullnameGCM = fullname_GLOBAL;
+
+				//sellingprice_GLOBAL = json.getString("sellingprice");
+				//yourprice_GLOBAL = json.getString("yourprice");
+				//modellongdesc_GLOBAL = json.getString("modellongdesc");
+
+			}
+			*/
+		
+		/*
+		} catch (JSONException  e) {
+			
+			
+			//e.printStackTrace();
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setMessage("4Unable to connect to the Dropship Online Malaysia server. Please try later.") 
+			.setCancelable(false)
+			.setTitle("Dropship Online Malaysia")
+			//.setIcon(R.drawable.komlogo)
+			.setIcon(R.drawable.symbolerror)
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					//goToLoginAgain();
+					//viewPager.setAdapter(mAdapter);
+					//viewPager.setCurrentItem(2);
+					//actionBar = getActionBar();
+					//actionBar.setSelectedNavigationItem(2);
+					//actionBar.setSelectedNavigationItem(2);
+					//viewPager.setCurrentItem(2);
+					return;
+
+				}
+				//})
+				//.setOnCancelListener(new OnCancelListener() {
+				//	public void onCancel(DialogInterface dialog)  {
+				//		goToLoginAgain();	
+				//	}
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+			
+			
+			*/
+		} catch (Exception e) {
+			//e.printStackTrace();
+			/*
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setMessage("5Unable to connect to the Dropship Online Malaysia server. Please try later.") 
+			.setCancelable(false)
+			.setTitle("Dropship Online Malaysia")
+			//.setIcon(R.drawable.komlogo)
+			.setIcon(R.drawable.symbolerror)
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					//goToLoginAgain();
+					//viewPager.setAdapter(mAdapter);
+					//viewPager.setCurrentItem(2);
+					//actionBar = getActionBar();
+					//actionBar.setSelectedNavigationItem(2);
+					//actionBar.setSelectedNavigationItem(2);
+					//viewPager.setCurrentItem(2);
+
+					return;
+
+				}
+				//})
+				//.setOnCancelListener(new OnCancelListener() {
+				//	public void onCancel(DialogInterface dialog)  {
+				//		goToLoginAgain();	
+				//	}
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+			*/
+
+		}					
+
+		//}
+		//else
+		//{
+		//	querystatus_GLOBAL = "OK";
+		//}
+
+
+
+		return null;
+	}	
+	
+	
+	
+	
+	protected void onPostExecute(String file_url) {
+		// dismiss the dialog after getting all products
+		/*
+		//check kat sini..
+		SharedPreferences settingsXX1 = getActivity().getSharedPreferences("KOMDS", 0);
+		KOMDS_TOTALITEMSOLDBYYOU = "" + settingsXX1.getString("KOMDS_TOTALITEMSOLDBYYOU", "");
+		KOMDS_TOTALALLSALEBYYOU = "" + settingsXX1.getString("KOMDS_TOTALALLSALEBYYOU", "");
+		KOMDS_TOTALALLCOSTBYYOU = "" + settingsXX1.getString("KOMDS_TOTALALLCOSTBYYOU", "");
+		KOMDS_TOTALALLPROFITBYYOU = "" + settingsXX1.getString("KOMDS_TOTALALLPROFITBYYOU", "");
+		KOMDS_RANKING = "" + settingsXX1.getString("KOMDS_RANKING", "");
+		*/
+
+		/*
+		try
+		{
+			// updating UI from Background Thread
+			getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+
+					if (querystatus_GLOBAL.equals("OK")) 
+					{
+
+
+						TextView itemSold=(TextView) getActivity().findViewById(R.id.itemSold);
+						itemSold.setText("No. of Item Sold : " + KOMDS_TOTALITEMSOLDBYYOU);
+
+						TextView salesrevenue=(TextView) getActivity().findViewById(R.id.salesrevenue);
+						salesrevenue.setText("Sales Revenue : RM " + KOMDS_TOTALALLSALEBYYOU);
+
+						TextView grossprofit=(TextView) getActivity().findViewById(R.id.grossprofit);
+						grossprofit.setText("Gross Profit : RM " + KOMDS_TOTALALLPROFITBYYOU);
+
+						TextView ranking=(TextView) getActivity().findViewById(R.id.ranking);
+						//ranking.setText("" + ranking_GLOBAL);
+						ranking.setText("Your Current Level");
+
+						ImageView star=(ImageView) getActivity().findViewById(R.id.star);
+						if (KOMDS_RANKING.equals("TOP 5"))
+						{
+							star.setImageResource(R.drawable.top5);
+							star.setVisibility(View.VISIBLE);
+							//ranking.setVisibility(View.GONE);
+						}
+						else if (KOMDS_RANKING.equals("TOP 10"))
+						{
+							star.setImageResource(R.drawable.top10);
+							star.setVisibility(View.VISIBLE);
+							//ranking.setVisibility(View.GONE);
+						}
+						else 
+						{
+							ranking.setText("Your Current Level : " + KOMDS_RANKING); 
+							//ranking.setVisibility(View.VISIBLE);
+							star.setVisibility(View.GONE);
+						}
+
+
+						//Date date; // your date
+						Calendar cal = Calendar.getInstance();
+						//cal.setTime(date);
+						int yearz = cal.get(Calendar.YEAR);
+						int monthz = cal.get(Calendar.MONTH);
+						String monthzx = "";
+						//int dayz = cal.get(Calendar.DAY_OF_MONTH);
+						if (monthz == 0) { monthzx = "JANUARY"; }
+						if (monthz == 1) { monthzx = "FEBRUARY"; }
+						if (monthz == 2) { monthzx = "MARCH"; }
+						if (monthz == 3) { monthzx = "APRIL"; }
+						if (monthz == 4) { monthzx = "MAY"; }
+						if (monthz == 5) { monthzx = "JUN"; }
+						if (monthz == 6) { monthzx = "JULY"; }
+						if (monthz == 7) { monthzx = "AUGUST"; }
+						if (monthz == 8) { monthzx = "SEPTEMBER"; }
+						if (monthz == 9) { monthzx = "OCTOBER"; }
+						if (monthz == 10) { monthzx = "NOVEMBER"; }
+						if (monthz == 11) { monthzx = "DECEMBER"; }
+
+
+						TextView monthstatistic=(TextView) getActivity().findViewById(R.id.monthstatistic);
+						monthstatistic.setText(monthzx + " " + yearz);
+
+
+					} 
+					else if (querystatus_GLOBAL.equals("KO")) 
+					{
+
+						AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+						builder.setMessage("Sorry, There is a problem while getting your sales data.")
+						.setCancelable(false)
+						.setTitle("Dropship Online Malaysia")
+						.setIcon(R.drawable.komlogoblack)
+						//.setIcon(R.drawable.symbolerror)
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								//goToLoginAgain();
+								return;
+							}
+							//})
+							//.setOnCancelListener(new OnCancelListener() {
+							//	public void onCancel(DialogInterface dialog)  {
+							//		goToLoginAgain();	
+							//	}
+						});
+						AlertDialog alert = builder.create();
+						alert.show();
+
+					} else {
+
+						AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+						builder.setMessage("6Unable to connect to the Dropship Online Malaysia server. Please try later.") 
+						.setCancelable(false)
+						.setTitle("Dropship Online Malaysia")
+						.setIcon(R.drawable.symbolerror)
+						//.setIcon(R.drawable.symbolerror)
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								//goToLoginAgain();
+								//viewPager.setAdapter(mAdapter);
+								//viewPager.setCurrentItem(2);
+								//actionBar = getActionBar();
+								//actionBar.setSelectedNavigationItem(2);
+								//actionBar.setSelectedNavigationItem(2);
+								//viewPager.setCurrentItem(2);
+								return;
+
+							}
+							//})
+							//.setOnCancelListener(new OnCancelListener() {
+							//	public void onCancel(DialogInterface dialog)  {
+							//		goToLoginAgain();	
+							//	}
+						});
+						AlertDialog alert = builder.create();
+						alert.show();
+
+					}
+
+
+
+				}
+			});
+		}
+		catch (Exception c)
+		{
+
+		}
+		*/
+
+	}
+	
+	
+	}
 	
 }
