@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Snap.js</title>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        
+        <script src="cordova.js"></script>
+		<script src="jquery-2.0.3.min.js"></script>
+		<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+
+	<script>
+			function initialize()
+			{
+				document.addEventListener("deviceready", deviceready, true);
+			}
+
+
+			function deviceready()
+			{
+				document.getElementById('map_canvas').innerHTML = '' ;
+				document.addEventListener("backbutton", function() {
+        					history.go(-1);
+        					//window.location.href = "mainpage.html";
+    						}, false);
+
+				document.addEventListener("offline", 
+						function(){ 
+								alert('Internet Connection not available.')
+							}, false);
+
+				document.addEventListener("online", 
+						function(){ 
+								//OK
+							}, false);				
+			
+				if(navigator.network.connection.type != Connection.NONE) {	
+			        var optionsZ = { timeout: 15000 , frequency : 1, enableHighAccuracy: true, maximumAge: 3000 };
+			        watchID = navigator.geolocation.watchPosition(onSuccess, onError, optionsZ);
+			    } else {
+			        alert('Internet Connection not available.')
+			    }
+			}
+			
+			var options = {
+		        maximumAge: 600000,         // We accept positions whose age is not greater than 10 minutes.
+		        timeout: 30000,             // if there is no cached position available at all, the user agent
+		                                    // will immediately invoke the error callback after "timeout" 5 seconds
+		        enableHighAccuracy: false   // true, if you need high accuracy
+		    };
+    
+			var onSuccess = function(position) {
+			    var myLat = position.coords.latitude;
+			    var myLong = position.coords.longitude;
+	
+	
+				  var myLatlng = new google.maps.LatLng(myLat,myLong);
+				  var mapOptions = {
+				    zoom: 15,
+				    center: myLatlng
+				  }
+					
+				  var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+				  var marker = new google.maps.Marker({
+				      position: myLatlng,
+				      map: map,
+				      icon: "http://coralhr.nc.com.my/enchr/images/map_male.png",
+				      title: 'Saya'
+				  });
+	
+	
+			};
+			
+			function onError(error) {
+				document.getElementById('map_canvas').innerHTML = 'Unable to get your current location. Please make sure your GPS is ON. Move around so the satelite can see you..:) <br><br><div align=center><img src=images/gps4.png width=80></div>' ;
+			}
+
+	</script>
+
+    </head>
+	<body onload="initialize();">
+
+	<div id="map_canvas" name="map_canvas" style="width:100%; height:80%;" ></div>
+	<center><h2>INI IALAH LOKASI SAYA SEKARANG...</h2></center>
+
+    </body>
+</html>
