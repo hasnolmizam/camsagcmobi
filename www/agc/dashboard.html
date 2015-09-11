@@ -277,7 +277,7 @@
 		        //start ajax request
 				//alert(getSessionStorage("STF_USERNAME"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_list_own_application&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_list_own_application&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -334,7 +334,7 @@
 		        //start ajax request
 				//alert(getSessionStorage("STF_USERNAME"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_list_application_to_support&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_list_application_to_support&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -388,7 +388,7 @@
 		        //start ajax request
 				//alert(getSessionStorage("STF_USERNAME"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_list_application_to_approve&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_list_application_to_approve&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
