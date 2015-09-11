@@ -17,7 +17,7 @@
 	<preference name="SplashScreenDelay" value="3000" />
 	<preference name="SplashMaintainAspectRatio" value="true" />
     
-    
+
     
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

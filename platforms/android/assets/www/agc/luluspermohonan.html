@@ -51,6 +51,10 @@
                     <div class="card-panel myTitle">Permohonan Kebenaran Meninggalkan Pejabat Dalam Waktu Bekerja di Bawah Perintah AM 5 BAB G</div>
                     <div class="card-panel">
                         <form id="applicantdetail" name="applicantdetail" action="#">
+						    <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Nama Pemohon</div>
+                                <div id="nama_pemohon" name="nama_pemohon" class="col s12 m5"></div>
+                            </div>
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Bahagian</div>
                                 <div id="bahagian" name="bahagian" class="col s12 m5"></div>
@@ -59,9 +63,17 @@
                                 <div class="col s12 m2 label-on-small-only">Penyokong</div>
                                 <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
                             </div>
-							<div id="pelulus" name="pelulus" class="row">
-                                <div class="col s12 m2 label-on-small-only">Pelulus</div>
-                                <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
+							<div id="penyokong" name="penyokong" class="row">
+                                <div class="col s12 m2 label-on-small-only">Tarikh Sokongan</div>
+                                <div id="tarikh_sokongan" name="tarikh_sokongan" class="col s12 m5"></div>
+                            </div>
+							<div id="penyokong" name="penyokong" class="row">
+                                <div class="col s12 m2 label-on-small-only">Keputusan Penyokong</div>
+                                <div id="status_sokongan" name="status_sokongan" class="col s12 m5"></div>
+                            </div>
+							<div id="penyokong" name="penyokong" class="row">
+                                <div class="col s12 m2 label-on-small-only">Ulasan Penyokong</div>
+                                <div id="ulasan_penyokong" name="ulasan_penyokong" class="col s12 m5"></div>
                             </div>  
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Tujuan</div>
@@ -85,20 +97,20 @@
                                     <input class="file-path" type="text" disabled/>
                                     <div class="btn waves-effect waves-light deep-purple darken-1">
                                         <span><i class="mdi-editor-attach-file"></i></span>
-                                        <input type="file" />
+                                        <input type="file" disabled/>
                                     </div>
                                 </div>
                             </div>
 							<div class="row">
-                                <div class="col s12 m2 label-on-small-only">Komen</div>
-								<div class="col s12 m5"><textarea id="komen" name="komen" class="materialize-textarea"></textarea></div>
+                                <div class="col s12 m2 label-on-small-only">Ulasan Pelulus</div>
+								<div class="col s12 m5"><textarea id="ulasan_pelulus" name="ulasan_pelulus" class="materialize-textarea"></textarea></div>
                                
                             </div>
 							<div class="row">
                                 <div class="col s12 m2 label-on-small-only myInputAlign">Status Kelulusan</div>
 								<div class="col s12 m5">
                                     <select id="status_kelulusan" name="status_kelulusan">
-									<option value="" selected>Sila Pilih</option>
+									<option id="pilihan" value="" selected>Sila Pilih</option>
 									<option value="5">Diluluskan</option>
 									<option value="6">Tidak diluluskan</option>
 									</select>
@@ -106,7 +118,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplicationByApprover();">KEMAS KINI</button>
+									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplicationByApprover();">KEMAS KINI</button>
 								</div>
                             </div>
                         </form>
@@ -174,7 +186,7 @@
 				var TX = Math.random(); 
 		        //start ajax request
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_supporter_by_divisionid&TX=" + TX,
 					dataType: "json",
 					data: 
 					{
@@ -218,7 +230,7 @@
 				var TX = Math.random(); 
 		        //start ajax request
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_approver_by_divisionid&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -261,11 +273,12 @@
 				
 				//alert("nilai gup phid = " + gup("phid"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
-					   id: gup("phid")
+					   id: gup("phid"),
+					   stf_id_penyokong: $('#stf_id_penyokong').val()
 					},
 					cache: false,
 					timeout: 30 * 1000,
@@ -281,23 +294,54 @@
 						//alert(jsondata);	
 						                        						
 						if (jsondata.length > 0) {
+						
 							var phid=jsondata[0].PH_ID;
-							var nama_penyokong = jsondata[0].STF_NAMA_PENYOKONG;	
-							var nama_pelulus = jsondata[0].STF_NAMA_PELULUS;	
+							var nama_pemohon = jsondata[0].STF_NAMA;
+							var nama_penyokong = jsondata[0].STF_NAMA_PENYOKONG;
+							var ulasan_penyokong = jsondata[0].PH_KOMEN_PENYOKONG;
+							var status_sokongan = jsondata[0].STATUS_PENYOKONG;
+							var nama_pelulus = jsondata[0].STF_NAMA_PELULUS;
+                            var ulasan_pelulus = jsondata[0].PH_KOMEN_PELULUS; 							
 							var tarikh = jsondata[0].PH_TKH_KELUAR;
 								tarikh = tarikh.replace ("/","-");
 								tarikh = tarikh.replace ("/","-");
+							var tarikh_sokongan = jsondata[0].PH_TKH_STATUS_PENYOKONG;
+								tarikh_sokongan = tarikh_sokongan.replace ("/","-");
+								tarikh_sokongan = tarikh_sokongan.replace ("/","-");
+							var tarikh_kelulusan = jsondata[0].PH_TKH_STATUS_PELULUS;
+								tarikh_kelulusan = tarikh_kelulusan.replace ("/","-");
+								tarikh_kelulusan = tarikh_kelulusan.replace ("/","-");
 							var sebab = jsondata[0].PH_TUJUAN;
 							var masa_keluar = jsondata[0].PH_MASA_KELUAR;
 							var masa_masuk = jsondata[0].PH_MASA_MASUK;
-                         
-						 $('#nama_penyokong').html(nama_penyokong);
-						 $('#nama_pelulus').html(nama_pelulus);
+							
+						 $('#nama_pemohon').html(nama_pemohon);
 						 $('#tkh_keluar').html(tarikh);
+						 $('#tujuan').html(sebab);
 						 $('#masa_keluar').html(masa_keluar);
 						 $('#masa_masuk').html(masa_masuk);
-						 $('#tujuan').html(sebab);
-													
+						 $('#nama_penyokong').html(nama_penyokong);
+						 $('#status_sokongan').html(status_sokongan); 
+						 $('#tarikh_sokongan').html(tarikh_sokongan);
+						 $('#ulasan_penyokong').html(ulasan_penyokong);
+						 $('#nama_pelulus').html(nama_pelulus);
+						 $('#tarikh_kelulusan').html(tarikh_kelulusan);
+						 $('#ulasan_pelulus').html(ulasan_pelulus);
+						 $('#status_kelulusan').val(status_kelulusan);
+						 
+							var status_kelulusan = jsondata[0].PH_STATUS_ID_PELULUS;
+							
+						 if (status_kelulusan != ""){
+									$('#status_kelulusan').val(status_kelulusan);
+									$('#status_kelulusan').material_select();
+									
+								 }
+						if (ulasan_penyokong!= "" && status_kelulusan != ""){
+						     $('#status_kelulusan').val(status_kelulusan);
+							 $("#update-btn").hide();$("select").hide();
+							 
+						}
+						
                          }
 					
 					}
@@ -318,7 +362,7 @@
 				var TX = Math.random(); 
 				
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=update_application_by_approver&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_approver&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -327,7 +371,7 @@
 						ph_id: gup("phid"),
 						stf_username: $('#stf_username').val(),
 						status_id:$('#status_kelulusan').val(),
-						comment: $('#komen').val()
+						comment: $('#ulasan_pelulus').val()
 					},
 					cache: false,
 					timeout: 30 * 1000,
@@ -339,7 +383,7 @@
                     success: function(data) {
                         
 						window.location.href = "dashboard.html?nextpage=kelulusan";
-                        //window.location.href = "dashboard.html";
+                       
 													
                     }
                 });
