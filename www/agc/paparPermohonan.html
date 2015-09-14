@@ -115,7 +115,7 @@
                                 <div class="col s12 offset-m2 m10">   
 									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="kemaskiniPermohonan(gup('phid'));">KEMAS KINI</button>
 									&nbsp;&nbsp;  <button id="cancel-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="cancelApplication(gup('phid'));">BATAL</button>
-									&nbsp;&nbsp;  <button id="checkin-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="checkin(gup('phid'));">CHECK-IN</button>
+									&nbsp;&nbsp;  <button id="checkin-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="checkInByApplicant(gup('phid'));">CHECK-IN</button>
 								</div>
                             </div>
                         </form>
@@ -126,6 +126,8 @@
 
         <div id="dtBox"></div>
 		<span id="hidden"><input id="stf_username" name="stf_username" type="hidden"></span>
+		<span id="hidden"><input id="latitud" name="latitud" type="hidden"></span>
+		<span id="hidden"><input id="longitud" name="longitud" type="hidden"></span>
 		
 		
 		    <script>
@@ -308,6 +310,8 @@
 							var status_id_penyokong = jsondata[0].PH_STATUS_ID_PENYOKONG;
 							var status_id_permohonan = jsondata[0].PH_STATUS_ID_PERMOHONAN;
 							var bf_flow_id = jsondata[0].PH_BF_FLOW_ID;
+							var lat = jsondata[0].PH_LATITUD_CHECK_IN;
+							var lng = jsondata[0].PH_LONGITUD_CHECK_IN;
 							
 							if (bf_flow_id == "1")
 							{
@@ -358,7 +362,10 @@
 							  $("#checkin-btn").show();
 							}						
 						   
-
+                           if (lat!=""){  //hide check-in button once pinned location.
+						   // means all buttons are hidden. $("#checkin-btn").hide();
+						   $("#change-btn").hide();
+						   }
                          
 						 $('#nama_penyokong').html(nama_penyokong);
 						 $('#ulasan_penyokong').html(ulasan_penyokong);
@@ -371,6 +378,8 @@
 						 $('#masa_masuk').html(masa_masuk);
 						 $('#tujuan').html(sebab);
 						 $('#status_permohonan').html(status_permohonan);
+						 $('#latitud').html(lat);
+						 $('#longitud').html(lng);
 													
                          }
 					
@@ -385,11 +394,7 @@
 				window.location.href = "kemaskinipermohonan.html?phid=" + phid;
 		} 
 		
-		function checkin(){
-		// API check-in
-		window.location.href = "checkin.html?phid=" + phid;
-		}
-		
+			
 		function cancelApplication(){
 		
 		var TX = Math.random(); 
@@ -418,7 +423,58 @@
 		
 		}
 		
-          
+        //Tracking Location by using cordova-plugin-geolocation
+		document.addEventListener("deviceready", onDeviceReady, false);
+
+        function onDeviceReady(){
+
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+        }   
+        function onSuccess(position)
+        {
+            document.getElementById("latitude").innerHTML= position.coords.latitude;
+            document.getElementById("longitude").innerHTML= position.coords.longitude;
+        }
+
+        function onError(error) {
+            alert('code: ' + error.code + '\n' +
+            'message: ' + error.message + '\n');
+        }
+        
+        function checkInByApplicant() 
+		{
+         		
+				var TX = Math.random(); 
+				
+                $.ajax({
+                    url: GLOBAL_IP + "/api_generator.php?api_name=check_in_by_applicant&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						
+						ph_id: gup("phid"),
+						stf_username: $('#stf_username').val(),
+						lat: $('#latitud').val(),
+						lng: $('#longitud').val()
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+                        
+                        alert('Lokasi semasa dihantar');	
+						window.location.href = "dashboard.html";
+													
+                    }
+                });
+			
+        }   //end checkInByApplicant() 
+				
         </script>
 
  
