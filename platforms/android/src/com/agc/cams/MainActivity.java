@@ -110,14 +110,14 @@ public class MainActivity extends CordovaActivity
 			if (useridG.equals(""))
 			{
 				
-				Toast.makeText(getApplicationContext(), "registerGCM_PUBLIC()" , Toast.LENGTH_LONG).show();
+				//Toast.makeText(getApplicationContext(), "registerGCM_PUBLIC()" , Toast.LENGTH_LONG).show();
 				//try register terlebih sebagai client biasa...
 				try {
 					registerGCM_PUBLIC();
 				}
 				catch (Exception e)
 				{
-					Toast.makeText(getApplicationContext(), "error registerGCM_PUBLIC() :" + e.toString() , Toast.LENGTH_LONG).show();
+					//Toast.makeText(getApplicationContext(), "error registerGCM_PUBLIC() :" + e.toString() , Toast.LENGTH_LONG).show();
 				}
 
 				regIdGCM = "" + GCMRegistrar.getRegistrationId(this);
@@ -133,14 +133,14 @@ public class MainActivity extends CordovaActivity
 				fullnameGCM = fullnameG;
 				useridGCM = useridG;
 				
-				Toast.makeText(getApplicationContext(), "registerGCM()" , Toast.LENGTH_LONG).show();
+				//Toast.makeText(getApplicationContext(), "registerGCM()" , Toast.LENGTH_LONG).show();
 				registerGCM();
 
 				//check message..
 				//new CheckMessage().execute();
 			}
 			
-			Toast.makeText(getApplicationContext(), "regIdGCM XX=" + regIdGCM , Toast.LENGTH_LONG).show();
+			//Toast.makeText(getApplicationContext(), "regIdGCM XX=" + regIdGCM , Toast.LENGTH_LONG).show();
 			
 			
 			String versionName = "";
