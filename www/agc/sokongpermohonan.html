@@ -100,19 +100,16 @@
                             </div>
 							<div class="row">
                                 <div class="col s12 m2 label-on-small-only myInputAlign">Status Sokongan</div>
-								<div class="col s12 m5">
-                                    <select id="status_sokongan" name="status_sokongan">
-									<option value="" selected>Sila Pilih</option>
-									<option value="2">Disokong</option>
-									<option value="3">Tidak disokong</option>
-									</select>
-                                </div>
+								<div id="status_sokongan" name="status_sokongan" type="text" class="col s12 m5"></div>
+							
                             </div>
                             <div class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplicationBySupporter();">KEMAS KINI</button>
+									<button id="update-btn" class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isSupported();">DISOKONG</button>
+                                    <button id="update-btn" class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejected();">TIDAK DISOKONG</button>	
+									
 								</div>
-                            </div>
+                            </div>  
                         </form>
                     </div>
                 </div>
@@ -301,11 +298,11 @@
 							var masa_masuk = jsondata[0].PH_MASA_MASUK;
 							var status_sokongan = jsondata[0].PH_STATUS_ID_PENYOKONG;
 							
-						 if (status_sokongan != ""){
-									$('#status_sokongan').val(status_sokongan);
-									$('#status_sokongan').material_select();
-									
-								 }
+						/* if (status_sokongan != ""){
+						            //$("#cams-btn").hide();
+									//$('#status_sokongan').val(status_sokongan);
+									//$('#status_sokongan').material_select();
+								 }  */
                          
 						 $('#nama_pemohon').html(nama_pemohon);
 						 $('#nama_penyokong').html(nama_penyokong);
@@ -324,13 +321,13 @@
 					}
                 });
 			
-        }   
-		
-		function updateApplicationBySupporter() 
+        }
+
+function isSupported() 
 		{
          		var TX = Math.random(); 
+				var result = 2;
 				
-				//alert("nilai gup phid = " + gup("phid"));
                 $.ajax({
                     url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_supporter&TX=" + TX,
                     dataType: "json",
@@ -338,7 +335,7 @@
 					{
 						ph_id: gup("phid"),
 						stf_username: $('#stf_username').val(),
-						status_id:$('#status_sokongan').val(),
+						status_id:result,
 						comment: $('#ulasan_penyokong').val()
 					},
 					cache: false,
@@ -349,13 +346,45 @@
 					},
                     success: function(data) {
 							    window.location.href = "dashboard.html?nextpage=sokongan";
-								//alert("OK");					
+												
                          }
 					
 					
                 });
 			
-        }     
+        }  //end isSupported() 
+		
+		function isRejected() 
+		{
+         		var TX = Math.random(); 
+				var result = 3;
+				
+                $.ajax({
+                    url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_supporter&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						ph_id: gup("phid"),
+						stf_username: $('#stf_username').val(),
+						status_id:result,
+						comment: $('#ulasan_penyokong').val()
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						return false;
+					},
+                    success: function(data) {
+							    window.location.href = "dashboard.html?nextpage=sokongan";
+												
+                         }
+					
+					
+                });
+			
+        }  //end isRejected() 		
+	
         </script>
 
  
