@@ -165,7 +165,13 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        
     	        if (SHOWLOKASI.equals("Y"))
     	        {
-    	        	generateNotificationCustomLayoutAGC(context, message, phid);
+    	        	//bentuk custom
+    	        	//===============
+    	        	//generateNotificationCustomLayoutAGC(context, message, phid);
+    	        	
+    	        	//bentuk standard
+    	        	//===============
+    	        	generateNotificationAGC(context, message, phid);
     	        }
     	        else if (LOCATIONREQUEST.equals("Y"))
     	        {
@@ -173,7 +179,13 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        }
     	        else 
     	        {
-    	        	generateNotificationCustomLayout(context, message, accountid);
+    	        	//bentuk custom
+    	        	//===============
+    	        	//generateNotificationCustomLayout(context, message, accountid);
+    	        	
+    	        	//bentuk standard
+    	        	//===============
+    	        	generateNotificationStandard (context, message, accountid);
     	        }
     	        
     	        /*
@@ -193,6 +205,10 @@ public class GCMIntentService extends GCMBaseIntentService  {
 
     }
 
+    
+    
+     
+    
     /**
      * Method called on receiving a deleted message
      * */
@@ -235,6 +251,9 @@ public class GCMIntentService extends GCMBaseIntentService  {
     /**
      * Issues a notification to inform the user that server has sent a message.
      */
+    
+    
+    
     private static void generateNotification(Context context, String message) {
         
     	//int icon = R.drawable.komlogoborder;
@@ -307,6 +326,8 @@ public class GCMIntentService extends GCMBaseIntentService  {
     
 
     
+   
+    
     private void generateNotificationCustomLayoutAGC_SENDLOCATION (Context context, String phid) {
     	
     		//terus dapatkan coordinat dan call API 
@@ -318,7 +339,55 @@ public class GCMIntentService extends GCMBaseIntentService  {
 
     }
     
-    
+   private void generateNotificationAGC (Context context, String message, String phid) {
+        
+    	//int icon = R.drawable.komlogoborder;
+    	int icon = R.drawable.camsagc3white;
+    	
+    	
+        long when = System.currentTimeMillis();
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(icon, message, when);
+        
+        String title = context.getString(R.string.app_name);
+        
+        Intent notificationIntent = new Intent(context, ShowLocationActivity.class);
+        // set intent so it does not start a new activity
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        notificationIntent.putExtra("phid", phid);
+    	
+        
+        
+        //PendingIntent contentIntent = PendingIntent.getActivity(context, 7, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    	
+        
+        
+        PendingIntent intent =
+                PendingIntent.getActivity(context, 9, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notification.setLatestEventInfo(context, title, message, intent);
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        
+        // Play default notification sound
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        
+        //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
+        
+        // Vibrate if vibrate is enabled
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        notificationManager.notify(9, notification);      
+
+        
+        int nilai = getBadgeLocal();
+        nilai = nilai + 1;
+        setBadge(context, nilai);
+        
+    }
+
+
+
+
+   
     private void generateNotificationCustomLayoutAGC (Context context, String message, String phid) {
     	
     	
@@ -553,6 +622,58 @@ public class GCMIntentService extends GCMBaseIntentService  {
         setBadge(context, nilai);
 
     }
+    
+    
+    
+    private  void generateNotificationStandard (Context context, String message, String accountid) {
+    	
+		SharedPreferences settingsS = getSharedPreferences("CAMSAGC", 0);
+		SharedPreferences.Editor editor = settingsS.edit();
+		editor.putString("CAMSAGC_GCM_OPEN_ACCOUNTID", accountid); 
+		editor.commit();
+    	
+       	//int icon = R.drawable.komlogoborder;
+    	int icon = R.drawable.camsagc3white;
+    	
+    	
+        long when = System.currentTimeMillis();
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(icon, message, when);
+        
+        String title = context.getString(R.string.app_name);
+        
+        Intent notificationIntent = new Intent(context, MainActivity.class);
+        // set intent so it does not start a new activity
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //notificationIntent.putExtra("phid", phid);
+    	
+        
+        
+        //PendingIntent contentIntent = PendingIntent.getActivity(context, 7, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    	
+        
+        
+        PendingIntent intent =
+                PendingIntent.getActivity(context, 7, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notification.setLatestEventInfo(context, title, message, intent);
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        
+        // Play default notification sound
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        
+        //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
+        
+        // Vibrate if vibrate is enabled
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        notificationManager.notify(0, notification);      
+
+        
+        int nilai = getBadgeLocal();
+        nilai = nilai + 1;
+        setBadge(context, nilai);
+
+    }    
 
     private  void generateNotificationCustomLayout2 (Context context, String message, String accountid, String contactinteractionid) {
     	
