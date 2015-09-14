@@ -25,6 +25,22 @@ var GLOBAL_IP = "http://10.17.14.210/cams";
 						STF_GAMBAR_FILE = encodeURIComponent(jsondata[0].STF_GAMBAR_FILE);
 					}
 					
+
+					
+					
+					var TOTAL_OWN_INPROCESS=jsondata[0].TOTAL_OWN_INPROCESS;
+					var TOTAL_OWN_APPROVED=jsondata[0].TOTAL_OWN_APPROVED;
+					var TOTAL_OWN_REJECTED=jsondata[0].TOTAL_OWN_REJECTED;
+
+					var TOTAL_APPROVER_INPROCESS=jsondata[0].TOTAL_APPROVER_INPROCESS;
+					var TOTAL_APPROVER_APPROVED=jsondata[0].TOTAL_APPROVER_APPROVED;
+					var TOTAL_APPROVER_REJECTED=jsondata[0].TOTAL_APPROVER_REJECTED;
+					
+					
+					
+					var TOTAL_SUPPORTER_INPROCESS=jsondata[0].TOTAL_SUPPORTER_INPROCESS;
+					var TOTAL_SUPPORTER_SUPPORTTED=jsondata[0].TOTAL_SUPPORTER_SUPPORTTED;
+					var TOTAL_SUPPORTER_NOTSUPPORTED=jsondata[0].TOTAL_SUPPORTER_NOTSUPPORTED;
 					
 					
 					var myroles = "";
@@ -47,6 +63,20 @@ var GLOBAL_IP = "http://10.17.14.210/cams";
 					else if (key == "PEN_BHGN_ID") { myvalue = PEN_BHGN_ID; }
 					else if (key == "BAHAGIAN") { myvalue = BAHAGIAN; }
 					else if (key == "FLOW_ID") { myvalue = FLOW_ID; }
+
+					else if (key == "TOTAL_OWN_INPROCESS") { myvalue = TOTAL_OWN_INPROCESS; }
+					else if (key == "TOTAL_OWN_APPROVED") { myvalue = TOTAL_OWN_APPROVED; }
+					else if (key == "TOTAL_OWN_REJECTED") { myvalue = TOTAL_OWN_REJECTED; }
+
+					else if (key == "TOTAL_APPROVER_INPROCESS") { myvalue = TOTAL_APPROVER_INPROCESS; }
+					else if (key == "TOTAL_APPROVER_APPROVED") { myvalue = TOTAL_APPROVER_APPROVED; }
+					else if (key == "TOTAL_APPROVER_REJECTED") { myvalue = TOTAL_APPROVER_REJECTED; }
+					
+					else if (key == "TOTAL_SUPPORTER_INPROCESS") { myvalue = TOTAL_SUPPORTER_INPROCESS; }
+					else if (key == "TOTAL_SUPPORTER_SUPPORTTED") { myvalue = TOTAL_SUPPORTER_SUPPORTTED; }
+					else if (key == "TOTAL_SUPPORTER_NOTSUPPORTED") { myvalue = TOTAL_SUPPORTER_NOTSUPPORTED; }
+
+					
 					else if (key == "STF_GAMBAR_FILE") { myvalue = STF_GAMBAR_FILE; }
 					
 					else if (key == "ROLE_PENGGUNA") 
@@ -94,7 +124,7 @@ var GLOBAL_IP = "http://10.17.14.210/cams";
     
 	function loading(msg) 
 	{
-		alert('masuk loading function');
+		//alert('masuk loading function');
     	cordova.plugins.pDialog.init({
     	    theme : 'HOLO_LIGHT',
     	    progressStyle : 'SPINNER',

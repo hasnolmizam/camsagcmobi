@@ -124,7 +124,7 @@ var GLOBAL_IP = "http://10.17.14.210/cams";
     
 	function loading(msg) 
 	{
-		alert('masuk loading function');
+		//alert('masuk loading function');
     	cordova.plugins.pDialog.init({
     	    theme : 'HOLO_LIGHT',
     	    progressStyle : 'SPINNER',

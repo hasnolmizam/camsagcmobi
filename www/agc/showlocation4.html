@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Google Maps JavaScript API v3 Example: Map Simple</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+        <meta charset="utf-8"/>
+        <style>
+            html, body, #map_canvas {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            }
+        </style>
+        <link rel="stylesheet" href="materialize/css/materialize.min.css" />
+        <link rel="stylesheet" href="css/custom.css" >
+		<script src='js/jquery2.1.0.min.js'></script>
+        <script src="js/custom.js"></script>
+        <script src="materialize/js/materialize.min.js"></script>
+		<script src="js/cams_script.js"></script>
+        
+        <!-- <script src="../cordova.js"></script> -->
+		<script src="../cordova.js"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+        <script>
+            var map;
+			var PH_TKH_CHECK_IN = "";
+			var STF_NAMA = "";
+			var PH_TKH_KELUAR = "";
+			var PH_MASA_KELUAR = "";
+			var PH_MASA_MASUK = "";
+			var PH_TUJUAN = "";
+			var STF_GAMBAR_FILE_PEMOHON = "";
+
+            function initialize(lat, lng) {
+            	
+				    var myLatlng = new google.maps.LatLng(lat,lng);
+				    //var myLatlngDown = new google.maps.LatLng(lat - 0.0001,lng);
+		            var mapOptions = {
+		            	zoom: 15,
+		            	center: myLatlng,
+		            	mapTypeId: google.maps.MapTypeId.ROADMAP
+		            };
+					  
+		            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+		            map.panBy(0, -100);
+		            
+					var marker = new google.maps.Marker({
+					      position: myLatlng,
+					      map: map,
+					      icon: "http://coralhr.nc.com.my/enchr/images/map_male.png",
+					      title: STF_NAMA
+					  });
+
+					var nicefilename=encodeURIComponent(STF_GAMBAR_FILE_PEMOHON); 
+					//baca semua string termasuk space character contoh mohd hanafi.png akan dibaca
+					//mohd%20hanafi.png
+				    var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
+
+					  var contentString = '<div id="content">'+
+				      '<div id="siteNotice">'+
+				      '</div>'+
+				      '<span class="profile-pic-map" style="background-image: url(' + urlgambar + ')"></span>' + 
+				      '<br><br><br><br><font size=3 id="firstHeading"><b>' + STF_NAMA + '</b></font>'+
+				      '<div id="bodyContent">'+
+				      '<p><b>Tarikh Keluar : </b> ' + PH_TKH_KELUAR + '<br>' +
+				      '<b>Masa Keluar : </b> ' + PH_MASA_KELUAR + '<br>' +
+				      '<b>Masa Masuk : </b> ' + PH_MASA_MASUK + '<br>' +
+				      '<b>Tujuan : </b> ' + PH_TUJUAN + '<br></p>'+
+				      '</div>'+
+				      '</div>';
+
+				  var infowindow = new google.maps.InfoWindow({
+				    content: contentString
+				  });
+				  
+				  infowindow.open(map, marker);
+				  
+					
+					
+            	}
+             
+            //google.maps.event.addDomListener(window, 'load', initialize);
+
+            
+            
+            
+            
+            
+            
+            
+            
+			function initialize_cordova()
+			{
+				document.addEventListener("deviceready", deviceready, true);
+			}
+
+
+			function deviceready()
+			{
+				
+				
+				 document.addEventListener("backbutton", function(e){
+			           navigator.app.exitApp();
+				    }, false);
+
+				 
+				document.getElementById('map_canvas').innerHTML = '' ;
+				document.addEventListener("backbutton", function() {
+        					history.go(-1);
+        					//window.location.href = "mainpage.html";
+    						}, false);
+
+				document.addEventListener("offline", 
+						function(){ 
+								alert('Internet Connection not available.')
+							}, false);
+
+				document.addEventListener("online", 
+						function(){ 
+								//OK
+							}, false);				
+			
+				/*
+				if(navigator.network.connection.type != Connection.NONE) {	
+			        var optionsZ = { timeout: 15000 , frequency : 1, enableHighAccuracy: true, maximumAge: 3000 };
+			        watchID = navigator.geolocation.watchPosition(onSuccess, onError, optionsZ);
+			    } else {
+			        alert('Internet Connection not available.')
+			    }
+				*/
+				
+				//alert("aaaaaaaaaaaaaaaaaa");
+			
+				var phid = gup("phid");
+				//call API utk dapakan details lng & lat..
+				
+	        	loading("Sila Tunggu...");
+				//alert("phid==" + phid);
+				//alert("GLOBAL_IP=" + GLOBAL_IP);
+
+	        	//navigator.notification.activityStart("Your message....", "loading");
+	        	
+				var TX = Math.random(); 
+				$.ajax({
+			        dataType: "json",
+					type: "POST",
+					url: GLOBAL_IP + "/api_generator.php?api_name=get_detail_application_by_id&TX=" + TX,
+					data: 
+						{   
+							id  : phid
+						},
+						cache: false,
+						timeout: 30 * 1000,
+						error: function(xhr, textStatus, errorThrown){
+							unloading();
+							alert('connection error ' + textStatus +  ' ' + errorThrown ); 
+							return false;
+						},
+						success: function(data) {
+							//cordova.plugins.pDialog.dismiss();
+							//navigator.notification.activityStop();
+	                        unloading();
+	                        
+	                        //data downloaded so we call parseJSON function and pass downloaded data
+							//alert(data);
+	                        var json = $.parseJSON(data);
+							
+							//alert("2");
+							var jsondata = $.parseJSON(json.data);
+							//alert(jsondata);						
+							
+							if (jsondata.length > 0)
+							{
+								
+								
+								var PH_LATITUD_CHECK_IN = jsondata[0].PH_LATITUD_CHECK_IN;
+								var PH_LONGITUD_CHECK_IN = jsondata[0].PH_LONGITUD_CHECK_IN;
+								
+								
+								PH_TKH_CHECK_IN = jsondata[0].PH_TKH_CHECK_IN;
+								STF_NAMA = jsondata[0].STF_NAMA;
+								PH_TKH_KELUAR = jsondata[0].PH_TKH_KELUAR;
+								PH_MASA_KELUAR = jsondata[0].PH_MASA_KELUAR;
+								PH_MASA_MASUK = jsondata[0].PH_MASA_MASUK;
+								PH_TUJUAN = jsondata[0].PH_TUJUAN;
+								STF_GAMBAR_FILE_PEMOHON = jsondata[0].STF_GAMBAR_FILE_PEMOHON;
+								
+								
+								//window.location.href = "dashboard.html";
+								
+								//alert("PH_LATITUD_CHECK_IN=" + PH_LATITUD_CHECK_IN);
+								//alert("PH_LONGITUD_CHECK_IN=" + PH_LONGITUD_CHECK_IN);
+								
+								//var options = {
+							    //    maximumAge: 600000,         // We accept positions whose age is not greater than 10 minutes.
+							    //    timeout: 30000,             // if there is no cached position available at all, the user agent
+							    //                                // will immediately invoke the error callback after "timeout" 5 seconds
+							    //    enableHighAccuracy: false   // true, if you need high accuracy
+							    //};
+					    
+								
+								
+								google.maps.event.addDomListener(window, 'load', initialize(PH_LATITUD_CHECK_IN, PH_LONGITUD_CHECK_IN));
+								
+								
+								/*
+									var onSuccess = function(position) {
+									    var myLat = PH_LATITUD_CHECK_IN;
+									    var myLong = PH_LONGITUD_CHECK_IN;
+						
+						
+									  var myLatlng = new google.maps.LatLng(myLat,myLong);
+									  var mapOptions = {
+									    zoom: 15,
+									    center: myLatlng
+									  }
+										
+									  var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+									  var marker = new google.maps.Marker({
+									      position: myLatlng,
+									      map: map,
+									      icon: "http://coralhr.nc.com.my/enchr/images/map_male.png",
+									      title: 'Saya'
+									  });
+						
+						
+								};
+								
+								*/
+								
+							}
+							
+
+	                    }
+						
+	                });				
+				
+				
+			
+			
+			}
+			
+			            
+            
+            
+            
+            
+            
+          </script>
+    </head>
+    <body onload="initialize_cordova();">
+        <div id="map_canvas"></div>
+    </body>
+</html>

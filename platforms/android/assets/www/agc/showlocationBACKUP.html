@@ -6,16 +6,14 @@
 		<title>AGC CAMS</title>
 
         <link rel="stylesheet" href="materialize/css/materialize.min.css" />
-		<!-- 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-         -->
-         <link rel="stylesheet" href="css/custom.css" >
+        <link rel="stylesheet" href="css/custom.css" >
 		<script src='js/jquery2.1.0.min.js'></script>
         <script src="js/custom.js"></script>
         <script src="materialize/js/materialize.min.js"></script>
 		<script src="js/cams_script.js"></script>
         
         <!-- <script src="../cordova.js"></script> -->
+		<script src="../cordova.js"></script>
 		<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
 
@@ -66,6 +64,7 @@
 				
 	        	loading("Sila Tunggu...");
 				alert("phid==" + phid);
+				alert("GLOBAL_IP=" + GLOBAL_IP);
 
 	        	//navigator.notification.activityStart("Your message....", "loading");
 	        	
@@ -117,9 +116,15 @@
 							        enableHighAccuracy: false   // true, if you need high accuracy
 							    };
 					    
-									var onSuccess = function(position) {
-								    var myLat = PH_LATITUD_CHECK_IN;
-								    var myLong = PH_LONGITUD_CHECK_IN;
+
+								
+								
+						        var watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+
+								
+								var onSuccess = function(position) {
+									    var myLat = PH_LATITUD_CHECK_IN;
+									    var myLong = PH_LONGITUD_CHECK_IN;
 						
 						
 									  var myLatlng = new google.maps.LatLng(myLat,myLong);
@@ -163,9 +168,10 @@
 
     </head>
 	<body onload="initialize();">
-	<script src="../cordova.js"></script>
+	
 
-	<div id="map_canvas" name="map_canvas" style="width:100%; height:80%;" ></div>
+	<div id="map_canvas" name="map_canvas" style="width:200px; height:200px;" ></div>
+	<!-- <div id="map_canvas_" name="map_canvas_" style="width:100%; height:80%;" ></div>-->
 	<center><h2>INI IALAH LOKASI SAYA SEKARANG...</h2></center>
 
     </body>

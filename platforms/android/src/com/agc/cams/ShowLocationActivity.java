@@ -95,8 +95,10 @@ public class ShowLocationActivity extends CordovaActivity
         // Set by <content src="index.html" /> in config.xml
         //super.loadUrl(Config.getStartUrl());
   
-		String urlphonegap = "file:///android_asset/www/agc/showlocation.html?phid="+ phid;
-    	
+		//String urlphonegap = "file:///android_asset/www/agc/showlocation.html?phid="+ phid;
+    	//String urlphonegap = "file:///android_asset/www/agc/showlocationBACKUP.html?phid="+ phid;
+    	String urlphonegap = "file:///android_asset/www/agc/showlocation4.html?phid="+ phid;
+		
         super.loadUrl(urlphonegap);
     }
     

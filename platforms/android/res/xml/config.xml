@@ -58,6 +58,8 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <access origin="*.google.com" />
+    <access origin="*.googleapis.com" />
     <preference name="SplashScreen" value="splash_agc" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="SplashMaintainAspectRatio" value="true" />
