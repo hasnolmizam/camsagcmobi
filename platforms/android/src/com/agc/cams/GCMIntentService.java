@@ -25,7 +25,6 @@ import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.google.android.gcm.GCMBaseIntentService;
 //import android.speech.tts.TextToSpeech;
@@ -342,7 +341,10 @@ public class GCMIntentService extends GCMBaseIntentService  {
         
         
         //int icon = R.drawable.komlogoborder;
-        int icon = R.drawable.mdeccrm3;
+        //int icon = R.drawable.mdeccrm3;
+        //
+        int icon = R.drawable.camsagc3white;
+        
         
         //CharSequence tickerText = "Happy Birthday!";
         long when = System.currentTimeMillis();
@@ -357,8 +359,10 @@ public class GCMIntentService extends GCMBaseIntentService  {
 				        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_notification);
 				    	//contentView.setImageViewResource(R.id.image, R.drawable.komlogopng);
 				        //contentView.setImageViewResource(R.id.image, R.drawable.komlogopng);
-				        contentView.setImageViewResource(R.id.image, R.drawable.mdeccrm3);
-				    	
+				        
+				        //contentView.setImageViewResource(R.id.image, R.drawable.mdeccrm3);
+				        contentView.setImageViewResource(R.id.image, R.drawable.camsagc3);
+				        
 				        
 				    	contentView.setTextViewText(R.id.title, "" + message);
 				    	//contentView.setTextViewText(R.id.text, "TX:" + message);
@@ -455,7 +459,9 @@ public class GCMIntentService extends GCMBaseIntentService  {
         
         
         //int icon = R.drawable.komlogoborder;
-        int icon = R.drawable.mdeccrm3;
+        //int icon = R.drawable.mdeccrm3;
+        int icon = R.drawable.camsagc3white;
+        
         
         //CharSequence tickerText = "Happy Birthday!";
         long when = System.currentTimeMillis();
@@ -470,8 +476,11 @@ public class GCMIntentService extends GCMBaseIntentService  {
 				        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_notification);
 				    	//contentView.setImageViewResource(R.id.image, R.drawable.komlogopng);
 				        //contentView.setImageViewResource(R.id.image, R.drawable.komlogopng);
-				        contentView.setImageViewResource(R.id.image, R.drawable.mdeccrm3);
-				    	
+				        
+				        //contentView.setImageViewResource(R.id.image, R.drawable.mdeccrm3);
+				        contentView.setImageViewResource(R.id.image, R.drawable.camsagc3);
+				        
+				        
 				        
 				    	contentView.setTextViewText(R.id.title, "" + message);
 				    	//contentView.setTextViewText(R.id.text, "TX:" + message);
@@ -569,7 +578,9 @@ public class GCMIntentService extends GCMBaseIntentService  {
         
         
         //int icon = R.drawable.komlogoborder;
-        int icon = R.drawable.mdeccrm3;
+        //int icon = R.drawable.mdeccrm3;
+        int icon = R.drawable.camsagc3white;
+        
         
         //CharSequence tickerText = "Happy Birthday!";
         long when = System.currentTimeMillis();
@@ -584,7 +595,10 @@ public class GCMIntentService extends GCMBaseIntentService  {
 				        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_notification);
 				    	//contentView.setImageViewResource(R.id.image, R.drawable.komlogopng);
 				        //contentView.setImageViewResource(R.id.image, R.drawable.komlogopng);
-				        contentView.setImageViewResource(R.id.image, R.drawable.mdeccrm3);
+				        
+				        
+				        //contentView.setImageViewResource(R.id.image, R.drawable.mdeccrm3);
+				        contentView.setImageViewResource(R.id.image, R.drawable.camsagc3);
 				    	
 				        
 				    	contentView.setTextViewText(R.id.title, "" + message);
