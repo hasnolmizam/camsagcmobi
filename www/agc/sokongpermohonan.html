@@ -59,14 +59,6 @@
                                 <div class="col s12 m2 label-on-small-only">Bahagian</div>
                                 <div id="bahagian" name="bahagian" class="col s12 m5"></div>
                             </div>
-                            <div id="penyokong" name="penyokong" class="row">
-                                <div class="col s12 m2 label-on-small-only">Penyokong</div>
-                                <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
-                            </div>
-							<div id="pelulus" name="pelulus" class="row">
-                                <div class="col s12 m2 label-on-small-only">Pelulus</div>
-                                <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
-                            </div>  
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Tujuan</div>
 								<div id="tujuan" name="tujuan" type="text" class="col s12 m5"></div>
@@ -83,6 +75,14 @@
                                 <div class="col s12 m2 label-on-small-only">Masa Masuk</div>
 								<div id="masa_masuk" name="masa_masuk" type="text" class="col s12 m5"></div>
                             </div>
+                            <div id="penyokong" name="penyokong" class="row">
+                                <div class="col s12 m2 label-on-small-only">Penyokong</div>
+                                <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
+                            </div>
+							<div id="pelulus" name="pelulus" class="row">
+                                <div class="col s12 m2 label-on-small-only">Pelulus</div>
+                                <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
+                            </div>  
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Lampiran</div>
                                 <div class="col s12 m5 file-field">
@@ -128,8 +128,7 @@
 					getData();
 					getApprover(getSessionStorage("PEN_BHGN_ID"));
 					getDetailApplicationById (); 
-					$('#status_sokongan').material_select(); //enable dropdown menu
-										
+															
 					var today = new Date();
 
 					$("#dtBox").DateTimePicker({timeFormat:'HH:mm', setButtonContent:'Set', clearButtonContent:'Padam', titleContentTime:'MASA', titleContentDate:'TARIKH', 
@@ -384,7 +383,7 @@ function isSupported()
                 });
 			
         }  //end isRejected() 		
-	
+		
         </script>
 
  
