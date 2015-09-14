@@ -11,6 +11,10 @@
         <script src="js/custom.js"></script>
         <script src="materialize/js/materialize.min.js"></script>
 		<script src="js/cams_script.js"></script>
+		<script src="radiobttn/radiobttn.js" type="text/javascript" charset="utf-8"></script>
+		<script src="radiobttn/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
+		<script src="radiobttn/iphone-style-checkboxes.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8" />
 		
 		
     </head>
@@ -44,6 +48,7 @@
                 </div>
             </nav>
         </div>
+
 
         <div class="myContainer">
             <div class="row">
@@ -108,17 +113,13 @@
                             </div>
 							<div class="row">
                                 <div class="col s12 m2 label-on-small-only myInputAlign">Status Kelulusan</div>
-								<div class="col s12 m5">
-                                    <select id="status_kelulusan" name="status_kelulusan">
-									<option value="" selected>Sila Pilih</option>
-									<option value="5">Diluluskan</option>
-									<option value="6">Tidak diluluskan</option>
-									</select>
-                                </div>
+								<div id="status_kelulusan" name="status_kelulusan" type="text" class="col s12 m5"></div>
                             </div>
                             <div class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplicationByApprover();">KEMAS KINI</button>
+									<button id="update-btn" class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isApprovedByApprover();">DILULUSKAN</button>
+									<button id="update-btn" class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejectedByApprover();">TIDAK DILULUSKAN</button>								
+									
 								</div>
                             </div>
                         </form>
@@ -301,6 +302,7 @@
 							var ulasan_penyokong = jsondata[0].PH_KOMEN_PENYOKONG;
 							var status_sokongan = jsondata[0].STATUS_PENYOKONG;
 							var nama_pelulus = jsondata[0].STF_NAMA_PELULUS;
+							var status_kelulusan = jsondata[0].STATUS_PELULUS;
                             var ulasan_pelulus = jsondata[0].PH_KOMEN_PELULUS; 							
 							var tarikh = jsondata[0].PH_TKH_KELUAR;
 								tarikh = tarikh.replace ("/","-");
@@ -327,52 +329,34 @@
 						 $('#nama_pelulus').html(nama_pelulus);
 						 $('#tarikh_kelulusan').html(tarikh_kelulusan);
 						 $('#ulasan_pelulus').html(ulasan_pelulus);
-						 $('#status_kelulusan').val(status_kelulusan);
-						 
-							var status_kelulusan = jsondata[0].PH_STATUS_ID_PELULUS;
-							
-						 if (status_kelulusan != ""){
-									$('#status_kelulusan').val(status_kelulusan);
-									$('#status_kelulusan').material_select();
+						 $('#status_kelulusan').html(status_kelulusan);
+						 							
+						/*if (status_kelulusan != ""){
+									//$('#status_kelulusan').val(status_kelulusan);
+									//$('#status_kelulusan').material_select();
 									
-								 }
-						if (ulasan_pelulus!= "" && status_kelulusan != ""){
-						     $('#status_kelulusan').val(status_kelulusan);
-							 $('#ulasan_pelulus').html(ulasan_pelulus);
-							 $("#update-btn").hide();
-							 $("#status_kelulusan").hide();
-							 
-						} 
-						
-                         }
+								 } */
+					}
 					
 					}
                 });
 			
         }   
-		
-		/*function sokong(phid)
+		 
+function isApprovedByApprover() 
 		{
-				//alert('saya di kemaskiniPermohonan');
-				window.location.href = "kemaskinipermohonan.html?phid=" + phid;
-		}  */
-		
-		function updateApplicationByApprover() 
-		{
-         		//alert($('#status_kelulusan').val());
-				//return false;
+
 				var TX = Math.random(); 
-				
+				var result = 5;
                 $.ajax({
                     url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_approver&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
-						//ph_id, stf_username, status_id, comment
-						
+
 						ph_id: gup("phid"),
 						stf_username: $('#stf_username').val(),
-						status_id:$('#status_kelulusan').val(),
+						status_id:result,
 						comment: $('#ulasan_pelulus').val()
 					},
 					cache: false,
@@ -390,9 +374,43 @@
                     }
                 });
 			
-        }   //end  updateApplicationByapprover()
-          
+        }   //end  isApprovedByApprover
+
+	function isRejectedByApprover() 
+		{
+
+				var TX = Math.random(); 
+				var result = 6;
+                $.ajax({
+                    url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_approver&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+
+						ph_id: gup("phid"),
+						stf_username: $('#stf_username').val(),
+						status_id:result,
+						comment: $('#ulasan_pelulus').val()
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+                        
+						window.location.href = "dashboard.html?nextpage=kelulusan";
+                       
+													
+                    }
+                });
+			
+        }   //end  isRejectedByApprover
+        		 
         </script>
+
 
  
     </body>
