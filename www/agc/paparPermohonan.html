@@ -362,10 +362,10 @@
 							  $("#checkin-btn").show();
 							}						
 						   
-                           if (lat!=""){  //hide check-in button once pinned location.
+                           if (lat!="" && lng!="" && status_id_permohonan==5 ){  //hide check-in button once pinned location.
 						   // means all buttons are hidden. $("#checkin-btn").hide();
 						   $("#change-btn").hide();
-						   }
+						   } 
                          
 						 $('#nama_penyokong').html(nama_penyokong);
 						 $('#ulasan_penyokong').html(ulasan_penyokong);
