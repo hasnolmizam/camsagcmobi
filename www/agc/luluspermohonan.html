@@ -64,6 +64,22 @@
                                 <div class="col s12 m2 label-on-small-only">Bahagian</div>
                                 <div id="bahagian" name="bahagian" class="col s12 m5"></div>
                             </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Tujuan</div>
+								<div id="tujuan" name="tujuan" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Tarikh</div>
+                                <div id="tkh_keluar" name="tkh_keluar" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Masa Keluar</div>
+								<div id="masa_keluar" name="masa_keluar" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Masa Masuk</div>
+								<div id="masa_masuk" name="masa_masuk" type="text" class="col s12 m5"></div>
+                            </div>
                             <div id="penyokong" name="penyokong" class="row">
                                 <div class="col s12 m2 label-on-small-only">Penyokong</div>
                                 <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
@@ -81,22 +97,6 @@
                                 <div id="ulasan_penyokong" name="ulasan_penyokong" class="col s12 m5"></div>
                             </div>  
                             <div class="row">
-                                <div class="col s12 m2 label-on-small-only">Tujuan</div>
-								<div id="tujuan" name="tujuan" type="text" class="col s12 m5"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 m2 label-on-small-only">Tarikh</div>
-                                <div id="tkh_keluar" name="tkh_keluar" type="text" class="col s12 m5"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 m2 label-on-small-only">Masa Keluar</div>
-								<div id="masa_keluar" name="masa_keluar" type="text" class="col s12 m5"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 m2 label-on-small-only">Masa Masuk</div>
-								<div id="masa_masuk" name="masa_masuk" type="text" class="col s12 m5"></div>
-                            </div>
-                            <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Lampiran</div>
                                 <div class="col s12 m5 file-field">
                                     <input class="file-path" type="text" disabled/>
@@ -106,20 +106,18 @@
                                     </div>
                                 </div>
                             </div>
+							<div id="pelulus" name="pelulus" class="row">
+                                <div class="col s12 m2 label-on-small-only">Keputusan Pelulus</div>
+                                <div id="status_kelulusan" name="status_kelulusan" class="col s12 m5"></div>
+                            </div>
 							<div class="row">
                                 <div class="col s12 m2 label-on-small-only">Ulasan Pelulus</div>
 								<div class="col s12 m5"><textarea id="ulasan_pelulus" name="ulasan_pelulus" class="materialize-textarea"></textarea></div>
-                               
                             </div>
-							<div class="row">
-                                <div class="col s12 m2 label-on-small-only myInputAlign">Status Kelulusan</div>
-								<div id="status_kelulusan" name="status_kelulusan" type="text" class="col s12 m5"></div>
-                            </div>
-                            <div class="row">
+                            <div id="result-btn" name="result-btn" class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button id="update-btn" class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isApprovedByApprover();">DILULUSKAN</button>
-									<button id="update-btn" class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejectedByApprover();">TIDAK DILULUSKAN</button>								
-									
+									<button class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isApprovedByApprover();">DILULUSKAN</button>
+									<button class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejectedByApprover();">TIDAK DILULUSKAN</button>								
 								</div>
                             </div>
                         </form>
@@ -140,8 +138,7 @@
 					getData();
 					getApprover(getSessionStorage("PEN_BHGN_ID"));
 					getDetailApplicationById (); 
-					$('#status_kelulusan').material_select(); //enable dropdown menu
-										
+															
 					var today = new Date();
 
 					$("#dtBox").DateTimePicker({timeFormat:'HH:mm', setButtonContent:'Set', clearButtonContent:'Padam', titleContentTime:'MASA', titleContentDate:'TARIKH', 
@@ -331,11 +328,10 @@
 						 $('#ulasan_pelulus').html(ulasan_pelulus);
 						 $('#status_kelulusan').html(status_kelulusan);
 						 							
-						/*if (status_kelulusan != ""){
-									//$('#status_kelulusan').val(status_kelulusan);
-									//$('#status_kelulusan').material_select();
+						if (status_kelulusan != ""){
+								 $("#result-btn").hide();		
 									
-								 } */
+								 } 
 					}
 					
 					}
