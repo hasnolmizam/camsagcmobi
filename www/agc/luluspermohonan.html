@@ -322,7 +322,10 @@
 							var masa_masuk = jsondata[0].PH_MASA_MASUK;
 							var lat = jsondata[0].PH_LATITUD_CHECK_IN;
 							var lng = jsondata[0].PH_LONGITUD_CHECK_IN;
+							lat = lat.trim();
+							lng = lng.trim();
 							
+														
 						 $('#nama_pemohon').html(nama_pemohon);
 						 $('#tkh_keluar').html(tarikh);
 						 $('#tujuan').html(sebab);
@@ -338,7 +341,8 @@
 						 $('#status_kelulusan').html(status_kelulusan);
 						 $('#latitud').val(lat);
 						 $('#longitud').val(lng);
-						 							
+						 
+												 
 						if (status_kelulusan == "DILULUSKAN" || status_kelulusan == "TIDAK DILULUSKAN"  ){
 								 $("#result-btn").hide();
 								 $("#show-location").hide();
@@ -350,12 +354,17 @@
 								 $("#show-location").hide();
 									
 								 }
-					    
-						if (lat!=="" && status_kelulusan == "DILULUSKAN"){
+
+						if (lat=="" && status_kelulusan == "DILULUSKAN"){
+						    $("#show-location").hide();
+						    $("#result-btn").hide();
+
+						} 
+						else if (lat!="" && status_kelulusan == "DILULUSKAN"){
 						    $("#show-location").show();
 						    $("#result-btn").hide();
+							
 						} 
-						
 					}
 					
 					}
