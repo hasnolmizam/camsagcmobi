@@ -27,6 +27,7 @@
                         <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
                         <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
                         <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+						<!--<li><button type="button" onclick="terminateApp();"><i class="mdi-action-lock left"></i>Log Keluar</button></li>-->
                     </ul>
                     <ul class="side-nav hide-on-med-and-down tablet-nav">
                         <li class="profile-container"><div class="profile-background"></div><span class="profile-pic"></span>
@@ -34,7 +35,8 @@
                         <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
                         <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
                         <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
-                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                         <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+						<!--<li><button type="button" onclick="terminateApp();"><i class="mdi-action-lock left"></i>Log Keluar</button></li>-->
                     </ul>
                 </div>
             </nav>
@@ -136,8 +138,8 @@
 							$('.profile-background').css('background-image', 'url(' + urlgambar + ')');
 							$('.profile-pic').css('background-image', 'url(' + urlgambar + ')');
 							
-														
-						
+							 
+				
 						}
 				
 				
@@ -189,9 +191,9 @@
                         '<div id="newApplicationBtn" name="newApplicationBtn" class="fixed-action-btn"><a href="permohonanBaru.html" class="btn-floating btn-large"><i class="mdi-content-add"></i></a></div>'+
                         '<div class="myListTitle">'+title+'</div>'+ //Tak perlu letak nama penuh mcm "Permohonan Terdahulu" sebab kat iPhone4 tak muat
                         '<div class="badge-container">'+
-                            '<span class="badge-inprocess">26</span>'+ //info statistik
-                            '<span class="badge-approaved">51</span>'+ //info statistik
-                            '<span class="badge-rejected">43</span>'+ //info statistik
+                            '<span class="badge-inprocess statistik'+title+'-inprocess"></span>'+ //info statistik
+                            '<span class="badge-approaved statistik'+title+'-approved"></span>'+ //info statistik
+                            '<span class="badge-rejected statistik'+title+'-rejected"></span>'+ //info statistik
                         '</div>'+
                         '<span class="close hide-on-med-and-up"><i class="mdi-content-clear"></i></span>'+
                     '</div>';
@@ -208,6 +210,7 @@
                     if (title=="Permohonan"){
 						ajaxResult = ajaxResult + '<span id=mylistapplication name=mylistapplication></span>';
 						getListOwnApplication(); //call function untuk senaraikan permohonan
+						
 					}
 					else if(title=="Sokongan"){ 
 						ajaxResult = ajaxResult + '<span id=to-support name=to-support></span>';
@@ -219,8 +222,7 @@
 						getApplicationToApprove();
 						$("#newApplicationBtn").hide();  //sembunyikan butang pautan ke permohonanbaru.html
 					}
-					
-					
+
 					/*	
 					ajaxResult = ajaxResult + '<div class="myListScroller" onscroll="myListScroll()" overflow-scroll="true">' +
 						'<ul class="myList">'+
@@ -277,7 +279,7 @@
 		        //start ajax request
 				//alert(getSessionStorage("STF_USERNAME"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_list_own_application&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_list_own_application&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -316,9 +318,16 @@
 								
 								myString = myString + '</ul></div>';
 								
-								//$(#myList).append(ul);
 								$('#mylistapplication').html(myString);
 								
+							//dapatkan statistik pemohon							
+						     var applyInProcess = getSessionStorage("TOTAL_OWN_INPROCESS");
+							 var applyIsApproved = getSessionStorage("TOTAL_OWN_APPROVED");
+							 var applyIsRejected = getSessionStorage("TOTAL_OWN_REJECTED");
+							 
+							 $('.statistikPermohonan-inprocess').html (applyInProcess);
+							 $('.statistikPermohonan-approved').html (applyIsApproved);
+							 $('.statistikPermohonan-rejected').html (applyIsRejected);
 								
 							} //end success: function(data)
 							
@@ -334,7 +343,7 @@
 		        //start ajax request
 				//alert(getSessionStorage("STF_USERNAME"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_list_application_to_support&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_list_application_to_support&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -373,7 +382,14 @@
 								myString = myString + '</ul></div>';
 								$('#to-support').html(myString);
 								
-								
+								//dapatkan statistik penyokong							
+						     var supportInProcess = getSessionStorage("TOTAL_SUPPORTER_INPROCESS");
+							 var IsSupported = getSessionStorage("TOTAL_SUPPORTER_SUPPORTTED");
+							 var IsNotSupported = getSessionStorage("TOTAL_SUPPORTER_NOTSUPPORTED");
+							 
+							 $('.statistikSokongan-inprocess').html (supportInProcess);
+							 $('.statistikSokongan-approved').html (IsSupported);
+							 $('.statistikSokongan-rejected').html (IsNotSupported);
 							} //end success: function(data)
 							
 														
@@ -388,7 +404,7 @@
 		        //start ajax request
 				//alert(getSessionStorage("STF_USERNAME"));
                 $.ajax({
-                    url: "http://10.17.14.210/cams/api_generator.php?api_name=get_list_application_to_approve&TX=" + TX,
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_list_application_to_approve&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
@@ -425,6 +441,16 @@
 								myString = myString + '</ul></div>';
 								$('#to-approve').html(myString);
 								
+										 
+							 
+							 //dapatkan statistik pelulus						
+						     var approvalInProcess = getSessionStorage("TOTAL_APPROVER_INPROCESS");
+							 var IsApproved = getSessionStorage("TOTAL_APPROVER_APPROVED");
+							 var IsNotApproved = getSessionStorage("TOTAL_APPROVER_REJECTED");
+							 //alert('in-process :'+ approvalInProcess);
+							 $('.statistikKelulusan-inprocess').html (approvalInProcess);
+							 $('.statistikKelulusan-approved').html (IsApproved);
+							 $('.statistikKelulusan-rejected').html (IsNotApproved);
 								
 							} //end success: function(data)
 							
@@ -447,6 +473,10 @@
 						{
 								window.location.href = "luluspermohonan.html?phid=" + phid;
 						}
+					
+				function terminateApp(){
+					navigator.app.exitApp();
+				}
 		
         </script>
     </body>

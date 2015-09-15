@@ -39,6 +39,18 @@ input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly
 .file-field .btn, .file-field .btn-large {
     left: 11px;
 }
+
+.btn-left {
+    float:left;
+	width:33%;
+	text-align:center;
+}
+.btn-right {
+    float:right;
+	width:65%;
+	text-align:center;
+}
+
 input[type=text]:disabled {
     border-bottom: 1px solid #C8C8C8;
 }
@@ -92,6 +104,20 @@ input[type=text]:disabled {
     left: 15px;
     position: absolute;
     top: calc(50% - 35px);
+    width: 70px;
+}
+
+
+.profile-pic-applicant {
+    background-position: center center;
+    background-size: auto 70px;
+    border: 2px solid white;
+    border-radius: 50%;
+    display: inline-block;
+    height: 70px;
+    right: 30px;
+    position: absolute;
+    top: 150px;
     width: 70px;
 }
 

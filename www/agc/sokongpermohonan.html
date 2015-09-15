@@ -51,6 +51,7 @@
                     <div class="card-panel myTitle">Permohonan Kebenaran Meninggalkan Pejabat Dalam Waktu Bekerja di Bawah Perintah AM 5 BAB G</div>
                     <div class="card-panel">
                         <form id="applicantdetail" name="applicantdetail" action="#">
+                        	<span class="profile-pic-applicant" id="profile-pic-applicant" name="profile-pic-applicant"></span>
 						    <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Nama Pemohon</div>
                                 <div id="nama_pemohon" name="nama_pemohon" class="col s12 m5"></div>
@@ -297,6 +298,12 @@
 							var masa_masuk = jsondata[0].PH_MASA_MASUK;
 							var status_sokongan = jsondata[0].PH_STATUS_ID_PENYOKONG;
 
+							
+							var STF_GAMBAR_FILE_PEMOHON = jsondata[0].STF_GAMBAR_FILE_PEMOHON;
+							var nicefilename=encodeURIComponent(STF_GAMBAR_FILE_PEMOHON); 
+						    var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
+						    $('#profile-pic-applicant').css('background-image', 'url(' + urlgambar + ')');
+							
                          
 						 $('#nama_pemohon').html(nama_pemohon);
 						 $('#nama_penyokong').html(nama_penyokong);

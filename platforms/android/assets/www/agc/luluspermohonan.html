@@ -11,6 +11,10 @@
         <script src="js/custom.js"></script>
         <script src="materialize/js/materialize.min.js"></script>
 		<script src="js/cams_script.js"></script>
+		<script src="radiobttn/radiobttn.js" type="text/javascript" charset="utf-8"></script>
+		<script src="radiobttn/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
+		<script src="radiobttn/iphone-style-checkboxes.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8" />
 		
 		
     </head>
@@ -45,12 +49,14 @@
             </nav>
         </div>
 
+
         <div class="myContainer">
             <div class="row">
                 <div class="col s12">
                     <div class="card-panel myTitle">Permohonan Kebenaran Meninggalkan Pejabat Dalam Waktu Bekerja di Bawah Perintah AM 5 BAB G</div>
                     <div class="card-panel">
                         <form id="applicantdetail" name="applicantdetail" action="#">
+						    <span class="profile-pic-applicant" id="profile-pic-applicant" name="profile-pic-applicant"></span>
 						    <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Nama Pemohon</div>
                                 <div id="nama_pemohon" name="nama_pemohon" class="col s12 m5"></div>
@@ -58,6 +64,22 @@
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Bahagian</div>
                                 <div id="bahagian" name="bahagian" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Tujuan</div>
+								<div id="tujuan" name="tujuan" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Tarikh</div>
+                                <div id="tkh_keluar" name="tkh_keluar" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Masa Keluar</div>
+								<div id="masa_keluar" name="masa_keluar" type="text" class="col s12 m5"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m2 label-on-small-only">Masa Masuk</div>
+								<div id="masa_masuk" name="masa_masuk" type="text" class="col s12 m5"></div>
                             </div>
                             <div id="penyokong" name="penyokong" class="row">
                                 <div class="col s12 m2 label-on-small-only">Penyokong</div>
@@ -76,22 +98,6 @@
                                 <div id="ulasan_penyokong" name="ulasan_penyokong" class="col s12 m5"></div>
                             </div>  
                             <div class="row">
-                                <div class="col s12 m2 label-on-small-only">Tujuan</div>
-								<div id="tujuan" name="tujuan" type="text" class="col s12 m5"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 m2 label-on-small-only">Tarikh</div>
-                                <div id="tkh_keluar" name="tkh_keluar" type="text" class="col s12 m5"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 m2 label-on-small-only">Masa Keluar</div>
-								<div id="masa_keluar" name="masa_keluar" type="text" class="col s12 m5"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 m2 label-on-small-only">Masa Masuk</div>
-								<div id="masa_masuk" name="masa_masuk" type="text" class="col s12 m5"></div>
-                            </div>
-                            <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Lampiran</div>
                                 <div class="col s12 m5 file-field">
                                     <input class="file-path" type="text" disabled/>
@@ -101,27 +107,26 @@
                                     </div>
                                 </div>
                             </div>
+							<div id="pelulus" name="pelulus" class="row">
+                                <div class="col s12 m2 label-on-small-only">Keputusan Pelulus</div>
+                                <div id="status_kelulusan" name="status_kelulusan" class="col s12 m5"></div>
+                            </div>
 							<div class="row">
                                 <div class="col s12 m2 label-on-small-only">Ulasan Pelulus</div>
 								<div class="col s12 m5"><textarea id="ulasan_pelulus" name="ulasan_pelulus" class="materialize-textarea"></textarea></div>
-                               
                             </div>
-							<div class="row">
-                                <div class="col s12 m2 label-on-small-only myInputAlign">Status Kelulusan</div>
-								<div class="col s12 m5">
-                                    <select id="status_kelulusan" name="status_kelulusan">
-									<option id="pilihan" value="" selected>Sila Pilih</option>
-									<option value="5">Diluluskan</option>
-									<option value="6">Tidak diluluskan</option>
-									</select>
-                                </div>
-                            </div>
-                            <div class="row">
+                            <div id="result-btn" name="result-btn" class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplicationByApprover();">KEMAS KINI</button>
+									<button class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isApprovedByApprover(gup('phid'));">DILULUSKAN</button>
+									<button class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejectedByApprover(gup('phid'));">TIDAK DILULUSKAN</button>								
 								</div>
                             </div>
-                        </form>
+                            <div id="show-location" name="show-location" class="row">
+                                <div class="col s12 offset-m2 m10">  							
+									<button id="location-btn" class="btn-large waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="showLocation(gup('phid'));">PAPAR LOKASI</button>
+								</div>
+                            </div>                       
+					   </form>
                     </div>
                 </div>
             </div>
@@ -129,6 +134,8 @@
 
         <div id="dtBox"></div>
 		<span id="hidden"><input id="stf_username" name="stf_username" type="hidden"></span>
+		<span id="hidden"><input id="latitud" name="latitud" type="hidden"></span>
+		<span id="hidden"><input id="longitud" name="longitud" type="hidden"></span>
 		
 		
 		    <script>
@@ -139,8 +146,7 @@
 					getData();
 					getApprover(getSessionStorage("PEN_BHGN_ID"));
 					getDetailApplicationById (); 
-					$('#status_kelulusan').material_select(); //enable dropdown menu
-										
+															
 					var today = new Date();
 
 					$("#dtBox").DateTimePicker({timeFormat:'HH:mm', setButtonContent:'Set', clearButtonContent:'Padam', titleContentTime:'MASA', titleContentDate:'TARIKH', 
@@ -301,6 +307,7 @@
 							var ulasan_penyokong = jsondata[0].PH_KOMEN_PENYOKONG;
 							var status_sokongan = jsondata[0].STATUS_PENYOKONG;
 							var nama_pelulus = jsondata[0].STF_NAMA_PELULUS;
+							var status_kelulusan = jsondata[0].STATUS_PELULUS;
                             var ulasan_pelulus = jsondata[0].PH_KOMEN_PELULUS; 							
 							var tarikh = jsondata[0].PH_TKH_KELUAR;
 								tarikh = tarikh.replace ("/","-");
@@ -314,7 +321,17 @@
 							var sebab = jsondata[0].PH_TUJUAN;
 							var masa_keluar = jsondata[0].PH_MASA_KELUAR;
 							var masa_masuk = jsondata[0].PH_MASA_MASUK;
+							var lat = jsondata[0].PH_LATITUD_CHECK_IN;
+							var lng = jsondata[0].PH_LONGITUD_CHECK_IN;
+							lat = lat.trim();
+							lng = lng.trim();
 							
+							var STF_GAMBAR_FILE_PEMOHON = jsondata[0].STF_GAMBAR_FILE_PEMOHON;
+							var nicefilename=encodeURIComponent(STF_GAMBAR_FILE_PEMOHON); 
+						    var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
+						    $('#profile-pic-applicant').css('background-image', 'url(' + urlgambar + ')');
+
+						    
 						 $('#nama_pemohon').html(nama_pemohon);
 						 $('#tkh_keluar').html(tarikh);
 						 $('#tujuan').html(sebab);
@@ -327,50 +344,55 @@
 						 $('#nama_pelulus').html(nama_pelulus);
 						 $('#tarikh_kelulusan').html(tarikh_kelulusan);
 						 $('#ulasan_pelulus').html(ulasan_pelulus);
-						 $('#status_kelulusan').val(status_kelulusan);
+						 $('#status_kelulusan').html(status_kelulusan);
+						 $('#latitud').val(lat);
+						 $('#longitud').val(lng);
 						 
-							var status_kelulusan = jsondata[0].PH_STATUS_ID_PELULUS;
-							
-						 if (status_kelulusan != ""){
-									$('#status_kelulusan').val(status_kelulusan);
-									$('#status_kelulusan').material_select();
+
+						    
+						if (status_kelulusan == "DILULUSKAN" || status_kelulusan == "TIDAK DILULUSKAN"  ){
+								 $("#result-btn").hide();
+								 $("#show-location").hide();
+									   
+								} 
+								 
+						else if (status_kelulusan == "BELUM DILULUSKAN"){
+								 $("#result-btn").show();
+								 $("#show-location").hide();
 									
 								 }
-						if (ulasan_penyokong!= "" && status_kelulusan != ""){
-						     $('#status_kelulusan').val(status_kelulusan);
-							 $("#update-btn").hide();$("select").hide();
-							 
-						}
-						
-                         }
+
+						if (lat=="" && status_kelulusan == "DILULUSKAN"){
+						    $("#show-location").hide();
+						    $("#result-btn").hide();
+
+						} 
+						else if (lat!="" && status_kelulusan == "DILULUSKAN"){
+						    $("#show-location").show();
+						    $("#result-btn").hide();
+							
+						} 
+					}
 					
 					}
                 });
 			
         }   
-		
-		/*function sokong(phid)
+		 
+function isApprovedByApprover() 
 		{
-				//alert('saya di kemaskiniPermohonan');
-				window.location.href = "kemaskinipermohonan.html?phid=" + phid;
-		}  */
-		
-		function updateApplicationByApprover() 
-		{
-         		//alert($('#status_kelulusan').val());
-				//return false;
+
 				var TX = Math.random(); 
-				
+				var result = 5;
                 $.ajax({
                     url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_approver&TX=" + TX,
                     dataType: "json",
 					data: 
 					{
-						//ph_id, stf_username, status_id, comment
-						
+
 						ph_id: gup("phid"),
 						stf_username: $('#stf_username').val(),
-						status_id:$('#status_kelulusan').val(),
+						status_id:result,
 						comment: $('#ulasan_pelulus').val()
 					},
 					cache: false,
@@ -388,9 +410,47 @@
                     }
                 });
 			
-        }   //end  updateApplicationByapprover()
-          
+        }   //end  isApprovedByApprover
+
+	function isRejectedByApprover() 
+		{
+
+				var TX = Math.random(); 
+				var result = 6;
+                $.ajax({
+                    url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_approver&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+
+						ph_id: gup("phid"),
+						stf_username: $('#stf_username').val(),
+						status_id:result,
+						comment: $('#ulasan_pelulus').val()
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+                        
+						window.location.href = "dashboard.html?nextpage=kelulusan";
+                       
+													
+                    }
+                });
+			
+        }   //end  isRejectedByApprover
+		
+		function showLocation(){
+				window.location.href = "showlocation4.html?phid=" + phid;
+		}
+        		 
         </script>
+
 
  
     </body>

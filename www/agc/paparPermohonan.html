@@ -45,12 +45,15 @@
             </nav>
         </div>
 
-        <div class="myContainer">
+        <div class="myContainer"> 
             <div class="row">
                 <div class="col s12">
                     <div class="card-panel myTitle">Permohonan Kebenaran Meninggalkan Pejabat Dalam Waktu Bekerja di Bawah Perintah AM 5 BAB G</div>
                     <div class="card-panel">
                         <form id="applicantdetail" name="applicantdetail" action="#">
+                        
+                            <span class="profile-pic-applicant" id="profile-pic-applicant" name="profile-pic-applicant"></span>
+                            
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Bahagian</div>
                                 <div id="bahagian" name="bahagian" class="col s12 m5"></div>
@@ -312,6 +315,12 @@
 							var bf_flow_id = jsondata[0].PH_BF_FLOW_ID;
 							var lat = jsondata[0].PH_LATITUD_CHECK_IN;
 							var lng = jsondata[0].PH_LONGITUD_CHECK_IN;
+							
+							var STF_GAMBAR_FILE_PEMOHON = jsondata[0].STF_GAMBAR_FILE_PEMOHON;
+							var nicefilename=encodeURIComponent(STF_GAMBAR_FILE_PEMOHON); 
+						    var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
+						    $('#profile-pic-applicant').css('background-image', 'url(' + urlgambar + ')');
+						    
 							
 							if (bf_flow_id == "1")
 							{

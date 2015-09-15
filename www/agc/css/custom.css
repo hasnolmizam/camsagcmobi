@@ -107,6 +107,20 @@ input[type=text]:disabled {
     width: 70px;
 }
 
+
+.profile-pic-applicant {
+    background-position: center center;
+    background-size: auto 70px;
+    border: 2px solid white;
+    border-radius: 50%;
+    display: inline-block;
+    height: 70px;
+    right: 30px;
+    position: absolute;
+    top: 150px;
+    width: 70px;
+}
+
 .profile-pic-map {
     background-position: center center;
     background-size: auto 70px;

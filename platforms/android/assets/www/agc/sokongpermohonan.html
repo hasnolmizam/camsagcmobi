@@ -51,6 +51,7 @@
                     <div class="card-panel myTitle">Permohonan Kebenaran Meninggalkan Pejabat Dalam Waktu Bekerja di Bawah Perintah AM 5 BAB G</div>
                     <div class="card-panel">
                         <form id="applicantdetail" name="applicantdetail" action="#">
+                        	<span class="profile-pic-applicant" id="profile-pic-applicant" name="profile-pic-applicant"></span>
 						    <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Nama Pemohon</div>
                                 <div id="nama_pemohon" name="nama_pemohon" class="col s12 m5"></div>
@@ -59,14 +60,6 @@
                                 <div class="col s12 m2 label-on-small-only">Bahagian</div>
                                 <div id="bahagian" name="bahagian" class="col s12 m5"></div>
                             </div>
-                            <div id="penyokong" name="penyokong" class="row">
-                                <div class="col s12 m2 label-on-small-only">Penyokong</div>
-                                <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
-                            </div>
-							<div id="pelulus" name="pelulus" class="row">
-                                <div class="col s12 m2 label-on-small-only">Pelulus</div>
-                                <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
-                            </div>  
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Tujuan</div>
 								<div id="tujuan" name="tujuan" type="text" class="col s12 m5"></div>
@@ -83,6 +76,14 @@
                                 <div class="col s12 m2 label-on-small-only">Masa Masuk</div>
 								<div id="masa_masuk" name="masa_masuk" type="text" class="col s12 m5"></div>
                             </div>
+                            <div id="penyokong" name="penyokong" class="row">
+                                <div class="col s12 m2 label-on-small-only">Penyokong</div>
+                                <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
+                            </div>
+							<div id="pelulus" name="pelulus" class="row">
+                                <div class="col s12 m2 label-on-small-only">Pelulus</div>
+                                <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
+                            </div>  
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Lampiran</div>
                                 <div class="col s12 m5 file-field">
@@ -100,19 +101,16 @@
                             </div>
 							<div class="row">
                                 <div class="col s12 m2 label-on-small-only myInputAlign">Status Sokongan</div>
-								<div class="col s12 m5">
-                                    <select id="status_sokongan" name="status_sokongan">
-									<option value="" selected>Sila Pilih</option>
-									<option value="2">Disokong</option>
-									<option value="3">Tidak disokong</option>
-									</select>
-                                </div>
+								<div id="status_sokongan" name="status_sokongan" type="text" class="col s12 m5"></div>
+							
                             </div>
                             <div class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplicationBySupporter();">KEMAS KINI</button>
+									<button id="update-btn" class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isSupported();">DISOKONG</button>
+                                    <button id="update-btn" class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejected();">TIDAK DISOKONG</button>	
+									
 								</div>
-                            </div>
+                            </div>  
                         </form>
                     </div>
                 </div>
@@ -131,8 +129,7 @@
 					getData();
 					getApprover(getSessionStorage("PEN_BHGN_ID"));
 					getDetailApplicationById (); 
-					$('#status_sokongan').material_select(); //enable dropdown menu
-										
+															
 					var today = new Date();
 
 					$("#dtBox").DateTimePicker({timeFormat:'HH:mm', setButtonContent:'Set', clearButtonContent:'Padam', titleContentTime:'MASA', titleContentDate:'TARIKH', 
@@ -300,12 +297,13 @@
 							var masa_keluar = jsondata[0].PH_MASA_KELUAR;
 							var masa_masuk = jsondata[0].PH_MASA_MASUK;
 							var status_sokongan = jsondata[0].PH_STATUS_ID_PENYOKONG;
+
 							
-						 if (status_sokongan != ""){
-									$('#status_sokongan').val(status_sokongan);
-									$('#status_sokongan').material_select();
-									
-								 }
+							var STF_GAMBAR_FILE_PEMOHON = jsondata[0].STF_GAMBAR_FILE_PEMOHON;
+							var nicefilename=encodeURIComponent(STF_GAMBAR_FILE_PEMOHON); 
+						    var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
+						    $('#profile-pic-applicant').css('background-image', 'url(' + urlgambar + ')');
+							
                          
 						 $('#nama_pemohon').html(nama_pemohon);
 						 $('#nama_penyokong').html(nama_penyokong);
@@ -316,7 +314,7 @@
 						 $('#tkh_keluar').html(tarikh);
 						 $('#masa_keluar').html(masa_keluar);
 						 $('#masa_masuk').html(masa_masuk);
-						 $('#status_sokongan').val(status_sokongan);
+						 $('#status_sokongan').html(status_sokongan);
 						 $('#tujuan').html(sebab);
 													
                          }
@@ -324,13 +322,13 @@
 					}
                 });
 			
-        }   
-		
-		function updateApplicationBySupporter() 
+        }
+
+function isSupported() 
 		{
          		var TX = Math.random(); 
+				var result = 2;
 				
-				//alert("nilai gup phid = " + gup("phid"));
                 $.ajax({
                     url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_supporter&TX=" + TX,
                     dataType: "json",
@@ -338,7 +336,7 @@
 					{
 						ph_id: gup("phid"),
 						stf_username: $('#stf_username').val(),
-						status_id:$('#status_sokongan').val(),
+						status_id:result,
 						comment: $('#ulasan_penyokong').val()
 					},
 					cache: false,
@@ -349,13 +347,45 @@
 					},
                     success: function(data) {
 							    window.location.href = "dashboard.html?nextpage=sokongan";
-								//alert("OK");					
+												
                          }
 					
 					
                 });
 			
-        }     
+        }  //end isSupported() 
+		
+		function isRejected() 
+		{
+         		var TX = Math.random(); 
+				var result = 3;
+				
+                $.ajax({
+                    url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_supporter&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						ph_id: gup("phid"),
+						stf_username: $('#stf_username').val(),
+						status_id:result,
+						comment: $('#ulasan_penyokong').val()
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						return false;
+					},
+                    success: function(data) {
+							    window.location.href = "dashboard.html?nextpage=sokongan";
+												
+                         }
+					
+					
+                });
+			
+        }  //end isRejected() 		
+		
         </script>
 
  

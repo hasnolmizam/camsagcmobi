@@ -19,7 +19,6 @@
 		<script src="js/cams_script.js"></script>
         
         <!-- <script src="../cordova.js"></script> -->
-		<script src="../cordova.js"></script>
 
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
         <script>
@@ -90,37 +89,41 @@
             
             
             
+            //$( document ).ready(function() {
+			//    //console.log( "ready!" );
+            //	deviceready();
+			//});
             
-			function initialize_cordova()
-			{
-				document.addEventListener("deviceready", deviceready, true);
-			}
+			//function initialize_cordova()
+			//{
+			//	document.addEventListener("deviceready", deviceready, true);
+			//}
 
 
 			function deviceready()
 			{
 				
 				
-				 document.addEventListener("backbutton", function(e){
-			           navigator.app.exitApp();
-				    }, false);
+				 //document.addEventListener("backbutton", function(e){
+			      //     navigator.app.exitApp();
+				  //  }, false);
 
 				 
 				document.getElementById('map_canvas').innerHTML = '' ;
-				document.addEventListener("backbutton", function() {
-        					history.go(-1);
-        					//window.location.href = "mainpage.html";
-    						}, false);
+				//document.addEventListener("backbutton", function() {
+        		//			history.go(-1);
+        		//			//window.location.href = "mainpage.html";
+    			//			}, false);
 
-				document.addEventListener("offline", 
-						function(){ 
-								alert('Internet Connection not available.')
-							}, false);
+				//document.addEventListener("offline", 
+			//			function(){ 
+				//				alert('Internet Connection not available.')
+				//			}, false);
 
-				document.addEventListener("online", 
-						function(){ 
-								//OK
-							}, false);				
+				//document.addEventListener("online", 
+				//		function(){ 
+				//				//OK
+				//			}, false);				
 			
 				/*
 				if(navigator.network.connection.type != Connection.NONE) {	
@@ -136,7 +139,7 @@
 				var phid = gup("phid");
 				//call API utk dapakan details lng & lat..
 				
-	        	loading("Sila Tunggu...");
+	        	//loading("Sila Tunggu...");
 				//alert("phid==" + phid);
 				//alert("GLOBAL_IP=" + GLOBAL_IP);
 
@@ -161,7 +164,7 @@
 						success: function(data) {
 							//cordova.plugins.pDialog.dismiss();
 							//navigator.notification.activityStop();
-	                        unloading();
+	                        //unloading();
 	                        
 	                        //data downloaded so we call parseJSON function and pass downloaded data
 							//alert(data);
@@ -250,7 +253,7 @@
             
           </script>
     </head>
-    <body onload="initialize_cordova();">
+    <body onload="deviceready();">
         <div id="map_canvas"></div>
     </body>
 </html>
