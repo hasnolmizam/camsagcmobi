@@ -360,11 +360,14 @@
 							  $("#update-btn").hide();
 							  $("#cancel-btn").show();
 							  $("#checkin-btn").show();
-							}						
+							} 						
 						   
-                           if (lat!="" && lng!="" && status_id_permohonan==5 ){  //hide check-in button once pinned location.
+						   if (lat!="" && lng!="" && status_id_permohonan==5 ){  //hide check-in button once pinned location.
 						   // means all buttons are hidden. $("#checkin-btn").hide();
-						   $("#change-btn").hide();
+								$("#change-btn").hide();
+								$("#update-btn").hide();
+								$("#cancel-btn").hide();
+								$("#checkin-btn").hide();
 						   } 
                          
 						 $('#nama_penyokong').html(nama_penyokong);
@@ -378,8 +381,8 @@
 						 $('#masa_masuk').html(masa_masuk);
 						 $('#tujuan').html(sebab);
 						 $('#status_permohonan').html(status_permohonan);
-						 $('#latitud').html(lat);
-						 $('#longitud').html(lng);
+						 $('#latitud').val(lat);
+						 $('#longitud').val(lng);
 													
                          }
 					
@@ -452,7 +455,6 @@
                     dataType: "json",
 					data: 
 					{
-						
 						ph_id: gup("phid"),
 						stf_username: $('#stf_username').val(),
 						lat: $('#latitud').val(),
