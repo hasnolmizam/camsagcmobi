@@ -116,11 +116,16 @@
                             </div>
                             <div id="result-btn" name="result-btn" class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isApprovedByApprover();">DILULUSKAN</button>
-									<button class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejectedByApprover();">TIDAK DILULUSKAN</button>								
+									<button class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isApprovedByApprover(gup('phid'));">DILULUSKAN</button>
+									<button class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejectedByApprover(gup('phid'));">TIDAK DILULUSKAN</button>								
 								</div>
                             </div>
-                        </form>
+                            <div id="show-location" name="show-location" class="row">
+                                <div class="col s12 offset-m2 m10">  							
+									<button id="location-btn" class="btn-large waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="showLocation(gup('phid'));">PAPAR LOKASI</button>
+								</div>
+                            </div>                       
+					   </form>
                     </div>
                 </div>
             </div>
@@ -128,6 +133,8 @@
 
         <div id="dtBox"></div>
 		<span id="hidden"><input id="stf_username" name="stf_username" type="hidden"></span>
+		<span id="hidden"><input id="latitud" name="latitud" type="hidden"></span>
+		<span id="hidden"><input id="longitud" name="longitud" type="hidden"></span>
 		
 		
 		    <script>
@@ -313,6 +320,8 @@
 							var sebab = jsondata[0].PH_TUJUAN;
 							var masa_keluar = jsondata[0].PH_MASA_KELUAR;
 							var masa_masuk = jsondata[0].PH_MASA_MASUK;
+							var lat = jsondata[0].PH_LATITUD_CHECK_IN;
+							var lng = jsondata[0].PH_LONGITUD_CHECK_IN;
 							
 						 $('#nama_pemohon').html(nama_pemohon);
 						 $('#tkh_keluar').html(tarikh);
@@ -327,11 +336,26 @@
 						 $('#tarikh_kelulusan').html(tarikh_kelulusan);
 						 $('#ulasan_pelulus').html(ulasan_pelulus);
 						 $('#status_kelulusan').html(status_kelulusan);
+						 $('#latitud').html(lat);
+						 $('#longitud').html(lng);
 						 							
-						if (status_kelulusan != ""){
-								 $("#result-btn").hide();		
+						if (status_kelulusan == "DILULUSKAN" || status_kelulusan == "TIDAK DILULUSKAN"  ){
+								 $("#result-btn").hide();
+								 $("#show-location").hide();
+									   
+								} 
+								 
+						else if (status_kelulusan == "BELUM DILULUSKAN"){
+								 $("#result-btn").show();
+								 $("#show-location").hide();
 									
-								 } 
+								 }
+					    
+						if (lat!=="" && status_kelulusan == "DILULUSKAN"){
+						    $("#show-location").show();
+						    $("#result-btn").hide();
+						} 
+						
 					}
 					
 					}
@@ -404,6 +428,10 @@ function isApprovedByApprover()
                 });
 			
         }   //end  isRejectedByApprover
+		
+		function showLocation(){
+				window.location.href = "showlocation4.html?phid=" + phid;
+		}
         		 
         </script>
 
