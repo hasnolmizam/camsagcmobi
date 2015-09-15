@@ -312,6 +312,8 @@
 							var bf_flow_id = jsondata[0].PH_BF_FLOW_ID;
 							var lat = jsondata[0].PH_LATITUD_CHECK_IN;
 							var lng = jsondata[0].PH_LONGITUD_CHECK_IN;
+							lat = lat.trim();
+							lng = lng.trim();
 							
 							if (bf_flow_id == "1")
 							{
