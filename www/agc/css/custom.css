@@ -289,6 +289,34 @@ input[type=text]:disabled {
 .badge-rejected {
     background-color: #E74C3C;
 }
+
+
+
+.badge-diluluskan-list {
+    /*
+    background-color: #3498DB;
+    border: 2px solid white;
+    display: inline-block;
+    height: 170px;
+    right: 70px;
+    width: 400px;
+    position: relative;
+    */
+    
+    background-color: #3498DB;
+    float: right;
+    width: 400px;
+    right: 100px;
+    height: 25px;
+    margin: 0px;
+    border: 2px solid white;
+    
+    /*border: 3px solid #8AC007; */
+        
+}
+
+
+
 .badge-container {
     position: absolute;
     top: 34px;

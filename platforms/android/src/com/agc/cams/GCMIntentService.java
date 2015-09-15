@@ -36,7 +36,8 @@ public class GCMIntentService extends GCMBaseIntentService  {
 	JSONParser jParser = new JSONParser();
     public double latitude = 0;
     public double longitude = 0;
-
+    public String GLOBAL_PHID = "0";
+    
 	private static final String TAG = "GCMIntentService";
 	//private static TextToSpeech tts;
 
@@ -158,6 +159,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        
     	        }
 
+    	        GLOBAL_PHID = phid;
     	        
     	        
     	        displayMessage(context, message);
@@ -175,6 +177,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        }
     	        else if (LOCATIONREQUEST.equals("Y"))
     	        {
+    	        	
     	        	generateNotificationCustomLayoutAGC_SENDLOCATION(context, phid);
     	        }
     	        else 
@@ -944,7 +947,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
 		// Building Parameters
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("fieldX","fieldX"));
-		params.add(new BasicNameValuePair("ph_id","633"));
+		params.add(new BasicNameValuePair("ph_id",GLOBAL_PHID));
 		//params.add(new BasicNameValuePair("roleid",KOMDS_ROLEID));
 
 
@@ -959,7 +962,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
 
 			//hantar maklumat ke API check_in_by_applicant
 			//JSONObject json = jParser.makeHttpRequest("http://www.visionice.net/ds/androidservice.php?actionid=getagentprofits&T=" + System.nanoTime(), "GET", params);
-			JSONObject json = jParser.makeHttpRequest("http://10.17.14.210/cams/api_generator.php?api_name=check_in_by_applicant&ph_id=633&stf_username=adlina&lng=" + longitude + "&lat=" + latitude + "&T=" + System.nanoTime(), "GET", params);
+			JSONObject json = jParser.makeHttpRequest("http://10.17.14.210/cams/api_generator.php?api_name=check_in_by_applicant&ph_id=" + GLOBAL_PHID + "&stf_username=adlina&lng=" + longitude + "&lat=" + latitude + "&T=" + System.nanoTime(), "GET", params);
 				
 			//if (json == null) 
 			//{

@@ -421,19 +421,51 @@
                        
 							var json = $.parseJSON(data);
 							var jsondata = $.parseJSON(json.data); //rekod permohonan dlm proses
-								
+							var statusid = "";
+							var warnabar = "";
+							
 								var myString = '<div class="myListScroller" onscroll="myListScroll()" overflow-scroll="true">' +
 									'<ul class="myList">';
 									
 								for(var i = 0; i < jsondata.length; i++) 
 								{
 											
+									
+										statusid = jsondata[i].PH_STATUS_ID_PERMOHONAN;
+										/*
+											1 BELUM DISOKONG
+											2 DISOKONG
+											3 TIDAK DISOKONG
+											4 BELUM DILULUSKAN
+											5 DILULUSKAN
+											6 TIDAK DILULUSKAN
+											7 BELUM DIBATALKAN
+											8 DIBATALKAN
+										*/
+										if (statusid == "4")
+											{
+											warnabar = '<br><div style="width:150px;height:21px" class="badge-belumdiluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>';
+											}
+										else if (statusid == "5")
+										{
+											warnabar = '<br><div style="width:150px;height:21px" class="badge-diluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>';
+										}
+										else if (statusid == "6")
+										{
+											warnabar = '<br><div style="width:150px;height:21px" class="badge-tidakdiluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>';
+										}
+										else if (statusid == "7")
+										{
+											warnabar = '<br><div style="width:150px;height:21px" class="badge-belumdibatalkan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>';
+										}
+										
 											
 
 										myString = myString + '<li onclick="getDetailByApprover(' + jsondata[i].PH_ID + ')">'+
 											'<b>' + jsondata[i].PH_STF_NAMA + '</b>'+
 											'<br>' + jsondata[i].PH_TUJUAN + //lokasi nak kuar
 											'<br>' + jsondata[i].PH_TKH_KELUAR + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR + ' - ' + jsondata[i].PH_MASA_MASUK +  //masa kuar
+											'<br><div style="width:150px;height:21px" class="badge-diluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>'+
 											'</li>';
 							
 								}
