@@ -75,6 +75,8 @@
                                 <div class="col s12 m2 label-on-small-only">Masa Masuk</div>
 								<div id="masa_masuk" name="masa_masuk" type="text" class="col s12 m5"></div>
                             </div>
+                            
+                      
 							<div id="penyokong" name="penyokong" class="row">
                                 <div class="col s12 m2 label-on-small-only">Penyokong</div>
                                 <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
@@ -87,6 +89,8 @@
                                 <div class="col s12 m2 label-on-small-only">Ulasan Penyokong</div>
                                 <div id="ulasan_penyokong" name="ulasan_penyokong" class="col s12 m5"></div>
                             </div>
+                      
+                            
 							<div id="pelulus" name="pelulus" class="row">
                                 <div class="col s12 m2 label-on-small-only">Pelulus</div>
                                 <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
@@ -99,6 +103,9 @@
                                 <div class="col s12 m2 label-on-small-only">Ulasan Pelulus</div>
                                 <div id="ulasan_pelulus" name="ulasan_pelulus" class="col s12 m5"></div>
                             </div>
+                            
+                            
+                            
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Lampiran</div>
                                 <div class="col s12 m5 file-field">
@@ -157,7 +164,7 @@
 				var getFlowID = getSessionStorage("FLOW_ID");
 			    if (getFlowID == 2) 
 					{
-						$("#penyokong").show();$("#status_penyokong").show();$("#ulasan_penyokong").show();
+			    		$("#penyokong").show();$("#status_penyokong").show();$("#ulasan_penyokong").show();
 						//alert('pengguna ini ada penyokong'); //ajax response successful alert box shows
 						getSupporter(getSessionStorage("PEN_BHGN_ID"));
 						

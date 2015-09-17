@@ -59,7 +59,8 @@
                             <img src="img/prosesSokongan.jpg">
                         </div>
                         <div class="mycard-content">
-                            Sokongan<a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Sokongan')"><i class="mdi-action-launch"></i></a>
+                            Sokongan<a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Sokongan')">
+                            <i class="mdi-action-launch"></i></a>
                         </div>
                     </div>
                     <div id="panel-pelulus" name="panel-pelulus" class="card">
@@ -67,7 +68,8 @@
                             <img src="img/prosesKelulusan.jpg">
                         </div>
                         <div class="mycard-content">
-                            Kelulusan<a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Kelulusan')"><i class="mdi-action-launch"></i></a>
+                            Kelulusan<a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Kelulusan')">
+                            <i class="mdi-action-launch"></i></a>
                         </div>
                     </div>
 
@@ -77,7 +79,7 @@
             </div>
         </div>
         
-        <div id="modalList" class="modal fullwidth" onclick="closeListing()"><div class="card"></div></div>
+        <div id="modalList" name="modalList"  class="modal fullwidth" onclick="closeListing()"><div class="card"></div></div>
         <span id="hidden"><input id="stf_username" name="stf_username" type="hidden"></span>
         <script>
             
@@ -98,7 +100,6 @@
 						{
 							getListing('Kelulusan');
 						}
-          						
 						else 
 						{
 							getListing('Permohonan');
@@ -182,9 +183,9 @@
 							}
             }
             
-            function getListing(title) {
+            function getListing (title) {
 			
-				            
+				//alert("call getListing [" + title  + "]");            
                 var ajaxResult =
                     '<div class="myListHeader">'+
                         '<img src="img/proses'+title+'_s.jpg">'+ //gambar kena sama ngan apa yg kita click kat left panel cuma append "_s"
@@ -197,6 +198,9 @@
                         '</div>'+
                         '<span class="close hide-on-med-and-up"><i class="mdi-content-clear"></i></span>'+
                     '</div>';
+                    ajaxResult = ajaxResult + '<span id=tosupport name=tosupport>Inject here to support</span>';
+                    ajaxResult = ajaxResult + '<span id=mylistapplication name=mylistapplication></span>';
+                    ajaxResult = ajaxResult + '<span id=to-approve name=to-approve></span>';
                     
                     //dlm semua listing permohonan, sokongan, kelulusan, akan ada 3 jenis symbol kat sebelah kiri lokasi nak kuar
                     //Symbol pangkah:          class="mdi-content-clear red-text text-darken-4" digunakan utk mewakili permohonan kena reject
@@ -206,22 +210,27 @@
                     //teknik kat atas nie tiru konsep whatsapp
                     //'<div class="myListScroller" onscroll="myListScroll()" overflow-scroll="true">'+
                     // </div>';  
-                    //var title ="";	
+                    //var title ="";
+                    
+                    
+                    /*
                     if (title=="Permohonan"){
 						ajaxResult = ajaxResult + '<span id=mylistapplication name=mylistapplication></span>';
-						getListOwnApplication(); //call function untuk senaraikan permohonan
+						//getListOwnApplication(); //call function untuk senaraikan permohonan
 						
 					}
 					else if(title=="Sokongan"){ 
-						ajaxResult = ajaxResult + '<span id=to-support name=to-support></span>';
-						getApplicationToSupport();
-						$("#newApplicationBtn").hide(); //sembunyikan butang pautan ke permohonanbaru.html
+						ajaxResult = ajaxResult + '<div id=tosupport name=tosupport>HAHAHAH</div>';
+						//ajaxResult = ajaxResult + '<span id=mylistapplication name=mylistapplication></span>';
+						//getApplicationToSupport();
+						//$("#newApplicationBtn").hide(); //sembunyikan butang pautan ke permohonanbaru.html
 					}
 					else if (title=="Kelulusan"){
 						ajaxResult = ajaxResult + '<span id=to-approve name=to-approve></span>';
-						getApplicationToApprove();
-						$("#newApplicationBtn").hide();  //sembunyikan butang pautan ke permohonanbaru.html
+						//getApplicationToApprove();
+						//$("#newApplicationBtn").hide();  //sembunyikan butang pautan ke permohonanbaru.html
 					}
+                    */
 
 					/*	
 					ajaxResult = ajaxResult + '<div class="myListScroller" onscroll="myListScroll()" overflow-scroll="true">' +
@@ -239,31 +248,47 @@
 					
                 if($(window).width()>959) {
                     $('.myListContainer .card-panel').html(ajaxResult);
+                    //alert("dah inject 1");
+					
                 }
-                else {
+                else 
+                {
                     $('#modalList .card').html(ajaxResult);
                     $('#modalList').openModal();
+                    $('#modalList').trigger('refresh');
+                    //alert("dah inject 2");
                 }
 
-
+				///alert("dah write");
+					
+					
 				if (title=="Permohonan"){
+					getListOwnApplication(); //call function untuk senaraikan permohonan	
 					$("#newApplicationBtn").show();
+					$('#mylistapplication').trigger('refresh');
 				}
-				else if(title=="Sokongan"){ 
+				else if (title=="Sokongan"){ 
+					getApplicationToSupport();					
 					$("#newApplicationBtn").hide(); //sembunyikan butang pautan ke permohonanbaru.html
+					$('.myListHeader').trigger('refresh');
 				}
 				else if (title=="Kelulusan"){
+					getApplicationToApprove();
 					$("#newApplicationBtn").hide();  //sembunyikan butang pautan ke permohonanbaru.html
+					$('#to-approve').trigger('refresh');
+					
 				}
+
 
 
 			}
             
             function closeListing() {
-                $('#modalList').closeModal();
+               $('#modalList').closeModal();
             }
 
             function myListScroll() {
+            	
                 if($('.myListScroller').scrollTop()>50) $('.myListHeader').addClass('minimize');
                 else if($('.myListScroller').scrollTop()<-50) console.log('berjaya close');
                 else if($('.myListScroller').scrollTop()<50) $('.myListHeader').removeClass('minimize');
@@ -337,8 +362,91 @@
 						
                     }
 
-		function getApplicationToSupport() 
+			function getApplicationToSupport() 
 			{
+			
+			
+				//$('#tosupport2').html("xxxxtosupport2");
+				//$('#tosupport').html("xxxxtosupport");
+
+				var TX = Math.random(); 
+		        //start ajax request
+				//alert(getSessionStorage("STF_USERNAME"));
+                $.ajax({
+                    url: GLOBAL_IP + "/api_generator.php?api_name=get_list_application_to_support&TX=" + TX,
+                    dataType: "json",
+					data: 
+					{
+						stf_username: getSessionStorage("STF_USERNAME")
+					},
+					cache: false,
+					timeout: 30 * 1000,
+					error: function(xhr, textStatus, errorThrown){
+						alert('connection error ' + textStatus +  errorThrown ); 
+						
+						return false;
+					},
+                    success: function(data) {
+                        //data downloaded so we call parseJSON function and pass downloaded data
+                        //alert(data);
+							var json = $.parseJSON(data);
+							var jsondata = $.parseJSON(json.data); //rekod permohonan dlm proses
+							//alert('Rekod permohonan=' + jsondata.length);
+							  //alert(jsondata);
+							  
+								var myString = '<div class="myListScroller" onscroll="myListScroll()" overflow-scroll="true">' +
+									'<ul class="myList">';
+								
+								for(var i = 0; i < jsondata.length; i++) 
+								{
+											
+											
+										myString = myString + '<li onclick="getDetailBySupporter(' + jsondata[i].PH_ID + ')">'+
+										'<b>' + jsondata[i].PH_STF_NAMA + '</b>'+
+										'' + jsondata[i].PH_TUJUAN + 
+										'' + jsondata[i].PH_TKH_KELUAR + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR + ' - ' + jsondata[i].PH_MASA_MASUK +  
+										'</li>';											
+											
+									//	myString = myString + '<li onclick="getDetailBySupporter(' + jsondata[i].PH_ID + ')">'+
+									//	'<b>' + jsondata[i].PH_STF_NAMA + '</b>'+
+									//	'<br>' + jsondata[i].PH_TUJUAN + //lokasi nak kuar
+									//	'<br>' + jsondata[i].PH_TKH_KELUAR + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR + ' - ' + jsondata[i].PH_MASA_MASUK +  //masa kuar
+									//	'</li>';											
+							
+									
+									 
+								}
+								
+								myString = myString + '</ul></div>';
+								//myString = utf8_encode (myString);
+								
+								//myString = decodeURIComponent(escape(myString));
+										
+								
+								//alert(myString);
+								$('#tosupport').html(myString);
+								
+								//dapatkan statistik penyokong							
+							     var supportInProcess = getSessionStorage("TOTAL_SUPPORTER_INPROCESS");
+								 var IsSupported = getSessionStorage("TOTAL_SUPPORTER_SUPPORTTED");
+								 var IsNotSupported = getSessionStorage("TOTAL_SUPPORTER_NOTSUPPORTED");
+								 
+								 $('.statistikSokongan-inprocess').html (supportInProcess);
+								 $('.statistikSokongan-approved').html (IsSupported);
+								 $('.statistikSokongan-rejected').html (IsNotSupported);
+								
+							} //end success: function(data)
+							
+														
+															
+						}); //end ajax
+						
+                    }
+			
+			function getApplicationToSupport__() 
+			{
+			
+			
 				var TX = Math.random(); 
 		        //start ajax request
 				//alert(getSessionStorage("STF_USERNAME"));
@@ -369,8 +477,6 @@
 								for(var i = 0; i < jsondata.length; i++) 
 								{
 											
-											
-
 										myString = myString + '<li onclick="getDetailBySupporter(' + jsondata[i].PH_ID + ')">'+
 											'<b>' + jsondata[i].PH_STF_NAMA + '</b>'+
 											'<br>' + jsondata[i].PH_TUJUAN + //lokasi nak kuar
@@ -380,8 +486,14 @@
 								}
 								
 								myString = myString + '</ul></div>';
-								$('#to-support').html(myString);
 								
+								//alert(myString);
+								
+								$('#tosupport').html(myString);
+								//$('#to-support').html("TTTTTTT");
+								//$('#to-support').trigger('refresh');
+							
+						
 								//dapatkan statistik penyokong							
 						     var supportInProcess = getSessionStorage("TOTAL_SUPPORTER_INPROCESS");
 							 var IsSupported = getSessionStorage("TOTAL_SUPPORTER_SUPPORTTED");
@@ -390,6 +502,15 @@
 							 $('.statistikSokongan-inprocess').html (supportInProcess);
 							 $('.statistikSokongan-approved').html (IsSupported);
 							 $('.statistikSokongan-rejected').html (IsNotSupported);
+						
+							 
+				                //$('#modalList').openModal();
+				                //$('#modalList').trigger('refresh');
+				                
+				                
+				                $('.myListHeader').trigger('refresh');
+				                alert("dah inject 2b");
+							 
 							} //end success: function(data)
 							
 														
