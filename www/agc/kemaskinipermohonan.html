@@ -15,6 +15,7 @@
     </head>
 
     <body>
+    	<script src="../cordova.js"></script>
         <div class="navbar-fixed">
             <nav class="deep-purple darken-1">
                 <div class="nav-wrapper">
@@ -94,7 +95,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s12 offset-m2 m10">
-									<button class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="updateApplication();">KEMASKINI</button></div>
+									<button class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="showConfirmKemaskini();">KEMAS KINI</button></div>
                             </div>
                         </form>
                     </div>
@@ -108,7 +109,18 @@
 		    <script>
             $(document).ready(function(){
 			  		
-					$(".button-collapse").sideNav({edge:'right'});
+	        	  if (navigator.notification) { // Override default HTML alert with native dialog
+	        	      window.alert = function (message) {
+	        		  		navigator.notification.alert(
+	        	              message,    // message
+	        	              null,       // callback
+	        	              "CAMS-AGC", // title
+	        	              'OK'        // buttonName
+	        	          );
+	        	      };
+	        	  }
+
+	        	  $(".button-collapse").sideNav({edge:'right'});
 					
 					getData();
 					getApprover(getSessionStorage("PEN_BHGN_ID"));
@@ -123,6 +135,20 @@
 				   		
 			});  //end document ready state
 
+	        document.addEventListener('deviceready', function () {
+	        	  if (navigator.notification) { // Override default HTML alert with native dialog
+	        	      window.alert = function (message) {
+	        		  		navigator.notification.alert(
+	        	              message,    // message
+	        	              null,       // callback
+	        	              "CAMS-AGC", // title
+	        	              'OK'        // buttonName
+	        	          );
+	        	      };
+	        	  }
+	        	}, false);
+	        	
+			
 			function getData()
 			{
 			
@@ -168,8 +194,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -212,8 +238,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -263,13 +289,13 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
                         
-                        alert('Permohonan dikemas kini.');	
+                        alert('Permohonan anda telah dikemaskini.\nTerima kasih.');	
 						window.location.href = "dashboard.html";
 													
                     }
@@ -277,6 +303,26 @@
 			
         }   //end updateApplication
 		
+        
+        function showConfirmKemaskini() {
+        	navigator.notification.confirm(
+    			    "Adakah anda pasti untuk mengemaskini permohonan ini?",  // message
+    		        onConfirmKemaskini,                // callback to invoke with index of button pressed
+    		        "CAMS-AGC", // title
+    		        'YA,BATAL'          // buttonLabels
+    		    );
+        }
+
+        
+        function onConfirmKemaskini(buttonIndex) {
+            //alert('You selected button ' + buttonIndex);
+            if (buttonIndex == 1)
+            	{
+            		updateApplication();	
+            	}
+            
+        }
+        
 		
 		function getDetailApplicationById() 
 		{
@@ -292,8 +338,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {

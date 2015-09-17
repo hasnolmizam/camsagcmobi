@@ -1,6 +1,14 @@
 
 var GLOBAL_IP = "http://10.17.14.210/cams";
 
+	function alertError(id)
+	{
+		if (id==1) { alert("Pangkalan data CAMS tidak dapat dihubungi. Sila hubungi pentadbir sistem."); }
+		else if (id==2) { alert("Pangkalan data CAMS tidak dapat dihubungi. Sila hubungi pentadbir sistem."); }
+		else { alert("Pangkalan data CAMS tidak dapat dihubungi. Sila hubungi pentadbir sistem."); }
+	}
+	
+	
 	function getSessionStorage (key)
 	{
 		var info = window.sessionStorage.getItem("info");

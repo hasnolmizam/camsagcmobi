@@ -16,6 +16,7 @@
     </head>
 
     <body>
+    	<script src="../cordova.js"></script>
         <div class="navbar-fixed">
             <nav class="deep-purple darken-1">
                 <div class="nav-wrapper">
@@ -76,14 +77,6 @@
                                 <div class="col s12 m2 label-on-small-only">Masa Masuk</div>
 								<div id="masa_masuk" name="masa_masuk" type="text" class="col s12 m5"></div>
                             </div>
-                            <div id="penyokong" name="penyokong" class="row">
-                                <div class="col s12 m2 label-on-small-only">Penyokong</div>
-                                <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
-                            </div>
-							<div id="pelulus" name="pelulus" class="row">
-                                <div class="col s12 m2 label-on-small-only">Pelulus</div>
-                                <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
-                            </div>  
                             <div class="row">
                                 <div class="col s12 m2 label-on-small-only">Lampiran</div>
                                 <div class="col s12 m5 file-field">
@@ -94,11 +87,27 @@
                                     </div>
                                 </div>
                             </div>
-							<div class="row">
-                                <div class="col s12 m2 label-on-small-only">Ulasan Penyokong</div>
-								<div class="col s12 m5"><textarea id="ulasan_penyokong" name="ulasan_penyokong" class="materialize-textarea"></textarea></div>
-                               
-                            </div>
+
+                            <div class="card-panel">
+                            
+	                            <div id="penyokong" name="penyokong" class="row">
+	                                <div class="col s12 m2 label-on-small-only">Penyokong</div>
+	                                <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
+	                            </div>
+	                            <!--  
+								<div id="pelulus" name="pelulus" class="row">
+	                                <div class="col s12 m2 label-on-small-only">Pelulus</div>
+	                                <div id="nama_pelulus" name="nama_pelulus" class="col s12 m5"></div>
+	                            </div>  
+								-->
+
+								<div class="row">
+	                                <div class="col s12 m2 label-on-small-only">Ulasan Penyokong</div>
+									<div class="col s12 m5"><textarea id="ulasan_penyokong" name="ulasan_penyokong" class="materialize-textarea"></textarea></div>
+	                            </div>
+
+							</div>
+							
 							<div class="row">
                                 <div class="col s12 m2 label-on-small-only myInputAlign">Status Sokongan</div>
 								<div id="status_sokongan" name="status_sokongan" type="text" class="col s12 m5"></div>
@@ -106,8 +115,9 @@
                             </div>
                             <div class="row">
                                 <div class="col s12 offset-m2 m10">   
-									<button id="update-btn" class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isSupported();">DISOKONG</button>
-                                    <button id="update-btn" class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejected();">TIDAK DISOKONG</button>	
+                                
+									<button id="update-btn" class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="showConfirmSokong();">DISOKONG</button>
+                                    <button id="update-btn" class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="showConfirmTidakSokong();">TIDAK DISOKONG</button>	
 									
 								</div>
                             </div>  
@@ -121,9 +131,25 @@
 		<span id="hidden"><input id="stf_username" name="stf_username" type="hidden"></span>
 		
 		
-		    <script>
+		    <script> 
             $(document).ready(function(){																				
 			  		
+            	
+        		//alert('document saya dah ready di browser');
+		      	  if (navigator.notification) { // Override default HTML alert with native dialog
+		    	      
+		      	      //alert('guna navigator.notification');
+		      		  window.alert = function (message) {
+		    	          navigator.notification.alert(
+		    	              message,    // message
+		    	              null,       // callback
+		    	              "CAMS-AGC", // title
+		    	              'OK'        // buttonName
+		    	          );
+		    	      };
+		    	  }
+
+		      	  
 					$(".button-collapse").sideNav({edge:'right'});
 					
 					getData();
@@ -137,9 +163,63 @@
 					}); //end dateTimePicker()
 
 				   		
-			});  //end document ready state
+			});  //end document ready state 
 			          
-			function getData()
+			
+	        document.addEventListener('deviceready', function () {
+	        	  if (navigator.notification) { // Override default HTML alert with native dialog
+	        	      window.alert = function (message) {
+	        	          navigator.notification.alert(
+	        	              message,    // message
+	        	              null,       // callback
+	        	              "CAMS-AGC", // title
+	        	              'OK'        // buttonName
+	        	          );
+	        	      };
+	        	  }
+	        
+	        }, false);
+        	
+			
+	        function showConfirmSokong() {
+	        	navigator.notification.confirm(
+	    			    "Adakah anda pasti untuk menyokong permohonan ini?",  // message
+	    		        onConfirmSokong,                // callback to invoke with index of button pressed
+	    		        "CAMS-AGC", // title
+	    		        'YA,BATAL'          // buttonLabels
+	    		    );
+	        }
+
+	        
+	        function onConfirmSokong(buttonIndex) {
+	            //alert('You selected button ' + buttonIndex);
+	            if (buttonIndex == 1)
+	            	{
+	            		isSupported();	
+	            	}
+	            
+	        }
+
+	        function showConfirmTidakSokong(message) {
+	        	navigator.notification.confirm(
+	        			"Adakah anda pasti untuk TIDAK menyokong permohonan ini?",  // message
+	    		        onConfirmTidakSokong,                // callback to invoke with index of button pressed
+	    		        "CAMS-AGC", // title
+	    		        'YA,BATAL'          // buttonLabels
+	    		    );
+	        }
+
+	        
+	        function onConfirmTidakSokong(buttonIndex) {
+	            //alert('You selected button ' + buttonIndex);
+	            if (buttonIndex == 1)
+	            	{
+			            isRejected();
+	            	}
+	        }
+
+	        
+	        function getData()
 			{
 			
 				var getFlowID = getSessionStorage("FLOW_ID");
@@ -329,6 +409,11 @@ function isSupported()
          		var TX = Math.random(); 
 				var result = 2;
 				
+				//alert("panggil loading");
+				loading("Permohonan sedang diproses. Sila tunggu...");
+				//alert("tamat panggil loading");
+				
+				
                 $.ajax({
                     url: GLOBAL_IP + "/api_generator.php?api_name=update_application_by_supporter&TX=" + TX,
                     dataType: "json",
@@ -346,6 +431,7 @@ function isSupported()
 						return false;
 					},
                     success: function(data) {
+                    			unloading();
 							    window.location.href = "dashboard.html?nextpage=sokongan";
 												
                          }

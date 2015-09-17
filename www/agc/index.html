@@ -72,7 +72,7 @@
 		    	      
 		      	      //alert('guna navigator.notification');
 		      		  window.alert = function (message) {
-		    	          navigator.notification.alert(
+							navigator.notification.alert(
 		    	              message,    // message
 		    	              null,       // callback
 		    	              "CAMS-AGC", // title
@@ -86,7 +86,7 @@
         
         document.addEventListener('deviceready', function () {
         	
-        	
+        		/*
 			            pushNotification = window.plugins.pushNotification;
 			            if (device.platform == 'android' || device.platform == 'Android') {
 			                console.log("registering android");
@@ -104,7 +104,7 @@
 			                    "ecb": "onNotificationAPN"
 			                }); // required!
 			            }
-			            
+			     */       
 			            
             
             
@@ -113,7 +113,7 @@
         	
         	  if (navigator.notification) { // Override default HTML alert with native dialog
         	      window.alert = function (message) {
-        	          navigator.notification.alert(
+					navigator.notification.alert(
         	              message,    // message
         	              null,       // callback
         	              "CAMS-AGC", // title
@@ -160,7 +160,8 @@
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
 						unloading();
-						alert('connection error ' + textStatus +  errorThrown ); 
+						//alert('connection error ' + textStatus +  errorThrown );
+						alertError(1);
 						return false;
 					},
 					success: function(data) {
@@ -231,8 +232,8 @@
 							cache: false,
 							timeout: 30 * 1000,
 							error: function(xhr, textStatus, errorThrown){
-								alert('connection error ' + textStatus + ' ' + errorThrown ); 
-								
+								//alert('connection error ' + textStatus + ' ' + errorThrown ); 
+								alertError(1);
 								return false;
 							},
 							success: function(data) {

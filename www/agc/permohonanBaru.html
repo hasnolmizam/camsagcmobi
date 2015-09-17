@@ -16,6 +16,7 @@
     </head>
 
     <body>
+    <script src="../cordova.js"></script>
         <div class="navbar-fixed">
             <nav class="deep-purple darken-1">
                 <div class="nav-wrapper">
@@ -95,7 +96,7 @@
                             </div>
                             <div class="row">
                                 <div class="col s12 offset-m2 m10">
-									<button class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="submitApplication();">Hantar</button></div>
+									<button class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="showConfirmHantar();">Hantar</button></div>
                             </div>
                         </form>
                     </div>
@@ -109,13 +110,26 @@
 		    <script>
             $(document).ready(function(){
 			  		
-					$(".button-collapse").sideNav({edge:'right'});
+        		//alert('document saya dah ready di browser');
+		      	  if (navigator.notification) { // Override default HTML alert with native dialog
+		    	      
+		      	      //alert('guna navigator.notification');
+		      		  window.alert = function (message) {
+		    	          navigator.notification.alert(
+		    	              message,    // message
+		    	              null,       // callback
+		    	              "CAMS-AGC", // title
+		    	              'OK'        // buttonName
+		    	          );
+		    	      };
+		    	  }
+
+		      	  
+		      	  $(".button-collapse").sideNav({edge:'right'});
 					
 					getData();
 					getApprover(getSessionStorage("PEN_BHGN_ID"));
 					
-					
-							
 					var today = new Date();
 
 					$("#dtBox").DateTimePicker({timeFormat:'HH:mm', setButtonContent:'Set', clearButtonContent:'Padam', titleContentTime:'MASA', titleContentDate:'TARIKH', 
@@ -127,7 +141,20 @@
 			          
 			
 
-
+	        document.addEventListener('deviceready', function () {
+        	  if (navigator.notification) { // Override default HTML alert with native dialog
+        	      window.alert = function (message) {
+        		  		navigator.notification.alert(
+        	              message,    // message
+        	              null,       // callback
+        	              "CAMS-AGC", // title
+        	              'OK'        // buttonName
+        	          );
+        	      };
+        	  }
+        	}, false);
+        	
+			
 			function getData()
 			{
 			
@@ -173,8 +200,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -220,8 +247,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -254,6 +281,7 @@
 		function submitApplication () 
 		{
          		//alert('start');
+         		loading("Permohonan anda sedang dihantar. Sila tunggu...");
 				var TX = Math.random(); 
 				//alert($('#stf_username').val());
 				
@@ -274,13 +302,14 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						unloading();
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
-                        
-                        alert('Permohonan disimpan.');	
+                    	unloading();
+                        alert('Permohonan anda telah dihantar.\nTerima kasih.');	
 						window.location.href = "dashboard.html";
 													
                     }
@@ -288,7 +317,62 @@
 			
         }   //end getApprover()
 		
-	
+        function showConfirmHantar() {
+        	
+        	//check dulu..
+        	//============
+        	var lengkap = true;
+        	var kenaisi = "";
+        	
+        	var stf_id_penyokong = $('#stf_id_penyokong').val();
+        	var stf_id_pelulus = $('#stf_id_pelulus').val();
+        	var tujuan = $('#tujuan').val();
+        	var tkh_keluar = $('#tkh_keluar').val();
+        	var masa_keluar = $('#masa_keluar').val();
+        	var masa_masuk = $('#masa_masuk').val();
+        	
+        	var getFlowID = getSessionStorage("FLOW_ID");
+		    if (getFlowID == 2 && stf_id_penyokong == "")
+		    {
+		    	lengkap = false;
+		    	kenaisi = "NAMA PENYOKONG";
+		    }	
+		    else if (stf_id_pelulus == "") { lengkap = false; kenaisi = "NAMA PELULUS"; }
+		    else if (tujuan == "") { lengkap = false; kenaisi = "TUJUAN"; }
+		    else if (tkh_keluar == "") { lengkap = false; kenaisi = "TARIKH KELUAR"; }
+		    else if (masa_keluar == "") { lengkap = false; kenaisi = "MASA KELUAR"; }
+		    else if (masa_masuk == "") { lengkap = false; kenaisi = "MASA MASUK";}
+		    	
+			if (lengkap)
+				{
+				
+		        	navigator.notification.confirm(
+		    			    "Adakah anda pasti untuk menghantar permohonan ini?",  // message
+		    		        onConfirmHantar,                // callback to invoke with index of button pressed
+		    		        "CAMS-AGC", // title
+		    		        'YA,BATAL'          // buttonLabels
+		    		    );
+				
+				}
+			else
+				{
+					
+				 	alert("Sila lengkapkan permohonan anda. Sila masukkan maklumat bagi [" + kenaisi + "]");
+				}
+		    	
+        }
+
+        
+        function onConfirmHantar(buttonIndex) {
+            //alert('You selected button ' + buttonIndex);
+            if (buttonIndex == 1)
+            	{
+            	submitApplication();	
+            	}
+            
+        }
+
+        
         </script>
 
  
