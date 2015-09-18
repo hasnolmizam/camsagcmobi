@@ -20,18 +20,18 @@
     	
 		<script>
 		    function reload_js(src) {
-		    	alert('masukkan ' + src + ' melalui script');
+		    	//alert('masukkan ' + src + ' melalui script');
 		        $('script[src="' + src + '"]').remove();
 		        $('<script>').attr('src', src).appendTo('head');
-		        alert('masukkan ' + src + ' melalui script BERJAYA');
+		        //alert('masukkan ' + src + ' melalui script BERJAYA');
 		    }
 
 		    
 		    function reload2body_js(src) {
-		    	alert('masukkan ' + src + ' melalui script');
+		    	//alert('masukkan ' + src + ' melalui script');
 		        $('script[src="' + src + '"]').remove();
 		        $('<script>').attr('src', src).appendTo('body');
-		        alert('masukkan ' + src + ' melalui script BERJAYA');
+		        //alert('masukkan ' + src + ' melalui script BERJAYA');
 		    }
 
 		    reload2body_js('../cordova.js?cachebuster='+ new Date().getTime());
@@ -171,6 +171,19 @@
 		    <script>
             $(document).ready(function(){
 
+            	document.addEventListener("backbutton", function(e){
+		        	//if (!GLOBAL_MASUKLISTING)
+		        	//	{
+		        	//	logKeluar();
+		        	//	}
+		        	//else
+		        	//	{
+		        	//	closeListing();
+		        	//	}
+		        	//history.back();
+		        	window.location.href="dashboard.html?nextpage=permohonan";
+				 }, false);
+		        
             	
             	 if (navigator.notification) { // Override default HTML alert with native dialog
 	        	      window.alert = function (message) {
@@ -201,7 +214,7 @@
 					}); //end dateTimePicker()
 
 					
-					alert("cari koordinat sebenar!");	
+					//alert("cari koordinat sebenar!");	
 			        navigator.geolocation.getCurrentPosition(onSuccess, onError);
 				   		
 			});  //end document ready state
@@ -546,7 +559,7 @@
       	      };
       	   }
         
-          alert("cari koordinat sebenar!");	
+          //alert("cari koordinat sebenar!");	
           navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
         }  
@@ -555,7 +568,7 @@
         
         function onSuccess(position)
         {
-            alert("koordinat sebenar dijumpai");	
+            //alert("koordinat sebenar dijumpai");	
         	//alert("dapat value lat ===" + position.coords.latitude);
             //document.getElementById("latitud").innerHTML= position.coords.latitude;
             //document.getElementById("longitud").innerHTML= position.coords.longitude;

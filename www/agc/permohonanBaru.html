@@ -110,6 +110,22 @@
 		    <script>
             $(document).ready(function(){
 			  		
+            	
+            	document.addEventListener("backbutton", function(e){
+		        	//if (!GLOBAL_MASUKLISTING)
+		        	//	{
+		        	//	logKeluar();
+		        	//	}
+		        	//else
+		        	//	{
+		        	//	closeListing();
+		        	//	}
+		        	//history.back();
+		        	window.location.href="dashboard.html?nextpage=permohonan";
+				 }, false);
+		        
+            	
+            	
         		//alert('document saya dah ready di browser');
 		      	  if (navigator.notification) { // Override default HTML alert with native dialog
 		    	      

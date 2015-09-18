@@ -84,74 +84,151 @@
         <span id="hidden"><input id="stf_username" name="stf_username" type="hidden"></span>
         <script>
             
+        	var GLOBAL_MASUKLISTING = false;
+        	
 			$(document).ready(function(){     
+				
+				
+		        document.addEventListener("backbutton", function(e){
+		        	if (!GLOBAL_MASUKLISTING)
+		        		{
+		        		logKeluar();
+		        		}
+		        	else
+		        		{
+		        		closeListing();
+		        		}
+		        					    
+				 }, false);
+		        
+		        
+		        
+        		//alert('document saya dah ready di browser');
+		      	  if (navigator.notification) { // Override default HTML alert with native dialog
+		    	      
+		      	      //alert('guna navigator.notification');
+		      		  window.alert = function (message) {
+							navigator.notification.alert(
+		    	              message,    // message
+		    	              null,       // callback
+		    	              "CAMS-AGC", // title
+		    	              'OK'        // buttonName
+		    	          );
+		    	      };
+		    	  }
+				
+				
+				
+				
+				
+				
+				
                 $(".button-collapse").sideNav({edge: 'right'});
+                
+                
                 getProfile();
 				//getListOwnApplication();
                 
-				if($(window).width()>959) 
+				var nextpage= gup("nextpage"); 
+
+				if ($(window).width()>959) 
 					{
 						//alert("masuk utk pc???");
-						var nextpage= gup("nextpage"); 
 						if (nextpage == "sokongan")
 						{
 							getListing('Sokongan');
+							
 						}
 						
 						else if(nextpage == "kelulusan")
 						{
 							getListing('Kelulusan');
+							
 						}
-						else 
+						else //default
 						{
 							getListing('Permohonan');
+							
 						}
 					}						
-						
-                        var info = window.sessionStorage.getItem("info");
-                        var json = $.parseJSON(info);
-												
-						var jsondata = $.parseJSON(json.data);
-						//alert(jsondata);
-											
-						if (jsondata.length > 0)
-						{					
-											
-							//alert("ROLE SAYA = " + getSessionStorage("ROLE_PENYOKONG")); 
-							//alert ni utk semak role.
+				else
+					{
+						//mobile phone..
+						if (nextpage == "sokongan")
+						{
+							getListing('Sokongan');
 							
-							var getStafID = jsondata[0].STF_ID;
-							//alert(getStafID);
-						
-							var getStafName=jsondata[0].STF_NAMA;
-							//alert('Anda log masuk sebagai '+ getStafName);
-							
-							$('#span_nama').html (getStafName);
-							$('#stf_username').val (getSessionStorage("STF_USERNAME"));							
-							var STF_GAMBAR_FILE = "defaultFEMALE.jpg";
-							if (jsondata[0].STF_GAMBAR_FILE != "")
-							{
-								STF_GAMBAR_FILE = jsondata[0].STF_GAMBAR_FILE;
-								
-							}
-							var nicefilename=encodeURIComponent(jsondata[0].STF_GAMBAR_FILE); 
-							//baca semua string termasuk space character contoh mohd hanafi.png akan dibaca
-							//mohd%20hanafi.png
-						    var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
-							$('.profile-background').css('background-image', 'url(' + urlgambar + ')');
-							$('.profile-pic').css('background-image', 'url(' + urlgambar + ')');
-							
-							 
-				
 						}
+						
+						else if (nextpage == "kelulusan")
+						{
+							getListing('Kelulusan');
+							
+						}
+						else if (nextpage == "permohonan")
+						{
+							getListing('Permohonan');
+							
+						}
+						
+						//no default..
+					
+					}
 				
+				
+				displayPhotoPic();
+				
+
+						
 				
 			});
+			
+			
+			function displayPhotoPic ()
+			{
+                var info = window.sessionStorage.getItem("info");
+                var json = $.parseJSON(info);
+										
+				var jsondata = $.parseJSON(json.data);
+				//alert(jsondata);
+									
+				if (jsondata.length > 0)
+				{					
+									
+					//alert("ROLE SAYA = " + getSessionStorage("ROLE_PENYOKONG")); 
+					//alert ni utk semak role.
+					
+					var getStafID = jsondata[0].STF_ID;
+					//alert(getStafID);
+				
+					var getStafName=jsondata[0].STF_NAMA;
+					//alert('Anda log masuk sebagai '+ getStafName);
+					
+					$('#span_nama').html (getStafName);
+					$('#stf_username').val (getSessionStorage("STF_USERNAME"));							
+					var STF_GAMBAR_FILE = "defaultFEMALE.jpg";
+					if (jsondata[0].STF_GAMBAR_FILE != "")
+					{
+						STF_GAMBAR_FILE = jsondata[0].STF_GAMBAR_FILE;
+						
+					}
+					var nicefilename=encodeURIComponent(jsondata[0].STF_GAMBAR_FILE); 
+					//baca semua string termasuk space character contoh mohd hanafi.png akan dibaca
+					//mohd%20hanafi.png
+				    var urlgambar = "https://ilms.agc.gov.my/hrm/img/photos/" + nicefilename;
+					$('.profile-background').css('background-image', 'url(' + urlgambar + ')');
+					$('.profile-pic').css('background-image', 'url(' + urlgambar + ')');
+					
+					 
+		
+				}				
+			}
    
             function getProfile() {
-              $('.profile-background, .profile-pic').css('background-image', '');
+              	
+            	$('.profile-background, .profile-pic').css('background-image', '');
 			  
-			  // untuk paparkan item dashboard
+			    // untuk paparkan item dashboard
 							var rolePengguna = getSessionStorage("ROLE_PENGGUNA");
 							var rolePenyokong = getSessionStorage("ROLE_PENYOKONG");
 							var rolePelulus = getSessionStorage("ROLE_PELULUS");
@@ -183,10 +260,15 @@
 								$("#panel-penyokong").hide();
 								$("#panel-pelulus").show();							
 							}
+			                
+			                
+			                displayPhotoPic();
             }
             
             function getListing (title) {
 			
+            	GLOBAL_MASUKLISTING = true;
+            	
 				//alert("call getListing [" + title  + "]");            
                 var ajaxResult =
                     '<div class="myListHeader">'+
@@ -286,6 +368,7 @@
 			}
             
             function closeListing() {
+            	GLOBAL_MASUKLISTING = false;
                $('#modalList').closeModal();
             }
 
