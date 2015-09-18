@@ -102,15 +102,28 @@
 				
 				
 				 document.addEventListener("backbutton", function(e){
-			           navigator.app.exitApp();
-				    }, false);
+			    
+					 	var camefrom = gup("camefrom");
+					 	alert("camefrom=" + camefrom);
+					 	if (camefrom == "INTERNAL")	 
+					 		{
+					 			history.back();
+					 		}
+					 	else
+					 		{
+					 		navigator.app.exitApp();
+					 		}
+				    
+				 
+				 }, false);
 
 				 
 				document.getElementById('map_canvas').innerHTML = '' ;
-				document.addEventListener("backbutton", function() {
-        					history.go(-1);
-        					//window.location.href = "mainpage.html";
-    						}, false);
+				
+				//document.addEventListener("backbutton", function() {
+        		//			history.go(-1);
+        		//			//window.location.href = "mainpage.html";
+    			//			}, false);
 
 				document.addEventListener("offline", 
 						function(){ 

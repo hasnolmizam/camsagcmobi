@@ -42,13 +42,11 @@ input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly
 
 .btn-left {
     float:left;
-	width:33%;
-	text-align:center;
-}
+	}
 .btn-right {
     float:right;
-	width:65%;
-	text-align:center;
+	padding-left:2px;
+	text-align:center !important;
 }
 
 input[type=text]:disabled {
@@ -154,6 +152,11 @@ input[type=text]:disabled {
 }
 .fullwidth {
     width: 100%;
+}
+
+.50width {
+    width: 48%;
+	text-align:center;
 }
 
 /* --------------------------------------------------------------------- Login */

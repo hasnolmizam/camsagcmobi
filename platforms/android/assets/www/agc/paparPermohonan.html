@@ -34,8 +34,8 @@
 		        alert('masukkan ' + src + ' melalui script BERJAYA');
 		    }
 
-		    reload2body_js('../cordova.js');
-		    reload_js('js/cams_script.js');
+		    reload2body_js('../cordova.js?cachebuster='+ new Date().getTime());
+		    reload_js('js/cams_script.js?cachebuster='+ new Date().getTime());
 		</script>
     	
         <div class="navbar-fixed">

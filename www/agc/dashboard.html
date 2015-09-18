@@ -90,6 +90,7 @@
                 
 				if($(window).width()>959) 
 					{
+						//alert("masuk utk pc???");
 						var nextpage= gup("nextpage"); 
 						if (nextpage == "sokongan")
 						{
@@ -549,12 +550,16 @@
 							
 								var myString = '<div class="myListScroller" onscroll="myListScroll()" overflow-scroll="true">' +
 									'<ul class="myList">';
-									
-								for(var i = 0; i < jsondata.length; i++) 
+								//alert(jsondata.length);
+								
+								for(var i = 0; i < jsondata.length; i++)
 								{
-											
-									
-										statusid = jsondata[i].PH_STATUS_ID_PERMOHONAN;
+										//i == 5 || i == 4 || i == 3 ||	
+									if ( i == 2 || i == 5 || i == 4 )
+										{
+										
+										statusid = jsondata[i].PH_STATUS_ID_PERMOHONAN.trim();
+										alert("statusid=" + statusid);
 										/*
 											1 BELUM DISOKONG
 											2 DISOKONG
@@ -567,33 +572,50 @@
 										*/
 										if (statusid == "4")
 											{
-											warnabar = '<br><div style="width:150px;height:21px" class="badge-belumdiluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>';
+											warnabar = '<br><div style="width:150px;height:21px" class="badge-belumdiluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI.trim() + '</div>';
 											}
 										else if (statusid == "5")
 										{
-											warnabar = '<br><div style="width:150px;height:21px" class="badge-diluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>';
+											warnabar = '<br><div style="width:150px;height:21px" class="badge-diluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI.trim() + '</div>';
 										}
 										else if (statusid == "6")
 										{
-											warnabar = '<br><div style="width:150px;height:21px" class="badge-tidakdiluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>';
+											warnabar = '<br><div style="width:150px;height:21px" class="badge-tidakdiluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI.trim() + '</div>';
 										}
 										else if (statusid == "7")
 										{
-											warnabar = '<br><div style="width:150px;height:21px" class="badge-belumdibatalkan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>';
+											warnabar = '<br><div style="width:150px;height:21px" class="badge-belumdibatalkan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI.trim() + '</div>';
 										}
 										
-											
+										//alert("jsondata[" + i + "].STATUS_PERMOHONAN_TERKINI=" + jsondata[i].STATUS_PERMOHONAN_TERKINI);
+										//alert("jsondata[" + i + "].PH_ID=" + jsondata[i].PH_ID);
+										//alert("jsondata[" + i + "].PH_STF_NAMA=" + jsondata[i].PH_STF_NAMA);
+										//alert("jsondata[" + i + "].PH_TUJUAN=" + jsondata[i].PH_TUJUAN);
+										//alert("jsondata[" + i + "].PH_TKH_KELUAR=" + jsondata[i].PH_TKH_KELUAR);
+										//alert("jsondata[" + i + "].PH_MASA_KELUAR=" + jsondata[i].PH_MASA_KELUAR);
+										//alert("jsondata[" + i + "].PH_MASA_MASUK=" + jsondata[i].PH_MASA_MASUK);
 
-										myString = myString + '<li onclick="getDetailByApprover(' + jsondata[i].PH_ID + ')">'+
-											'<b>' + jsondata[i].PH_STF_NAMA + '</b>'+
-											'<br>' + jsondata[i].PH_TUJUAN + //lokasi nak kuar
-											'<br>' + jsondata[i].PH_TKH_KELUAR + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR + ' - ' + jsondata[i].PH_MASA_MASUK +  //masa kuar
-											'<br><div style="width:150px;height:21px" class="badge-diluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI + '</div>'+
+
+										myString = myString + '<li onclick="getDetailByApprover(' + jsondata[i].PH_ID.trim() + ')">'+
+											'<b>' + jsondata[i].PH_STF_NAMA.trim() + '</b>'+
+											'<br>' + jsondata[i].PH_TUJUAN.trim() + //lokasi nak kuar
+											'<br>' + jsondata[i].PH_TKH_KELUAR.trim() + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR.trim() + ' - ' + jsondata[i].PH_MASA_MASUK.trim() +  //masa kuar
+											'<br><div style="width:150px;height:21px" class="badge-diluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI.trim() + '</div>'+
 											'</li>';
-							
+										/*
+										myString = myString + '<li onclick="getDetailByApprover(' + jsondata[i].PH_ID.trim() + ')">'+
+										'<b>' + jsondata[i].PH_STF_NAMA.trim() + '</b>'+
+										'' + jsondata[i].PH_TUJUAN.trim() + //lokasi nak kuar
+										'' + jsondata[i].PH_TKH_KELUAR.trim() + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR.trim() + ' - ' + jsondata[i].PH_MASA_MASUK.trim() +  //masa kuar
+										'<div style="width:150px;height:21px" class="badge-diluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI.trim() + '</div>'+
+										'</li>';
+										*/										
+										}
+
 								}
 								
 								myString = myString + '</ul></div>';
+								alert(myString);
 								$('#to-approve').html(myString);
 								
 										 

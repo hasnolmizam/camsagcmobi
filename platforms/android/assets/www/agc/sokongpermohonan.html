@@ -91,7 +91,7 @@
                             <div class="card-panel">
                             
 	                            <div id="penyokong" name="penyokong" class="row">
-	                                <div class="col s12 m2 label-on-small-only">Penyokong</div>
+	                                <div class="col s12 m2 label-on-small-only">Nama Penyokong</div>
 	                                <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
 	                            </div>
 	                            <!--  
@@ -106,20 +106,34 @@
 									<div class="col s12 m5"><textarea id="ulasan_penyokong" name="ulasan_penyokong" class="materialize-textarea"></textarea></div>
 	                            </div>
 
+								<!-- <div class="row" id=statuspenyokongsection name=statuspenyokongsection>
+	                                <div class="col s12 m2 label-on-small-only myInputAlign">Status Penyokong</div>
+									<div id="status_sokongan" name="status_sokongan" type="text" class="col s12 m5"></div>
+	                            </div>
+	                             -->
 							</div>
 							
-							<div class="row">
-                                <div class="col s12 m2 label-on-small-only myInputAlign">Status Sokongan</div>
-								<div id="status_sokongan" name="status_sokongan" type="text" class="col s12 m5"></div>
-							
-                            </div>
                             <div class="row">
+<!-- 
                                 <div class="col s12 offset-m2 m10">   
+
                                 
 									<button id="update-btn" class="btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="showConfirmSokong();">DISOKONG</button>
                                     <button id="update-btn" class="btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="showConfirmTidakSokong();">TIDAK DISOKONG</button>	
+ 									<button id="update-btn" class="btn-large 50width btn-left waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isSupported();">DISOKONG</button>
+                                    <button id="update-btn" class="btn-large 50width btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejected();">TIDAK DISOKONG</button>	
 									
 								</div>
+-->
+
+
+                            <div id="change-btn" name="change-btn" class="row">
+                                <div class="col s12 offset-m2 m10">   
+									<button id="update-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="showConfirmSokong();">SOKONG</button>
+									&nbsp;&nbsp;  <button id="cancel-btn" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" name="action" onclick="showConfirmTidakSokong();"">TIDAK SOKONG</button>
+								</div>
+                            </div>
+
                             </div>  
                         </form>
                     </div>
@@ -183,7 +197,7 @@
 			
 	        function showConfirmSokong() {
 	        	navigator.notification.confirm(
-	    			    "Adakah anda pasti untuk menyokong permohonan ini?",  // message
+	    			    "Adakah anda pasti untuk MENYOKONG permohonan ini?",  // message
 	    		        onConfirmSokong,                // callback to invoke with index of button pressed
 	    		        "CAMS-AGC", // title
 	    		        'YA,BATAL'          // buttonLabels
@@ -200,13 +214,41 @@
 	            
 	        }
 
-	        function showConfirmTidakSokong(message) {
-	        	navigator.notification.confirm(
-	        			"Adakah anda pasti untuk TIDAK menyokong permohonan ini?",  // message
-	    		        onConfirmTidakSokong,                // callback to invoke with index of button pressed
-	    		        "CAMS-AGC", // title
-	    		        'YA,BATAL'          // buttonLabels
-	    		    );
+	        function showConfirmTidakSokong() {
+
+	        	var ulasan_penyokong = "" + $("#ulasan_penyokong").val();
+	        	ulasan_penyokong = ulasan_penyokong.trim();
+	        	
+	        	//alert("[" + ulasan_penyokong + "]");
+	        	if (ulasan_penyokong != "")
+	        		{
+	        			showConfirmTidakSokongPOST();
+	        			//alert("call showConfirmTidakSokongPOST.");
+	        			return false;
+	        		}
+	        	else
+	        		{
+	        			//alert("Sila masukkan ulasan.");
+ 						navigator.notification.alert(
+		    	              "Sila masukkan ulasan.",    // message
+		    	              null,       // callback
+		    	              "CAMS-AGC", // title
+		    	              'OK'        // buttonName
+		    	          );	        			
+	        			return false;
+	        		}
+	        	
+	        }
+
+	        function showConfirmTidakSokongPOST() {
+
+		        	navigator.notification.confirm(
+		        			"Adakah anda pasti untuk TIDAK MENYOKONG permohonan ini?",  // message
+		    		        onConfirmTidakSokong,                // callback to invoke with index of button pressed
+		    		        "CAMS-AGC", // title
+		    		        'YA,BATAL'          // buttonLabels
+		    		    );
+	        	
 	        }
 
 	        
@@ -376,7 +418,7 @@
 							var sebab = jsondata[0].PH_TUJUAN;
 							var masa_keluar = jsondata[0].PH_MASA_KELUAR;
 							var masa_masuk = jsondata[0].PH_MASA_MASUK;
-							var status_sokongan = jsondata[0].PH_STATUS_ID_PENYOKONG;
+							//HASNOLMIZAM var status_sokongan = jsondata[0].PH_STATUS_ID_PENYOKONG;
 
 							
 							var STF_GAMBAR_FILE_PEMOHON = jsondata[0].STF_GAMBAR_FILE_PEMOHON;
@@ -394,7 +436,7 @@
 						 $('#tkh_keluar').html(tarikh);
 						 $('#masa_keluar').html(masa_keluar);
 						 $('#masa_masuk').html(masa_masuk);
-						 $('#status_sokongan').html(status_sokongan);
+						 //HASNOLMIZAM $('#status_sokongan').html(status_sokongan);
 						 $('#tujuan').html(sebab);
 													
                          }

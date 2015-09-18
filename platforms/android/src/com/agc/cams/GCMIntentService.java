@@ -37,6 +37,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
     public double latitude = 0;
     public double longitude = 0;
     public String GLOBAL_PHID = "0";
+    public String GLOBAL_usernameRequester = "";
     
 	private static final String TAG = "GCMIntentService";
 	//private static TextToSpeech tts;
@@ -91,6 +92,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
         
         
         String message = intent.getExtras().getString("price");
+       
     	if (message != null)
     	{
     		if (!message.equals("")) 
@@ -101,6 +103,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        String accountid = "";
     	        String contactinteractionid = "";
     	        String phid = "";
+    	        
     	        //String XArray = 
     	        
     	        /*
@@ -147,6 +150,18 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        
     	        }
     	        
+    	        i = message.indexOf("TIDAK MENGAKTIFKAN GPS");
+    	        if (i >= 0)
+    	        {
+    	        	SHOWLOKASI = "N";
+    	        
+    	        	String XArray[] = message.split("#");
+    	        	phid = XArray[0];
+    	        	message= XArray[1];
+    	        
+    	        }
+    	        
+    	        
     	        
     	        String LOCATIONREQUEST = "N";
     	        i = message.indexOf("LOCATIONREQUEST");
@@ -156,6 +171,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
     	        	String XArray[] = message.split("#");
     	        	phid = XArray[0];
     	        	message= XArray[1];
+    	        	GLOBAL_usernameRequester= XArray[2];
     	        
     	        }
 
@@ -962,7 +978,7 @@ public class GCMIntentService extends GCMBaseIntentService  {
 
 			//hantar maklumat ke API check_in_by_applicant
 			//JSONObject json = jParser.makeHttpRequest("http://www.visionice.net/ds/androidservice.php?actionid=getagentprofits&T=" + System.nanoTime(), "GET", params);
-			JSONObject json = jParser.makeHttpRequest("http://10.17.14.210/cams/api_generator.php?api_name=check_in_by_applicant&ph_id=" + GLOBAL_PHID + "&stf_username=adlina&lng=" + longitude + "&lat=" + latitude + "&T=" + System.nanoTime(), "GET", params);
+			JSONObject json = jParser.makeHttpRequest("http://10.17.14.210/cams/api_generator.php?api_name=check_in_by_applicant&ph_id=" + GLOBAL_PHID + "&stf_username=" + GLOBAL_usernameRequester + "&lng=" + longitude + "&lat=" + latitude + "&T=" + System.nanoTime(), "GET", params);
 				
 			//if (json == null) 
 			//{
