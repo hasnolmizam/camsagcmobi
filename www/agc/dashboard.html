@@ -12,6 +12,7 @@
     </head>
 
     <body>
+    	<script src="../cordova.js"></script>
         <div class="navbar-fixed">
             <nav class="deep-purple darken-1">
                 <div class="nav-wrapper">
@@ -25,8 +26,8 @@
 						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
                         <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
                         <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
-                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
-                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                        <li><a href="konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="javascript:;" onclick="logKeluar();"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
 						<!--<li><button type="button" onclick="terminateApp();"><i class="mdi-action-lock left"></i>Log Keluar</button></li>-->
                     </ul>
                     <ul class="side-nav hide-on-med-and-down tablet-nav">
@@ -34,8 +35,8 @@
 						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
                         <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
                         <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
-                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
-                         <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                        <li><a href="konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="javascript:;" onclick="logKeluar();"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
 						<!--<li><button type="button" onclick="terminateApp();"><i class="mdi-action-lock left"></i>Log Keluar</button></li>-->
                     </ul>
                 </div>
@@ -46,29 +47,29 @@
             <div class="row">
                 <div class="col s12 m4 l5">
                     <div class="card">
-                        <div id="panel-pengguna" name="panel-pengguna" class="card-image">
+                        <div id="panel-pengguna" name="panel-pengguna" class="card-image" style="display:none">
                             <img src="img/prosesPermohonan.jpg">
                         </div>
                         <div class="mycard-content">
-                            Permohonan<a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Permohonan')">
+                            <b>Permohonan</b><a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Permohonan')">
 							<i class="mdi-action-launch"></i></a>
                         </div>
                     </div>
-                    <div id="panel-penyokong" name="panel-penyokong" class="card">
+                    <div id="panel-penyokong" name="panel-penyokong" class="card" style="display:none">
                         <div class="card-image">
                             <img src="img/prosesSokongan.jpg">
                         </div>
                         <div class="mycard-content">
-                            Sokongan<a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Sokongan')">
+                            <b>Sokongan</b><a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Sokongan')">
                             <i class="mdi-action-launch"></i></a>
                         </div>
                     </div>
-                    <div id="panel-pelulus" name="panel-pelulus" class="card">
+                    <div id="panel-pelulus" name="panel-pelulus" class="card" style="display:none">
                         <div class="card-image">
                             <img src="img/prosesKelulusan.jpg">
                         </div>
                         <div class="mycard-content">
-                            Kelulusan<a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Kelulusan')">
+                            <b>Kelulusan</b><a class="btn-floating btn-large waves-effect waves-light right" onclick="getListing('Kelulusan')">
                             <i class="mdi-action-launch"></i></a>
                         </div>
                     </div>
@@ -342,6 +343,14 @@
 							
 								}
 								
+								if (jsondata.length == 0)
+								{
+								
+								myString = myString + '<li>'+
+										'<b>--- TIADA REKOD ---</b>'+
+										'</li>';		
+								}
+								
 								myString = myString + '</ul></div>';
 								
 								$('#mylistapplication').html(myString);
@@ -383,8 +392,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -395,6 +404,7 @@
 							//alert('Rekod permohonan=' + jsondata.length);
 							  //alert(jsondata);
 							  
+							   //alert(jsondata.length);
 								var myString = '<div class="myListScroller" onscroll="myListScroll()" overflow-scroll="true">' +
 									'<ul class="myList">';
 								
@@ -415,10 +425,17 @@
 									//	'<br>' + jsondata[i].PH_TUJUAN + //lokasi nak kuar
 									//	'<br>' + jsondata[i].PH_TKH_KELUAR + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR + ' - ' + jsondata[i].PH_MASA_MASUK +  //masa kuar
 									//	'</li>';											
-							
-									
-									 
 								}
+								
+
+								if (jsondata.length == 0)
+									{
+									
+									myString = myString + '<li>'+
+											'<b>--- TIADA REKOD ---</b>'+
+											'</li>';		
+									}
+								
 								
 								myString = myString + '</ul></div>';
 								//myString = utf8_encode (myString);
@@ -463,8 +480,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -537,8 +554,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -559,7 +576,7 @@
 										{
 										
 										statusid = jsondata[i].PH_STATUS_ID_PERMOHONAN.trim();
-										alert("statusid=" + statusid);
+										//alert("statusid=" + statusid);
 										/*
 											1 BELUM DISOKONG
 											2 DISOKONG
@@ -612,6 +629,15 @@
 										*/										
 										}
 
+								}
+								
+								
+								if (jsondata.length == 0)
+								{
+								
+								myString = myString + '<li>'+
+										'<b>--- TIADA REKOD ---</b>'+
+										'</li>';		
 								}
 								
 								myString = myString + '</ul></div>';

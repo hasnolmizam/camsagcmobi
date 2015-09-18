@@ -1,6 +1,26 @@
 
 var GLOBAL_IP = "http://10.17.14.210/cams";
 
+	function logKeluar()
+	{
+		navigator.notification.confirm(
+			    "Adakah anda pasti untuk keluar dari aplikasi ini?",  // message
+		        onConfirmKeluar,                // callback to invoke with index of button pressed
+		        "CAMS-AGC", // title
+		        'YA,BATAL'          // buttonLabels
+		    );
+	}
+	
+    function onConfirmKeluar(buttonIndex) {
+        //alert('You selected button ' + buttonIndex);
+        if (buttonIndex == 1)
+        	{
+        		navigator.app.exitApp();
+        	}
+        
+    }
+    
+	
 	function alertError(id)
 	{
 		if (id==1) { alert("Pangkalan data CAMS tidak dapat dihubungi. Sila hubungi pentadbir sistem."); }

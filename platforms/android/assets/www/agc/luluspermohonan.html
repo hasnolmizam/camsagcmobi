@@ -35,16 +35,16 @@
 						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
                         <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
                         <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
-                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
-                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                        <li><a href="konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="javascript:;" onclick="logKeluar();"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
                     </ul>
                     <ul class="side-nav hide-on-med-and-down tablet-nav">
                         <li class="profile-container"><div class="profile-background"></div><span class="profile-pic"></span>
 						<span id="span_nama" name="span_nama" style="top: calc(50% - 10px);" class="profile-name"></span></li>
                         <li><a href="dashboard.html"><i class="mdi-action-home left"></i>Utama</a></li>
                         <li><a href="panduan.html"><i class="mdi-action-description left"></i>Panduan</a></li>
-                        <li><a href="Konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
-                        <li><a href="index.html"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
+                        <li><a href="konfigurasi.html"><i class="mdi-action-settings left"></i>Konfigurasi</a></li>
+                        <li><a href="javascript:;" onclick="logKeluar();"><i class="mdi-action-lock left"></i>Log Keluar</a></li>
                     </ul>
                 </div>
             </nav>
@@ -149,16 +149,20 @@
 									<button class="btn-large 50width btn-right waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="isRejectedByApprover();">TIDAK DILULUSKAN</button>								
 								</div>
                             </div>
-                            <div id="show-location" name="show-location" class="row" style="display:none;">
-                                <div class="col s12 offset-m2 m10">  							
-									<button id="location-btn" class="btn-large waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="showLocation();">PAPAR LOKASI</button>
+                            <div id="show-location-section" name="show-location-section" class="row" >
+                                <div class="col s12 offset-m2 m10">							
+									<button style="display:none;" id="show-location" name="show-location"  class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" onclick="showLocation();">PAPAR LOKASI</button>
+									<br><br>
+									<button style="display:none;" id="request-location" name="request-location" class="btn-large waves-effect waves-light deep-purple darken-1 fullwidth" type="button" onclick="requestLocation();">JEJAK LOKASI</button>
 								</div>
-                            </div>                       
+                            </div>                      
+                            <!--  
                             <div id="request-location" name="request-location" class="row" style="display:none;">
                                 <div class="col s12 offset-m2 m10">  							
 									<button id="request-location-btn" class="btn-large waves-effect waves-light deep-purple darken-1" type="button" name="action" onclick="requestLocation();">JEJAK LOKASI</button>
 								</div>
-                            </div>                       
+                            </div>
+                             -->                       
 					   </form>
                     </div>
                 </div>
@@ -263,8 +267,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -307,8 +311,8 @@
 					cache: false,
 					timeout: 30 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -606,7 +610,7 @@ function isApprovedByApprover()
                     alert("Permintaan koordinat lokasi melalui telefon pintar pemohon telah dihantar. Jika pemohon telah memasang aplikasi CAMS di telefon pintar dan mengaktifkan fungsi JEJAK LOKASI, anda boleh menerima koordinat GPS beliau sebentar lagi.\n\nTerima kasih.");
 					//window.location.href = "dashboard.html?nextpage=kelulusan";
                     //window.location.href = window.location.href;
-                    getDetailApplicationById();
+                    setTimeout("getDetailApplicationById();",3000);
 												
                 }
             });
