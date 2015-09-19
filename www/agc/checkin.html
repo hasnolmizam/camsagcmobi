@@ -16,6 +16,7 @@
     </head>
 
     <body>
+    	<script src="../cordova.js"></script>
         <div class="navbar-fixed">
             <nav class="deep-purple darken-1">
                 <div class="nav-wrapper">
@@ -119,10 +120,10 @@
 						bahagianid: bhgnid
 					},
 					cache: false,
-					timeout: 30 * 1000,
+					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -163,10 +164,10 @@
 						bahagianid: bhgnid
 					},
 					cache: false,
-					timeout: 30 * 1000,
+					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -206,10 +207,10 @@
 						id: gup("phid")
 					},
 					cache: false,
-					timeout: 30 * 1000,
+					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -266,10 +267,10 @@
 						comment: $('#komen').val()
 					},
 					cache: false,
-					timeout: 30 * 1000,
+					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -300,9 +301,10 @@
 						comment: $('#komen').val()
 					},
 					cache: false,
-					timeout: 30 * 1000,
+					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
