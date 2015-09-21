@@ -497,17 +497,17 @@
 											
 										//TODO : kenapa tak boleh letak <br> ??????
 												//============================
-										myString = myString + '<li onclick="getDetailBySupporter(' + jsondata[i].PH_ID + ')">'+
-										'<b>' + jsondata[i].PH_STF_NAMA + '</b>'+
-										'' + jsondata[i].PH_TUJUAN + 
-										'' + jsondata[i].PH_TKH_KELUAR + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR + ' - ' + jsondata[i].PH_MASA_MASUK +  
-										'</li>';											
-											
 									//	myString = myString + '<li onclick="getDetailBySupporter(' + jsondata[i].PH_ID + ')">'+
 									//	'<b>' + jsondata[i].PH_STF_NAMA + '</b>'+
-									//	'<br>' + jsondata[i].PH_TUJUAN + //lokasi nak kuar
-									//	'<br>' + jsondata[i].PH_TKH_KELUAR + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR + ' - ' + jsondata[i].PH_MASA_MASUK +  //masa kuar
+									//	'' + jsondata[i].PH_TUJUAN + 
+									//	'' + jsondata[i].PH_TKH_KELUAR + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR + ' - ' + jsondata[i].PH_MASA_MASUK +  
 									//	'</li>';											
+											
+										myString = myString + '<li onclick="getDetailBySupporter(' + jsondata[i].PH_ID + ')">'+
+										'<b>' + jsondata[i].PH_STF_NAMA + '</b>'+
+										'<br>' + jsondata[i].PH_TUJUAN + //lokasi nak kuar
+										'<br>' + jsondata[i].PH_TKH_KELUAR + ' &nbsp; ' + jsondata[i].PH_MASA_KELUAR + ' - ' + jsondata[i].PH_MASA_MASUK +  //masa kuar
+										'</li>';											
 								}
 								
 
@@ -655,8 +655,8 @@
 								for(var i = 0; i < jsondata.length; i++)
 								{
 										//i == 5 || i == 4 || i == 3 ||	
-									if ( i == 2 || i == 5 || i == 4 )
-										{
+									//if ( i == 2 || i == 5 || i == 4 )
+									//	{
 										
 										statusid = jsondata[i].PH_STATUS_ID_PERMOHONAN.trim();
 										//alert("statusid=" + statusid);
@@ -710,7 +710,7 @@
 										'<div style="width:150px;height:21px" class="badge-diluluskan-list">' + jsondata[i].STATUS_PERMOHONAN_TERKINI.trim() + '</div>'+
 										'</li>';
 										*/										
-										}
+									//	}
 
 								}
 								
@@ -724,7 +724,7 @@
 								}
 								
 								myString = myString + '</ul></div>';
-								alert(myString);
+								//alert(myString);
 								$('#to-approve').html(myString);
 								
 										 

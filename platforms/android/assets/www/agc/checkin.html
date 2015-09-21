@@ -16,6 +16,7 @@
     </head>
 
     <body>
+    	<script src="../cordova.js"></script>
         <div class="navbar-fixed">
             <nav class="deep-purple darken-1">
                 <div class="nav-wrapper">
@@ -121,8 +122,8 @@
 					cache: false,
 					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -165,8 +166,8 @@
 					cache: false,
 					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -208,8 +209,8 @@
 					cache: false,
 					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -268,8 +269,8 @@
 					cache: false,
 					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
-						
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
@@ -302,7 +303,8 @@
 					cache: false,
 					timeout: 15 * 1000,
 					error: function(xhr, textStatus, errorThrown){
-						alert('connection error ' + textStatus +  errorThrown ); 
+						//alert('connection error ' + textStatus +  errorThrown ); 
+						alertError(1);
 						return false;
 					},
                     success: function(data) {
