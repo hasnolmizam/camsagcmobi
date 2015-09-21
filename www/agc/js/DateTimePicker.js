@@ -63,7 +63,7 @@
 			return sDate.dayShort + ", " + sDate.month + " " + sDate.dd + ", " + sDate.yyyy;
 		},
 	
-		minuteInterval: 1,
+		minuteInterval: 15,
 		roundOffMinutes: true,
 	
 		titleContentDate: "Set Date",
