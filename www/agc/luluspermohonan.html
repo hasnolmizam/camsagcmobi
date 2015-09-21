@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             
-                            <div class="card-panel">
+                            <div class="card-panel" id="penyokongsection" name="penyokongsection">
 		                            <div id="penyokong" name="penyokong" class="row">
 		                                <div class="col s12 m2 label-on-small-only">Nama Penyokong</div>
 		                                <div id="nama_penyokong" name="nama_penyokong" class="col s12 m5"></div>
@@ -375,6 +375,7 @@
 							var status_sokongan = jsondata[0].STATUS_PENYOKONG;
 							var nama_pelulus = jsondata[0].STF_NAMA_PELULUS;
 							var status_kelulusan = jsondata[0].STATUS_PELULUS;
+							var PH_BF_FLOW_ID = jsondata[0].PH_BF_FLOW_ID;
 							
                             var ulasan_pelulus = jsondata[0].PH_KOMEN_PELULUS; 							
 							var tarikh = jsondata[0].PH_TKH_KELUAR;
@@ -477,21 +478,28 @@
 								}
 							
 							
+							if (PH_BF_FLOW_ID == "1")
+							{
+								//hide section penyokong
+								
+								$("#penyokongsection").hide();
+							}							
 							
 							
 							
 							
-							
-							
-							
+						//alert(status_kelulusan);
+						 //$("#result-btn").show();
+						 status_kelulusan = status_kelulusan.trim();
+						 
 						    
 						if (status_kelulusan == "DILULUSKAN" || status_kelulusan == "TIDAK DILULUSKAN"  ){
 								 $("#result-btn").hide();
 								 //$("#show-location").hide();
 									   
 								} 
-								 
-						else if (status_kelulusan == "BELUM DILULUSKAN"){
+						else if (status_kelulusan == "BELUM DILULUSKAN" || status_kelulusan == "" ){
+								 //alert("SHOOWWW");
 								 $("#result-btn").show();
 								 //$("#show-location").hide();
 									
@@ -528,7 +536,7 @@ function isApprovedByApprover()
 						ph_id: gup("phid"),
 						stf_username: $('#stf_username').val(),
 						status_id:result,
-						comment: $('#ulasan_pelulus_textarea').val()
+						comment: $('#ulasan_pelulus_edit').val()
 					},
 					cache: false,
 					timeout: 15 * 1000,
@@ -561,7 +569,7 @@ function isApprovedByApprover()
 						ph_id: gup("phid"),
 						stf_username: $('#stf_username').val(),
 						status_id:result,
-						comment: $('#ulasan_pelulus_textarea').val()
+						comment: $('#ulasan_pelulus_edit').val()
 					},
 					cache: false,
 					timeout: 15 * 1000,
@@ -589,6 +597,7 @@ function isApprovedByApprover()
 			var phid = gup('phid');
 			
 			//http://10.17.14.210/cams/api_generator.php?api_name=request_location_by_approver&ph_id=633&stf_username_requester=faiza&stf_username_applicant=adlina
+					//alert(getSessionStorage("STF_USERNAME"));
 					
 			var TX = Math.random(); 
 			$.ajax({
@@ -622,3 +631,4 @@ function isApprovedByApprover()
  
     </body>
 </html>
+
